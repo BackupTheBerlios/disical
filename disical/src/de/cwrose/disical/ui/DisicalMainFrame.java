@@ -134,28 +134,28 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
             dlg.show();
             cancel = dlg.cancel;
             if (!cancel) {
-           
+                
                 if (server == null) {
-                    client = new DisicalCli(new String[0]);                    
+                    client = new DisicalCli(new String[0]);
                     try {
                         server = client.getServer();
-                         online = true;
-                         user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
-                         System.out.println(cancel);
-                         
-                         try {
-                             new SessionFrame(user.listAllDatesByTime()).show();
-                         } catch ( Exception e)  {
-                             new SessionFrame(new Date[0]).show();
-                             e.printStackTrace(System.out);
-                         }
+                        online = true;
+                        user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
+                        System.out.println(cancel);
+                        
+                        try {
+                            new SessionFrame(user.listAllDatesByTime()).show();
+                        } catch ( Exception e)  {
+                            new SessionFrame(new Date[0]).show();
+                            e.printStackTrace(System.out);
+                        }
                     }
                     catch (jdoPersistenceEx e) {
                         System.out.println(e.toString());
                         e.printStackTrace(System.out);
                     }
                 }
-               
+                
             }
         }
         
@@ -181,7 +181,22 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
             dlg.show();
             cancel = dlg.cancel;
             System.out.println(cancel);
-            dlg.setMessage(dlg.login + " " + dlg.password);
+             client = new DisicalCli( new String[0]);
+            server = client.getServer();
+            try {
+                user = server.login(dlg.login, dlg.password); /* relogin */
+            } catch (Exception e) {
+                dlg.setMessage("login failed");
+            }
+            // dlg.setMessage(dlg.login + " " + dlg.password);
+            if (user != null)
+                online = true;
+            try {
+                new SessionFrame(user.listAllDatesByTime()).show();
+            } catch ( Exception e)  {
+                new SessionFrame(new Date[0]).show();
+                e.printStackTrace(System.out);
+            }
             
             
             
@@ -218,7 +233,7 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
      */
     public static void main(String args[]) {
         new DisicalMainFrame().show();
-       // this.args = args;
+        // this.args = args;
     }
     
     public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
