@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by -->
-<!-- $Id: build.xml,v 1.5 2002/01/02 15:50:45 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.6 2002/01/04 17:58:12 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -100,7 +100,7 @@
 </target>
 
 <target name="clean_idl">
-  <delete dir="${dir.src}/${dir.ns}/corba/corba" />
+  <delete dir="${dir.src}/${dir.ns}/corba/disiorb" />
 </target>
 
 
@@ -119,22 +119,22 @@
 </target>
 
 <target name="clean_corba">
-  <delete dir="{dir.out}/${dir.ns}/corba" />
+  <delete dir="${dir.out}/${dir.ns}/corba" />
 </target>
 
 
 
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,idl,corba,db">
+<target name="jar" depends="init,corba,db">
   <jar 
-    jarfile="${dir.lib}/disical-${disical.version}.jar"
+    jarfile="${dir.dist}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
   />
 </target>
 
 <target name="clean_jar" depends="init">
-  <delete file="${dir.lib}/disical-${disical.version}.jar" />
+  <delete file="${dir.dist}/disical-${disical.version}.jar" />
 </target>
 
 
