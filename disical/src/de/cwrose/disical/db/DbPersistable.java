@@ -8,13 +8,17 @@ import de.cwrose.disical.util.HackHelper;
 import java.lang.reflect.InvocationTargetException;
 import org.exolab.castor.jdo.DataObjectAccessException;
 
-public class DbPersistable {
+public class DbPersistable 
+implements org.exolab.castor.jdo.TimeStampable {
 	/* Flag that stores whether a DbPersistable must be created 
 	   or updated when persisted to the db */
 	private boolean create_persistable = true;
 
 	/* Maps CORBA.Object -> bubble */
 	private static Hashtable reverseMapping;
+
+	private long jdoTimeStamp = 
+		org.exolab.castor.jdo.TimeStampable.NO_TIMESTAMP;
 
 	static
 	{
@@ -134,6 +138,7 @@ public class DbPersistable {
 	{
 		if (isNew ())
 			{
+				this.jdoTimeStamp = System.currentTimeMillis ();
 				this.create (db);
 				this.growOld ();
 			}
@@ -177,4 +182,12 @@ public class DbPersistable {
 	}
 
 
+	public long jdoGetTimeStamp () { 
+		return this.jdoTimeStamp; 
+	}
+
+	public void jdoSetTimeStamp (long jdoTimeStamp) {
+		this.jdoTimeStamp = jdoTimeStamp;
+	}
+	
 }
