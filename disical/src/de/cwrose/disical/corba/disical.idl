@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.21 2002/01/31 03:08:04 deafman Exp $
+// $Id: disical.idl,v 1.22 2002/01/31 03:49:26 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 module de {
   module cwrose {
@@ -79,6 +79,9 @@ module de {
 			seqDate listDatesBySubject(in string subject)
 			  raises (jdoPersistenceEx);
 			
+			seqUser listAllUsers()
+			  raises (jdoPersistenceEx);
+
 			seqInvitation getInvitations()
 			  raises (jdoPersistenceEx);
 
@@ -134,6 +137,8 @@ module de {
 		  /* Interface Invitation */
 		  interface Invitation {
 			
+			void invite (in User usr);
+
 			void setStartTime(in long long Time);
 			void setEndTime(in long long Time);
 			void setLocation(in string location);

@@ -46,6 +46,7 @@ public final class DbInvitation extends DbPersistable
 		throws PersistenceException
 	{
 		DbInvitation di = new DbInvitation ();
+		
 		di.setSubject (subject);
 		di.setLocation (location);
 		di.setStartTime (start);
@@ -53,9 +54,9 @@ public final class DbInvitation extends DbPersistable
 		di.setDescription (descr);
 		di.setUser ((DbUser)lookupBubble(u));
 
-		Invitation i = di.getInvitation ();
 		System.out.println ("STARTTIME:"+start);
 		System.out.println ("STOPTTIME:"+stop);
+		Invitation i = di.getInvitation ();
 		i.persist ();
 		di.growOld();
 		return i;
@@ -133,7 +134,7 @@ public final class DbInvitation extends DbPersistable
 
 	public void setStartTime (java.sql.Timestamp t)
 	{
-		skel.setStartTime (t.getNanos ());
+		skel.setStartTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getStartTime ()
@@ -147,7 +148,7 @@ public final class DbInvitation extends DbPersistable
 
 	public void setEndTime (java.sql.Timestamp t)
 	{
-		skel.setEndTime (t.getNanos ());
+		skel.setEndTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getEndTime ()

@@ -62,6 +62,7 @@ public abstract class InvitationPOA
             "getLocation",
             "getStartTime",
             "getSubject",
+            "invite",
             "persist",
             "setDescription",
             "setEndTime",
@@ -122,25 +123,28 @@ public abstract class InvitationPOA
         case 9: // getSubject
             return _OB_op_getSubject(in, handler);
 
-        case 10: // persist
+        case 10: // invite
+            return _OB_op_invite(in, handler);
+
+        case 11: // persist
             return _OB_op_persist(in, handler);
 
-        case 11: // setDescription
+        case 12: // setDescription
             return _OB_op_setDescription(in, handler);
 
-        case 12: // setEndTime
+        case 13: // setEndTime
             return _OB_op_setEndTime(in, handler);
 
-        case 13: // setFromUser
+        case 14: // setFromUser
             return _OB_op_setFromUser(in, handler);
 
-        case 14: // setLocation
+        case 15: // setLocation
             return _OB_op_setLocation(in, handler);
 
-        case 15: // setStartTime
+        case 16: // setStartTime
             return _OB_op_setStartTime(in, handler);
 
-        case 16: // setSubject
+        case 17: // setSubject
             return _OB_op_setSubject(in, handler);
         }
 
@@ -276,6 +280,17 @@ public abstract class InvitationPOA
         String _ob_r = getSubject();
         out = handler.createReply();
         out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_invite(org.omg.CORBA.portable.InputStream in,
+                  org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        User _ob_a0 = UserHelper.read(in);
+        invite(_ob_a0);
+        out = handler.createReply();
         return out;
     }
 

@@ -60,6 +60,7 @@ public abstract class UserPOA
             "getInvitations",
             "getLogin",
             "getName",
+            "listAllUsers",
             "listDatesByLocation",
             "listDatesBySubject",
             "listDatesByTime",
@@ -115,28 +116,31 @@ public abstract class UserPOA
         case 7: // getName
             return _OB_op_getName(in, handler);
 
-        case 8: // listDatesByLocation
+        case 8: // listAllUsers
+            return _OB_op_listAllUsers(in, handler);
+
+        case 9: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 9: // listDatesBySubject
+        case 10: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 10: // listDatesByTime
+        case 11: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 11: // persist
+        case 12: // persist
             return _OB_op_persist(in, handler);
 
-        case 12: // setEmail
+        case 13: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 13: // setLogin
+        case 14: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 14: // setName
+        case 15: // setName
             return _OB_op_setName(in, handler);
 
-        case 15: // setPasswd
+        case 16: // setPasswd
             return _OB_op_setPasswd(in, handler);
         }
 
@@ -268,6 +272,25 @@ public abstract class UserPOA
         String _ob_r = getName();
         out = handler.createReply();
         out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_listAllUsers(org.omg.CORBA.portable.InputStream in,
+                        org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        try
+        {
+            User[] _ob_r = listAllUsers();
+            out = handler.createReply();
+            seqUserHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

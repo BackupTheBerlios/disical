@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.19 2002/01/31 03:08:04 deafman Exp $
+// $Id: DisicalUser.java,v 1.20 2002/01/31 03:49:26 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -201,6 +201,18 @@ public class DisicalUser extends UserPOA {
 		return dateList;
 	}
 
+	public User[] listAllUsers()
+		throws jdoPersistenceEx
+	{
+		try {
+			return DbUser.listAllUsers ();
+		}
+		catch (PersistenceException e) {
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+			
+	}
+
 	public Date[] listDatesByLocation(String location)
 		throws jdoPersistenceEx {
 
@@ -269,8 +281,8 @@ public class DisicalUser extends UserPOA {
 		try {
 			invitation = 
 				DbInvitation.createInvitation(getBubble().getUser(),
-											  new Timestamp(start),
-											  new Timestamp(end),
+											  new java.sql.Timestamp(start),
+											  new java.sql.Timestamp(end),
 											  subject, location, description);
 		}
 		catch (PersistenceException e) {

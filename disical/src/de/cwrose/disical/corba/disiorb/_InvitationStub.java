@@ -34,6 +34,60 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     final public static java.lang.Class _ob_opsClass = InvitationOperations.class;
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/invite:1.0
+    //
+    public void
+    invite(User _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("invite", true);
+                    UserHelper.write(out, _ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("invite", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.invite(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStartTime:1.0
     //
     public void

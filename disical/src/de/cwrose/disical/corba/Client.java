@@ -29,7 +29,7 @@ public class Client {
 		System.out.println (myDate.getLogin () == newUser);
 		//newDate = myDate.getDate
 
-		Invitation invitation = newUser.createInvitation(fstTime+1000, fstTime+61000, "zuhause", "schlafen", "ich will...");
+		Invitation invitation = newUser.createInvitation(fstTime, fstTime, "zuhause", "schlafen", "ich will...");
 		}
 		catch (wrongPwEx e) {
 			System.out.println(e.toString());

@@ -138,6 +138,15 @@ public interface UserOperations
         throws jdoPersistenceEx;
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/User/listAllUsers:1.0
+    //
+    /***/
+
+    User[]
+    listAllUsers()
+        throws jdoPersistenceEx;
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/User/getInvitations:1.0
     //
     /***/

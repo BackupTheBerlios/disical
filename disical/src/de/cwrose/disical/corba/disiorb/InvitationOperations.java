@@ -22,6 +22,14 @@ package de.cwrose.disical.corba.disiorb;
 public interface InvitationOperations
 {
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/invite:1.0
+    //
+    /***/
+
+    void
+    invite(User usr);
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStartTime:1.0
     //
     /***/

@@ -53,12 +53,12 @@
 	    <sql name="stoptime" type="timestamp" />
     </field>
 
-  	<field name="location" type="string">
-  		<sql name="location" type="varchar"/>
-  	</field>
-
   	<field name="subject" type="string">
   		<sql name="subject" type="varchar"/>
+  	</field>
+
+  	<field name="location" type="string">
+  		<sql name="location" type="varchar"/>
   	</field>
 
   	<field name="description" type="string">
@@ -95,12 +95,12 @@
 	    <sql name="stoptime" type="timestamp" />
     </field>
 
-  	<field name="location" type="string">
-  		<sql name="location" type="varchar"/>
-  	</field>
-
   	<field name="subject" type="string">
   		<sql name="subject" type="varchar"/>
+  	</field>
+
+  	<field name="location" type="string">
+  		<sql name="location" type="varchar"/>
   	</field>
 
   	<field name="description" type="string">
