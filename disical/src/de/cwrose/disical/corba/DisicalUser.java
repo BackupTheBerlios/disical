@@ -1,8 +1,9 @@
+// $Id: DisicalUser.java,v 1.16 2002/01/29 22:57:12 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
- * DisicalUser ist the Implementation of the Object the User 
- * has after logging in into the Server
+ * CORBA Implemetation for the User-Object of the Calendar
+ * 
  * (set|get)Login (String)
  * (set|get)Name (String);
  * (set|get)Email (String);
@@ -11,7 +12,7 @@ package de.cwrose.disical.corba;
  * DeleteUser();
  * disiorb.Date createDate 
  * 		(long start, long end, String location, String subject);
- * disiorb.Date selectDate(int index) ???
+ * disiorb.Date selectDate(int index) ??? (obsolete)
  * disiorb.Date[] selectDatesByTime(long start, long end);
  * disiorb.Date[] selectDatesByLocation(String location);
  * disiorb.Date[] selectDatesBySubject(String subject);
@@ -19,7 +20,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -101,7 +102,7 @@ public class DisicalUser extends UserPOA {
 		throws org.exolab.castor.jdo.PersistenceException
 	{
 
-		System.out.println ("PERSIST: "+getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getUser ()))+"/"+(Object)bubble);
+		//		System.out.println ("PERSIST: "+getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getUser ()))+"/"+(Object)bubble);
 		bubble.persist (db);
 	}
 
@@ -139,8 +140,6 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
-		
-		// dbDeleteUser(newUserImpl);
 	}
 
 	public Date createDate
@@ -158,7 +157,7 @@ public class DisicalUser extends UserPOA {
 	}
 
 	public Date selectDate(int index) 
-	throws jdoPersistenceEx {
+		throws jdoPersistenceEx {
 
 		Date selDate = null;
 
@@ -177,98 +176,81 @@ public class DisicalUser extends UserPOA {
 		return selDate;
 	}
 
-	public Date[] listDatesByTime(long start, long end) {
+	public Date[] listDatesByTime(long start, long end)
+		throws jdoPersistenceEx {
 
-		Date[] dateList = new Date[dateLimit];
-/* will the db give me an array or the dates one by one ? */
+		Date[] dateList = null;
+
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
 			//dateList = getBubble().selectDate(new Timestamp(start), new Timestamp(end));
-/*
-		for ( int i = 0; i < dateLimit; i++) {
-			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
-		}
-*/
+			db.commit();
 		}
 		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
+		}
+		return dateList;
+	}
+
+	public Date[] listDatesByLocation(String location)
+		throws jdoPersistenceEx {
+
+		Date[] dateList = null;
+		
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//dateList = getBubble().selectDate(new Timestamp(start), new Timestamp(end));
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
+		}
+		return dateList;
+		
+	}
+
+	public Date[] listDatesBySubject(String subject)
+		throws jdoPersistenceEx {
 			
+			Date[] dateList = null;
+
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//dateList = getBubble().selectDate(new Timestamp(start), new Timestamp(end));
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
 		}
 		return dateList;
 	}
 
-	public Date[] listDatesByLocation(String location) {
-
-		DisicalDate selDateImpl = new DisicalDate();
-		DisicalDate[] listDateImpl;
-
-		selDateImpl.setLocation(location);
-		listDateImpl = null; //dbGetDatesByLocation(selDateImpl);
-
-		dateLimit = listDateImpl.length;
-		Date[] dateList = new Date[dateLimit];
-
-		for ( int i = 0; i < dateLimit; i++) {
-			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
-		}
-
-		return dateList;
-	}
-
-	public Date[] listDatesBySubject(String subject) {
-
-		DisicalDate selDateImpl = new DisicalDate();
-		DisicalDate[] listDateImpl;
-
-		selDateImpl.setSubject(subject);
-		listDateImpl = null; //dbGetDatesBySubject(selDateImpl);
-
-		dateLimit = listDateImpl.length;
-		Date[] dateList = new Date[dateLimit];
-
-		for ( int i = 0; i < dateLimit; i++) {
-			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
-		}
-
-		return dateList;
-	}
-
-	public Invitation[] getInvitations() {
-
-		DisicalDate selDateImpl = new DisicalDate();
-		// selDateImpl.setLogin(login);
-
-		DisicalInvitation[] listInvitationImpl = 
-				new DisicalInvitation[inviteLimit];
-
-		Invitation[] listInvitation = new Invitation[inviteLimit];
-
-		DisicalInvStatus invStatus = new DisicalInvStatus();
-		DisicalUser fromUserImpl = new DisicalUser();
-		DisicalUser[] toUserImpl = new DisicalUser[inviteLimit];
-		User[] toUser = new User[inviteLimit];
-		DisicalDate invDateImpl = new DisicalDate();
-
-		for (int i = 0; i < inviteLimit; i++) {
-			invStatus = null; //dbGetInvStatus();
-			listInvitation[i].setStatus(invStatus.getStatus());
-
-			fromUserImpl = null; //dbGetInvFromUser();
-			User fromUser = fromUserImpl._this(DisicalSrv.orb);
-			listInvitation[i].setFromUser(fromUser);
+	public Invitation[] getInvitations()
+		throws jdoPersistenceEx {
 			
-			toUserImpl = null; //dbGetInvToUser();
-			for (int j = 0; j < inviteLimit; j++) {
-				toUser[j] = toUserImpl[j]._this(DisicalSrv.orb);
-			}
-			listInvitation[i].setToUser(toUser);
-
-			invDateImpl = null; //dbGetInvDate();
-			Date invDate = invDateImpl._this(DisicalSrv.orb);
-			listInvitation[i].setInvitationDate(invDate);
+		Invitation[] invitationList = null;
+		
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//dateList = getBubble().selectDate(new Timestamp(start), new Timestamp(end));
+			db.commit();
 		}
-
-		return listInvitation;
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
+		}
+		return invitationList;
 	}
 
 	public void destroy() {

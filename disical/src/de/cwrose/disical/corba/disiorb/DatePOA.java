@@ -148,12 +148,20 @@ public abstract class DatePOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        long _ob_a0 = in.read_longlong();
-        long _ob_a1 = in.read_longlong();
-        String _ob_a2 = in.read_string();
-        String _ob_a3 = in.read_string();
-        changeDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
-        out = handler.createReply();
+        try
+        {
+            long _ob_a0 = in.read_longlong();
+            long _ob_a1 = in.read_longlong();
+            String _ob_a2 = in.read_string();
+            String _ob_a3 = in.read_string();
+            changeDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -162,8 +170,16 @@ public abstract class DatePOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        deleteDate();
-        out = handler.createReply();
+        try
+        {
+            deleteDate();
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.13 2002/01/29 14:16:42 deafman Exp $
+// $Id: disical.idl,v 1.14 2002/01/29 22:57:12 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 module de {
 	module cwrose {
@@ -111,13 +111,15 @@ module de {
 
 		boolean persist();
 
-		void deleteDate();
+		void deleteDate()
+		  raises (jdoPersistenceEx);
 
 		void changeDate(in long long start,
-				in long long end,
-				in string location,
-				in string subject);
-
+						in long long end,
+						in string location,
+						in string subject)
+		  raises (jdoPersistenceEx);
+	      
 		void destroy();
 	};
 

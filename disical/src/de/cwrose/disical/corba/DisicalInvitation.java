@@ -1,15 +1,27 @@
-// $Id: DisicalInvitation.java,v 1.5 2002/01/29 14:16:42 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.6 2002/01/29 22:57:12 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
- * This class manages the invitations (comes soon, hopefully)
+ * CORBA Implementation for the Invitation-Object of the Calendar
  * 
+ * (set|get)FromUser (disiorb.User)
+ * (set|get)ToUser (disiorb.User[])
+ * (set|get)InvitationDate (disical.Date)
+ * boolean persist();
+ * void setInvitation(disical.User, disical.User[], disical.Date, short);
+ * void deleteInvitation();
+ * void destroy();
+ *
  * @author deafman
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
+//import de.cwrose.disical.db.DbInvitation;
+import org.exolab.castor.jdo.Database;
+import de.cwrose.disical.db.DbManager;
+import org.exolab.castor.jdo.PersistenceException;
 
 public class DisicalInvitation extends InvitationPOA {
 
@@ -22,7 +34,43 @@ public class DisicalInvitation extends InvitationPOA {
 	private Date date;
 	private short status;
 
-	private int MAXUSER = 100;
+	private DbInvitation bubble = null;
+
+	public void setBubble( DbInvitation bubble) {
+		if (this.bubble != null)
+			throw new IllegalStateException ("Don't burst my bubble, fool!");
+		this.bubble = bubble;
+	}
+
+	public DbDate getBubble () {
+		return this.bubble;
+	}
+
+
+	public void do_persist(Database db) 
+		throws org.exolab.castor.jdo.PersistenceException
+	{
+		//		System.out.println ("PERSIST: "+getLogin().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
+		bubble.persist (db);
+	}
+
+	public boolean persist ()
+	{
+		try 
+		{ 
+			Database db = DbManager.getConnection ();
+			db.begin ();
+			this.do_persist (db);
+			db.commit ();
+		}
+		catch (org.exolab.castor.jdo.PersistenceException e)
+		{
+			System.err.println (e.getMessage ());
+			e.printStackTrace (System.err);
+			return false;
+		}
+		return true;
+	}
 
 	public int getIndex() {
 		return _index;
@@ -64,58 +112,43 @@ public class DisicalInvitation extends InvitationPOA {
 		status = newStatus;
 	}
 
-	public void setInvitation(User[] toUser, Date invitationDate) {
-
-		touser = toUser;
-		date = invitationDate;
-
+	public void setInvitation(User[] toUser, Date invitationDate)
+		throws jdoPersistenceEx {
+		
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//selDate = getBubble().selectDate(index);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 	}
 
-	public void delete() {
-		DisicalInvitation invitationImpl = new DisicalInvitation();
+	public void deleteInvitation()
+{ 		throws jdoPersistenceEx {
 
-		invitationImpl.setFromUser(fromuser);
-		invitationImpl.setToUser(touser);
-		invitationImpl.setInvitationDate(date);
-		invitationImpl.setStatus(status);
-
-		//dbDeleteInvitation(_index);
-		System.out.println("comes later");
-	}
-
-	public boolean persist() {
-	
-		DisicalUser invFromUserImpl = new DisicalUser();
-		invFromUserImpl.setLogin(fromuser.getLogin());
-
-		DisicalUser[] invToUserImpl = new DisicalUser[MAXUSER];
-		for (int i = 0; i < MAXUSER; i++) {
-			invToUserImpl[i].setLogin(touser[i].getLogin());
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//selDate = getBubble().selectDate(index);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
 		}
 
-		DisicalDate invitationDateImpl = new DisicalDate();
-		invitationDateImpl.setStartTime(date.getStartTime());
-		invitationDateImpl.setEndTime(date.getEndTime());
-		invitationDateImpl.setLocation(date.getLocation());
-		invitationDateImpl.setSubject(date.getSubject());
-
-		DisicalInvStatus invitationStateImpl = new DisicalInvStatus();
-		invitationStateImpl.setStatus(status);
-/*
-		dbPersistInvFromUser(invFromUserImpl);
-		dbPersistInvToUser(invToUserImpl);
-		dbPersistInvDateImpl(invitationDateImpl);
-		dbPersistInvStatusImpl(invitationStateImpl);
-*/
-		boolean success = true; //dbPersistInvitation(invitationImpl);
-		
-		return success;
 	}
 
 	public void destroy() {
 		POA poa = _default_POA();
 		try {
-			byte[] id = poa.servant_to_id(this);
+			byte[] id = poa.servant_to_id(this); 
 			poa.deactivate_object(id);
 		}
 		catch (org.omg.CORBA.UserException ex) {}

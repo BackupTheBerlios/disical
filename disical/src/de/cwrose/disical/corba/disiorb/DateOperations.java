@@ -131,7 +131,8 @@ public interface DateOperations
     /***/
 
     void
-    deleteDate();
+    deleteDate()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/changeDate:1.0
@@ -142,7 +143,8 @@ public interface DateOperations
     changeDate(long start,
                long end,
                String location,
-               String subject);
+               String subject)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/destroy:1.0

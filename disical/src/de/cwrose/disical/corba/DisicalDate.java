@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.13 2002/01/29 14:16:42 deafman Exp $
+// $Id: DisicalDate.java,v 1.14 2002/01/29 22:57:12 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -16,7 +16,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -25,6 +25,7 @@ import org.omg.PortableServer.POA;
 import de.cwrose.disical.db.DbDate;
 import org.exolab.castor.jdo.Database;
 import de.cwrose.disical.db.DbManager;
+import org.exolab.castor.jdo.PersistenceException;
 
 public class DisicalDate extends DatePOA {
 
@@ -55,7 +56,7 @@ public class DisicalDate extends DatePOA {
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		System.out.println ("PERSIST: "+getLogin().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
+		//System.out.println ("PERSIST: "+getLogin().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
 		bubble.persist (db);
 	}
 
@@ -125,25 +126,38 @@ public class DisicalDate extends DatePOA {
 		return	_index;
 	}
 
-	public void deleteDate() {
-		DisicalDate dateImpl = new DisicalDate();
+	public void deleteDate()
+		throws jdoPersistenceEx {
 
-		dateImpl.setStartTime(startTime);
-		dateImpl.setEndTime(endTime);
-		dateImpl.setLocation(location);
-		dateImpl.setSubject(subject);
-
-		Date date = dateImpl._this(DisicalSrv.orb);
-		//dbDeleteDate(date);
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//selDate = getBubble().selectDate(index);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 
 	}
 
 	public void changeDate(long start, long end, 
-					String location, String subject) {
-		startTime = start;
-		endTime = end;
-		this.location = location;
-		this.subject = subject;
+						   String location, String subject) 
+		throws jdoPersistenceEx {
+		
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//selDate = getBubble().selectDate(index);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 	}
 
 	public void destroy() {
