@@ -8,7 +8,7 @@ create table auth (
 	primary key ( login ),
 	unique ( email )
 );
-create unique index auth_email_idx on auth (email);
+create unique index auth_email_idx on auth ( email );
 
 create table appointments (
 	id			serial,
@@ -23,8 +23,8 @@ create table appointments (
 	primary key ( id )
 );
 create index appointments_login_idx 
-	on appointments (login);
+	on appointments ( login );
 create index appointments_start_idx 
-	on appointments (startDate, startTime);
+	on appointments ( startDate, startTime );
 create index appointments_subject_idx 
-	on appointments (subject);
+	on appointments ( subject );
