@@ -1,4 +1,4 @@
-//package de.cwrose.disical.corba;
+package de.cwrose.disical.corba;
 
 import java.io.*;
 import java.util.Properties;
@@ -33,10 +33,13 @@ public class CSetup {
 		orb = ORB.init(args, props);
     }
 
+	public ORB getORB() {
+		return this.orb;
+	}
+
     public void orbRun() {
 
 		orb.run();
-
     }
     
     public void initPOA() {

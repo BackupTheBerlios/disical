@@ -1,6 +1,10 @@
+package de.cwrose.disical.corba;
+
+import de.cwrose.disical.corba.disiorb.*;
+import de.cwrose.disical.corba.disiorb.UserPackage.*;
 import org.omg.CORBA.*;
 
-class DisicalUser extends disiorb.UserPOA {
+class DisicalUser extends UserPOA {
 
 	public final static String Id = "User";
 	public final static String Kind = "";
@@ -10,7 +14,7 @@ class DisicalUser extends disiorb.UserPOA {
 	private static String Email;
 	private static String Passwd;
 
-	public String Login() { return Login; }
+	public String login() { return Login; }
 	public String Name() { return Name; }
 	public String Email() { return Email; }
 	public String Passwd() { return Passwd; }
@@ -20,29 +24,30 @@ class DisicalUser extends disiorb.UserPOA {
 		Passwd = newPW;
 	}
 
-	public void getUserInfo(org.omg.CORBA.StringHolder name,
-							org.omg.CORBA.StringHolder pwd,
-							org.omg.CORBA.StringHolder email) {
+	public sUser getUserInfo() {
 
 		//name = dbGetName();
 		//pwd = dbGetPWD();
 		//email = dbGetEmail();
 
-		Name = name;
-		Passwd = pwd;
-		Email = email;
+		sUser user = new sUser();
 
+		Name = user.name;
+		Passwd = user.pwd;
+		Email = user.email;
+
+		return user;
 	}
 
-	public void setUserInfo(String name, String pwd, String email);
+	public void setUserInfo(sUser user) {
 
 		//name = dbSetName();
 		//pwd = dbSetPWD();
 		//email = dbSetEmail();
 
-		Name = name;
-		Passwd = pwd;
-		Email = email;
+		Name = user.name;
+		Passwd = user.pwd;
+		Email = user.email;
 
 	}
 
@@ -54,8 +59,9 @@ class DisicalUser extends disiorb.UserPOA {
 
 	public Date createDate(String start, String end, String location, String subject) {
 
-		Date newDate = new Date();
-
+		DisicalDate newDateImpl = new DisicalDate();
+		Date newDate = newDateImpl._this(DisicalSrv.orb);
+		
 		newDate.setStartTime(start);
 		newDate.setEndTime(end);
 		newDate.setLocation(location);
@@ -69,16 +75,22 @@ class DisicalUser extends disiorb.UserPOA {
 
 	public Date selectDate(short index) {
 
+		DisicalDate selDateImpl = new DisicalDate();
+		Date selDate = selDateImpl._this(DisicalSrv.orb);
+		
 		//return dbGetDate(index);
-		return null;
+		return selDate;
 
 	}
 
 	public Date findDate(String start, String end, String location,
              				String subject, short index) {
 
+		DisicalDate findDateImpl = new DisicalDate();
+		Date findDate = findDateImpl._this(DisicalSrv.orb);
+		
 		//return dbFindDate(start, end, location, subject, index);
-		return null;
+		return findDate;
 
 	}
 

@@ -4,11 +4,14 @@
  * Betroffene Module: corba
  * Verzapft von: deafman (Carsten Rose)
  */
-
-module disiorb {
+module de {
+	module cwrose {
+		module disical {
+			module corba {
+				module disiorb {
 
 /* Predefinitions */
-	interface User;
+ 	interface User;
 	interface Date;
 
 /* ServerInterface */
@@ -29,14 +32,18 @@ module disiorb {
 		readonly attribute string Email;
 		readonly attribute string Passwd;
 
+		struct sUser {
+			string name;
+			string pwd;
+			string email;
+		};
+
 		void changePW( in string newPW );
 
-		void getUserInfo(out string name, 
-				out string pwd, 
-				out string email);
-		void setUserInfo(in string name, 
-				in string pwd, 
-				in string email);
+		sUser getUserInfo();
+
+		void setUserInfo(in sUser user);
+ 
 		void deleteUser();
 
 /* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates...
@@ -89,6 +96,10 @@ module disiorb {
 				in string end,
 				in string location,
 				in string subject);
+	};
+				};
+			};
+		};
 	};
 };
 

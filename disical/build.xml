@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.9 2002/01/06 13:15:58 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.10 2002/01/10 21:11:12 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -117,8 +117,8 @@
 
 <!-- Make the basic CORBA-Stuff -->
 <target name="idl" depends="init,clean_jar">
-  <exec dir="${dir.src}/${dir.ns}/corba" executable="jidl">
-      <arg line="disical.idl" />
+  <exec dir="${dir.src}" executable="jidl">
+      <arg line="${dir.ns}/corba/disical.idl" />
   </exec>
 </target>
 
@@ -130,13 +130,14 @@
 
 <!-- Make CORBA related Java-Stuff -->
 <target name="corba" depends="init,clean_jar,idl">
-  <javac srcdir="${dir.src}" destdir="${dir.out}/${dir.ns}/corba"
+  <javac srcdir="${dir.src}" destdir="${dir.out}"
          debug="${build.debug}" optimize="${build.optimize}">
         <classpath id="corba.classpath">
+		  <pathelement path="${dir.out}" />
           <pathelement path="${java.class.path}" />
           <pathelement location="${dir.lib}/${mod.OB}" />
         </classpath>
-     <include name="${dir.ns}/corba/**/*.java" />
+     <include name="${dir.ns}/corba/DisicalSrv.java" />
   </javac>
 </target>
 

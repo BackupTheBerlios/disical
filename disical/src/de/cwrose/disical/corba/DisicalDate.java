@@ -1,6 +1,10 @@
-import org.omg.CORBA.*;
+package de.cwrose.disical.corba;
 
-class DisicalDate extends disiorb.DatePOA {
+import de.cwrose.disical.corba.disiorb.*;
+import org.omg.CORBA.*;
+import org.omg.PortableServer.POA;
+
+class DisicalDate extends DatePOA {
 
 	public final static String Id = "Date";
 	public final static String Kind = "";
@@ -12,8 +16,16 @@ class DisicalDate extends disiorb.DatePOA {
 	private static short _index;
 
 	public void deleteDate(){
+
 		//dbDeleteDate(_index);
-		//delete;
+
+		POA poa = _default_POA();
+		try {
+			byte[] id = poa.servant_to_id(this);
+			poa.deactivate_object(id);
+		}
+		catch (org.omg.CORBA.UserException ex) {}	
+		
 	}
 
 	public void setStartTime(String Time) {
