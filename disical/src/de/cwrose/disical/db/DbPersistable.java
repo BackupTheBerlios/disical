@@ -2,6 +2,8 @@ package de.cwrose.disical.db;
 
 import org.exolab.castor.jdo.*;
 import java.util.Hashtable;
+import java.util.Vector;
+import java.util.Enumeration;
 import de.cwrose.disical.util.HackHelper;
 
 public class DbPersistable {
@@ -93,4 +95,5 @@ public class DbPersistable {
 			throw new org.exolab.castor.jdo.PersistenceException
 				("Can't delete object that is not persistent !");
 	}
+
 }

@@ -7,6 +7,8 @@ import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
 import java.sql.Timestamp;
+import java.util.Enumeration;
+import java.util.Vector;
 
 public final class DbDate extends DbPersistable
 {
@@ -141,5 +143,23 @@ public final class DbDate extends DbPersistable
 	public java.sql.Timestamp getEndTime ()
 	{
 		return new java.sql.Timestamp (skel.getEndTime ());
+	}
+
+
+	protected final static Date [] enum2array (Enumeration enum)
+	{
+		Vector v = new Vector ();
+
+		if (!enum.hasMoreElements ())
+				return null;
+
+		while (enum.hasMoreElements ())
+			{
+				DbDate o = (DbDate)enum.nextElement ();
+				o.growOld ();
+				v.addElement (o.getDate ());
+			}
+
+		return (Date [])v.toArray ();
 	}
 }

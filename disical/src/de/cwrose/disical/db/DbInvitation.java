@@ -12,6 +12,10 @@ import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
 import java.sql.Timestamp;
 import java.util.Vector;
+import java.util.Enumeration;
+import java.util.Vector;
+import java.util.Enumeration;
+import java.util.Vector;
 
 public final class DbInvitation extends DbPersistable
 {
@@ -165,5 +169,27 @@ public final class DbInvitation extends DbPersistable
 	public void addToUser (DbInvited inv)
 	{
 		toUsers.addElement (inv);
+	}
+
+	public Invited[] getAllInvited ()
+	{
+		return (Invited [])getToUsers().toArray();
+	}
+
+	protected final static Invitation [] enum2array (Enumeration enum)
+	{
+		Vector v = new Vector ();
+
+		if (!enum.hasMoreElements ())
+				return null;
+
+		while (enum.hasMoreElements ())
+			{
+				DbInvitation o = (DbInvitation)enum.nextElement ();
+				o.growOld ();
+				v.addElement (o.getInvitation ());
+			}
+
+		return (Invitation [])v.toArray ();
 	}
 }

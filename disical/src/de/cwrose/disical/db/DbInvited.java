@@ -8,6 +8,8 @@ import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.DisicalInvited;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 
 public final class DbInvited extends DbPersistable
@@ -117,5 +119,22 @@ public final class DbInvited extends DbPersistable
 	public void setNotify (boolean b)
 	{
 		stub.setNotify (b);
+	}
+
+	protected final static Invited [] enum2array (Enumeration enum)
+	{
+		Vector v = new Vector ();
+
+		if (!enum.hasMoreElements ())
+				return null;
+
+		while (enum.hasMoreElements ())
+			{
+				DbInvited o = (DbInvited)enum.nextElement ();
+				o.growOld ();
+				v.addElement (o.getInvited ());
+			}
+
+		return (Invited [])v.toArray ();
 	}
 }
