@@ -49,7 +49,7 @@ create table invited (
     login       varchar ( 16 ) not null references auth ( login ),
 	date        integer default null null references appointments ( id ),
 	state       int2 default 0 check (state >= 0 and state <= 3),
-	notify      int2 default 0 check (default == 0 or default == 1),
+	notify      int2 default 0 check (notify <=1 and notify >= 0),
 
 	primary key ( id )
 );

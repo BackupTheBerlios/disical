@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.13 2002/01/31 04:46:23 stepn Exp $
+// $Id: DisicalInvitation.java,v 1.14 2002/02/05 15:06:53 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -81,12 +81,9 @@ public class DisicalInvitation extends InvitationPOA {
 		throws jdoPersistenceEx
 	{
 		try	{
+			System.out.println ("D-U:"+(Object)u+" "+u.getLogin());
 			DbInvitation inv = getBubble();
-			DbInvited di = inv.createToUser ();
-			Invited i = di.getInvited ();
-			di.setInvitation (bubble);
-			inv.addToUser (di);
-			i.persist ();
+			DbInvited.createInvited (inv.getInvitation(),u);
 		}
 		catch (PersistenceException e) {
 			throw new jdoPersistenceEx(e.getMessage());
@@ -102,19 +99,23 @@ public class DisicalInvitation extends InvitationPOA {
 			invitedList = getBubble().getAllInvited();
 			
 		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 		catch (IllegalStateException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
 			
-			return invitedList;
+		return invitedList;
 	}
 	
 	public Invited[] getAllNotifiedInv()
 		throws jdoPersistenceEx {
 		
-		Invited[] invitedList = null;
 		
 		try {
 			return getBubble().getAllNotifiedInv ();
@@ -125,7 +126,6 @@ public class DisicalInvitation extends InvitationPOA {
 			throw new jdoPersistenceEx(e.getMessage());
 		}
 			
-		return invitedList;
 	}
 
 	public void delete()

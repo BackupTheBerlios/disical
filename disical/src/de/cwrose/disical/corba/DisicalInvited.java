@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.7 2002/01/31 04:46:23 stepn Exp $
+// $Id: DisicalInvited.java,v 1.8 2002/02/05 15:06:53 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -21,6 +21,8 @@ import org.omg.PortableServer.POA;
 
 import org.exolab.castor.jdo.Database;
 import org.exolab.castor.jdo.PersistenceException;
+
+import java.sql.Timestamp;
 
 public class DisicalInvited extends InvitedPOA {
 
@@ -94,14 +96,15 @@ public class DisicalInvited extends InvitedPOA {
 		throws jdoPersistenceEx 
 	{
 		try	{
-		    DbInvitedbubble = getBubble();				
+		    DbInvited bubble = getBubble();				
 			if (bubble.getState () != 2) {
-				bubble.setState (2);
+				bubble.setState ((short)2);
 				Invitation i = bubble.getInvitation().getInvitation();
-				bubble.setDate 
+				this.setDate 
 					(DbDate.createDate 
 					 (this.getUser(), 
-					  i.getStartTime (), i.geEndTime (), 
+					  new Timestamp(i.getStartTime ()),
+					  new Timestamp(i.getEndTime ()), 
 					  i.getSubject (), i.getLocation (), i.getDescription ()));
 				this.persist ();
 			}
@@ -114,10 +117,10 @@ public class DisicalInvited extends InvitedPOA {
 	public void reject()
 		throws jdoPersistenceEx {
 		try	{
-			DbInvited bubble = getBubble().setDate();
-			if (bubble.getState () != 2) {
-				bubble.setState (2);
-				bubble.getDate ().delete ();
+			DbInvited bubble = getBubble();
+			if (bubble.getState () != 3) {
+				bubble.setState ((short)3);
+				bubble.getDate ().getDate().deleteDate ();
 				bubble.setDate (null);
 				this.persist ();
 			}

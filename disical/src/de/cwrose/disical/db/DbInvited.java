@@ -46,12 +46,12 @@ public final class DbInvited extends DbPersistable
 		DbInvited bubble = new DbInvited ();
 		DisicalInvited inv = bubble.getDisicalInvited ();
 		inv.setInvitation (i);
+		System.out.println ("U-U:"+(Object)u+" "+u.getLogin());
 		inv.setUser (u);
 		
-		Invited ret = bubble.getInvited ();
-		ret.persist ();
-
-		return ret;
+		inv.persist ();
+		bubble.growOld();
+		return bubble.getInvited ();
     }
 
 	/* Property: User */
@@ -59,10 +59,11 @@ public final class DbInvited extends DbPersistable
 	public DbUser getUser () 
 	throws PersistenceException
     {
-		return (DbUser)lookupBubble(skel.getUser ());
+		return (DbUser)lookupBubble(stub.getUser ());
 	}
 
 	public void setUser (DbUser login) {
+		updateBubble (login.getUser (), login);
 		stub.setUser (login.getUser ());
 	}
 
@@ -77,6 +78,7 @@ public final class DbInvited extends DbPersistable
 	}
 
 	public void setInvitation (DbInvitation inv) {
+		updateBubble (inv.getInvitation (), inv);
 		stub.setInvitation (inv.getInvitation ());
 	}
 
@@ -87,10 +89,15 @@ public final class DbInvited extends DbPersistable
 	public DbDate getDate () 
 	throws PersistenceException
     {
-		return (DbDate)lookupBubble(skel.getDate ());
+		Date date = stub.getDate ();
+		if (date == null)
+			return (DbDate)lookupBubble(date);
+		else
+			return null;
 	}
 
 	public void setDate (DbDate date) {
+		updateBubble (date.getDate (), date);
 		stub.setDate (date.getDate ());
 	}
 

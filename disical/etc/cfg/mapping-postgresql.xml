@@ -107,10 +107,6 @@
   		<sql name="descr" type="varchar"/>
   	</field>
 
-	<field name="toUsers" type="de.cwrose.disical.db.DbInvited" 
-	       collection="vector" >
-		<sql many-key="invitation" />
-    </field>
   </class>
 
 

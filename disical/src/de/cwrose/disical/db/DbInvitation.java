@@ -157,27 +157,23 @@ public final class DbInvitation extends DbPersistable
 	}
 
 
-	/* Property: toUsers */
-
-	public DbInvited createToUser ()
-		throws PersistenceException
-	{
-		return new DbInvited ();
-	}
-
-	public Vector getToUsers ()
-	{
-		return this.toUsers;
-	}
-	
-	public void addToUser (DbInvited inv)
-	{
-		toUsers.addElement (inv);
-	}
-
 	public Invited[] getAllInvited ()
+		throws org.exolab.castor.jdo.PersistenceException
 	{
-		return (Invited [])getToUsers().toArray();
+		Database  db = DbManager.getConnection ();
+
+		// OQL 
+		OQLQuery oql = db.getOQLQuery 
+			("SELECT i FROM de.cwrose.disical.db.DbInvited i "+
+			 "WHERE i.login=$1 and i.invitation=$2");
+		oql.bind (this.getUser().getLogin());
+		oql.bind (this.getIndex ());
+
+		// Get Results
+		db.begin();
+		QueryResults res = oql.execute();
+		db.commit();
+		return (Invited [])DbInvited.enum2array(res);
 	}
 
 	public  Invited[] getAllNotifiedInv ()

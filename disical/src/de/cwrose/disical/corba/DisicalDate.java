@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.17 2002/01/31 04:46:23 stepn Exp $
+// $Id: DisicalDate.java,v 1.18 2002/02/05 15:06:53 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;

@@ -25,18 +25,28 @@ public class DbPersistable {
 	protected static void putBubble(org.omg.CORBA.Object o, DbPersistable p)
 	throws PersistenceException
     {
-		System.out.println ("DbPersistable.putBubble: "+o+"("+o.getClass().toString()+")"+"="+p);
+		//		System.out.println ("DbPersistable.putBubble: "+o+"("+o.getClass().toString()+")"+"="+p);
+		//HackHelper.printStackTrace (System.out, "PUT_BUBBLE");
 		if (reverseMapping.containsKey (o))
 			throw new PersistenceException 
 				("Attempt to overwrite bubble for CORBA object");
 		reverseMapping.put (o, p);
 	}
 
+	protected static void updateBubble(org.omg.CORBA.Object o, DbPersistable p)
+    {
+		//System.out.println ("DbPersistable.updBubble: "+o+"("+o.getClass().toString()+")"+"="+p);
+		//HackHelper.printStackTrace (System.out, "PUT_BUBBLE");
+		reverseMapping.put (o, p);
+		//HackHelper.printStackTrace (System.out, "UPDATE_BUBBLE");
+	}
+
 	protected static DbPersistable lookupBubble(org.omg.CORBA.Object o)
 	throws PersistenceException
 	{
 		DbPersistable p = null;
-		System.out.println ("DbPersistable.lookupBubble: "+o+"("+o.getClass().toString()+")");
+		//System.out.println ("DbPersistable.lookupBubble: "+o+"("+o.getClass().toString()+")");
+		//HackHelper.printStackTrace (System.out, "PUT_BUBBLE");
 		if (!reverseMapping.containsKey (o))
 		{
 			Exception e = new PersistenceException 
@@ -46,7 +56,7 @@ public class DbPersistable {
 		try
 		{
 			p = (DbPersistable)reverseMapping.get(o);
-		    System.out.println ("DbPersistable.retBubble: "+p);
+		    //System.out.println ("DbPersistable.retBubble: "+p);
 			return p;
 		}
 		catch (ClassCastException e)
@@ -97,7 +107,10 @@ public class DbPersistable {
 		throws org.exolab.castor.jdo.PersistenceException
 	{
 		if (isNew ())
-			this.create (db);
+			{
+				this.create (db);
+				this.growOld ();
+			}
 		else
 			this.update (db);
 	}
