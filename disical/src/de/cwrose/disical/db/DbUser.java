@@ -111,7 +111,7 @@ public final class DbUser extends DbPersistable
 			 "WHERE d.login=$1 and d.location=$2");
 		oql.bind (getLogin());
 		oql.bind (location);
-
+		System.out.println(getLogin() + "<> " +location);
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
@@ -243,10 +243,7 @@ public final class DbUser extends DbPersistable
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
-				return null;
-
-		while (enum.hasMoreElements ())
+		for (; enum.hasMoreElements (); )
 			{
 				DbUser o = (DbUser)enum.nextElement ();
 				o.growOld ();

@@ -155,16 +155,17 @@ public final class DbDate extends DbPersistable
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
-				return null;
+		//		if (!enum.hasMoreElements ())
+		//	return null;
 
-		while (enum.hasMoreElements ())
+		for (;enum.hasMoreElements ();)
 			{
 				DbDate o = (DbDate)enum.nextElement ();
 				o.growOld ();
 				v.addElement (o.getDateSkel());
 			}
 
-		return (Date [])v.toArray ();
+	   Object [] ret = v.toArray ();
+	   return (Date [])ret;
 	}
 }

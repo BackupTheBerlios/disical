@@ -47,8 +47,8 @@ create table invited (
 	id          serial,
     invitation  integer not null references invitations ( id ),
     login       varchar ( 16 ) not null references auth ( login ),
-	state       int2 default 0 check (state >= 0 and state <= 3),
-	notify      int2 default 0 check (notify <=1 and notify >= 0),
+	state       integer default 0 check (state >= 0 and state <= 3),
+	notify      integer default 0 check (notify <=1 and notify >= 0),
 
 	primary key ( id )
 );

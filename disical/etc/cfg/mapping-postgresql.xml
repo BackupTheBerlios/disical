@@ -34,7 +34,6 @@
 
   <class name="de.cwrose.disical.db.DbDate"
          identity="index" key-generator="appointments_keygen">
-
     <map-to table="appointments" />
 	
     <field name="index" type="integer">
@@ -76,7 +75,6 @@
 
   <class name="de.cwrose.disical.db.DbInvitation"
          identity="index" key-generator="invitations_keygen">
-
     <map-to table="invitations" />
 	
     <field name="index" type="integer">
@@ -118,7 +116,6 @@
 
   <class name="de.cwrose.disical.db.DbInvited"
          identity="index" key-generator="invited_keygen">
-
     <map-to table="invited" />
 	
     <field name="index" type="integer">
@@ -133,12 +130,12 @@
 	    <sql name="login" type="varchar" />
     </field>
 
-  	<field name="state" type="short">
+  	<field name="state" type="integer">
   		<sql name="state" type="integer"/>
   	</field>
 
-  	<field name="notify" type="boolean">
-  		<sql name="notify" type="bit"/>
+  	<field name="notify" type="integer">
+  		<sql name="notify" type="integer"/>
   	</field>
 
   </class>

@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.12 2002/02/13 23:39:23 stepn Exp $
+// $Id: DisicalInvited.java,v 1.13 2002/02/14 01:57:45 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -149,11 +149,11 @@ public class DisicalInvited extends InvitedPOA {
 	}
    
 	public void setNotify(boolean notify) {
-		getBubble().setNotify(notify);
+		getBubble().setNotify(notify ? 1 : 0);
 	}
 
 	public boolean getNotify() {
-		return getBubble().getNotify();
+		return (getBubble().getNotify() == 1);
 	}
 
 	public void destroy() {

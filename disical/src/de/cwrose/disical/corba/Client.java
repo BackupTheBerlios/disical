@@ -90,16 +90,16 @@ public class Client {
 
 				stepn.persist();
 				invitation.invite(stepn);
-				//invitation.invite(fabian);
-				//invitation.invite(conny);
+				invitation.invite(fabian);
+				invitation.invite(conny);
 
 			}
 			catch (jdoPersistenceEx e) {
 				HackHelper.printEx(e, System.out);
 			}
 			
-			/*			for (int j=0; j<5; j++) {
-
+			for (int j=0; j<5; j++) {
+				
 				Date[] locdate = newUser.listDatesByLocation("Mensa1");
 				printDate(locdate[0]);		
 				Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
@@ -108,14 +108,14 @@ public class Client {
 														  fstTime+1234);
 				printDate(timedate[0]);
 			}
-			*/
-			//			Invitation[] newInv = newUser.getInvitations();
-			//printInvitation(newInv[0]);
-			/*			
+			
+						Invitation[] newInv = newUser.getInvitations();
+			printInvitation(newInv[0]);
+						
 			for (int k=0; k<newInv.length; k++) {
 				printInvited(newInv[k].getAllInvited());
 				
-				}*/
+			}
 		}
 		catch (wrongPwEx e) {
 			System.out.println(e.toString());

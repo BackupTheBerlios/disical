@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.25 2002/02/13 23:39:23 stepn Exp $
+// $Id: DisicalUser.java,v 1.26 2002/02/14 01:57:45 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,10 +22,11 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
+import de.cwrose.disical.util.HackHelper;
 
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
@@ -222,10 +223,8 @@ public class DisicalUser extends UserPOA {
 		Date[] dateList = null;
 		
 		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//dateList = getBubble().selectDateByLocation(location);
-			db.commit();
+			dateList = getBubble().listDatesByLocation(location);
+			System.out.println(dateList);
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());
