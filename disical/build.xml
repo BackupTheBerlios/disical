@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.16 2002/01/14 22:15:33 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.17 2002/01/15 12:17:20 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -300,7 +300,7 @@
 
 <!-- Clean all -->
 <target name="clean" 
-        depends="init,clean_idl,clean_corba,clean_db,clean_util" />
+        depends="init,clean_corba,clean_db,clean_util" />
 
 
 

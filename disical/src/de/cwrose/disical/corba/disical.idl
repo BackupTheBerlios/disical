@@ -10,9 +10,16 @@ module de {
 			module corba {
 				module disiorb {
 
+//	typedef int dbkey;
+
 /* Predefinitions */
  	interface User;
 	interface Date;
+	interface Invitation;
+
+	typedef sequence <Date> seqDate;
+	typedef sequence <Invitation> seqInvitation;
+	typedef sequence <User> seqUser;
 
 /* ServerInterface */
 	interface Server {
@@ -27,48 +34,51 @@ module de {
 
 /*	Userinterface */
 	interface User {
-		readonly attribute string Login;
-		readonly attribute string Name;
-		readonly attribute string Email;
-		readonly attribute string Passwd;
 
-		struct sUser {
-			string login;
-			string name;
-			string pwd;
-			string email;
-		};
+		void setLogin(in string login);
+		void setName(in string name);
+		void setEmail(in string email);
+		void setPasswd(in string passwd);
+
+		string getLogin();
+		string getName();
+		string getEmail();
+		string getPasswd();
+
+		/* persist routine zum abgleich der db */
+		boolean persist();
 
 		void changePW( in string newPW );
 
-		sUser getUserInfo();
+		User getUserInfo();
 
-		void setUserInfo(in sUser user);
+		void setUserInfo(in User userInfo);
  
 		void deleteUser();
 
-/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates...
- * ... in einer fabrik
- */
+		/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates
+ 		 * in einer fabrik
+ 		 */
 		Date createDate(in string start, 
 				in string end, 
 				in string location, 
 				in string subject);
+		/* ok, the index might be of different type (typedef dbkey..) :-) */
+		Date selectDate(in long index);
 
-/* außerdem kam diese select-Methode dazu, um queries zu tätigen,
- * dazu ist inzwische allerding ein index nötig, ich schlage den primär-
- * key in der Datenbank vor -  sie muß dann aber der GUI bekannt sein, 
- * wird aber, denke ich nicht mit angezeigt, das kannst du conny dir
- * überlegen
- */
-		Date selectDate(in short index);
+		seqDate listDatesByTime(in string start,
+									in string end);
 
-		Date findDate(in string start,
-					in string end,
-					in string location,
-					in string subject,
-					in short index);
+		seqDate listDatesByLocation(in string location);
+
+		seqDate listDatesBySubject(in string subject);
+
+		void setInvitation(in seqUser toUser, in Date invitationDate);
+
+		seqInvitation getInvitations();
 	};
+
+
 
 /* alle ersteinmal als string, kann noch verändert werden */
 /* Dateinterface */
@@ -79,24 +89,39 @@ module de {
 		void setLocation(in string location);
 		void setSubject(in string subject);
 
-/* habe ich modifiziert, um ein logischeres layout zu erhalten 
- * (ergebnis ist der returnwert)
- */
+		/* habe ich modifiziert, um ein logischeres layout zu erhalten 
+		 * (ergebnis ist der returnwert)
+		 */
 		string getStartTime();
 		string getEndTime();
 		string getLocation();
 		string getSubject();
-/* nun nötig, um den index eines Dates zu erhalten */
+
+		/* nun nötig, um den index eines Dates zu erhalten */
 		short getIndex(); 
 
-/* das delete bleibt hier :-) */
+		/* persist routine zum abgleich der db */
+		boolean persist();
+
+		/* das delete bleibt hier :-) */
 		void deleteDate();
 
-/* wir wollen ja schließlich die Dates auch modifizieren */
+		/* wir wollen ja schließlich die Dates auch modifizieren */
 		void changeDate(in string start,
 				in string end,
 				in string location,
 				in string subject);
+	};
+
+/* Interface Invitation */
+	interface Invitation {
+
+		User fromUser();
+		seqUser toUser();
+		Date InvitationDate();
+		short getStatus();
+		void setStatus(in short newStatus);
+
 	};
 				};
 			};
