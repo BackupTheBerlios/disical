@@ -31,7 +31,7 @@ public final class DbInvitation extends DbPersistable
 		stub = new DisicalInvitation ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
-		putBubble (skel, this);
+		//		putBubble (skel, this);
 	}
 
 	public Invitation getInvitation ()

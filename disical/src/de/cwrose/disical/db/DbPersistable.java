@@ -8,17 +8,13 @@ import de.cwrose.disical.util.HackHelper;
 import java.lang.reflect.InvocationTargetException;
 import org.exolab.castor.jdo.DataObjectAccessException;
 
-public class DbPersistable 
-implements org.exolab.castor.jdo.TimeStampable {
+public class DbPersistable {
 	/* Flag that stores whether a DbPersistable must be created 
 	   or updated when persisted to the db */
 	private boolean create_persistable = true;
 
 	/* Maps CORBA.Object -> bubble */
 	private static Hashtable reverseMapping;
-
-	private long jdoTimeStamp = 
-		org.exolab.castor.jdo.TimeStampable.NO_TIMESTAMP;
 
 	static
 	{
@@ -45,7 +41,6 @@ implements org.exolab.castor.jdo.TimeStampable {
 			throw new PersistenceException 
 				("Attempt to overwrite bubble for CORBA object");
 		reverseMapping.put (o, p);
-		HackHelper.printObj (System.out, "PUT_BUBBLE: ", o);
 	}
 
 
@@ -68,12 +63,12 @@ implements org.exolab.castor.jdo.TimeStampable {
     protected static DbPersistable lookupBubble(org.omg.CORBA.Object o)
 	throws PersistenceException {
 		DbPersistable p = null;
-
+		/*
 		if (!reverseMapping.containsKey (o)) {
 			Exception e = new PersistenceException 
 				("Bubble not found for exsiting	CORBA object");
 			e.printStackTrace(System.out);
-		}
+			}*/
 		try	{
 			p = (DbPersistable)reverseMapping.get(o);
 			//System.out.println ("DbPersistable.retBubble: "+p);
@@ -94,7 +89,6 @@ implements org.exolab.castor.jdo.TimeStampable {
     public void blow (org.omg.CORBA.Object obj) 
     throws PersistenceException 
     {
-		HackHelper.printObj (System.out, "BLOW: ", obj);
 		putBubble (obj, this);
     }
 
@@ -140,7 +134,6 @@ implements org.exolab.castor.jdo.TimeStampable {
 	{
 		if (isNew ())
 			{
-				this.jdoTimeStamp = System.currentTimeMillis ();
 				this.create (db);
 				this.growOld ();
 			}
@@ -184,12 +177,4 @@ implements org.exolab.castor.jdo.TimeStampable {
 	}
 
 
-	public long jdoGetTimeStamp () { 
-		return this.jdoTimeStamp; 
-	}
-
-	public void jdoSetTimeStamp (long jdoTimeStamp) {
-		this.jdoTimeStamp = jdoTimeStamp;
-	}
-	
 }

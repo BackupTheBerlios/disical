@@ -25,7 +25,7 @@ public final class DbUser extends DbPersistable
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
 		this.isLoginUser = false;
-		putBubble (skel, this);
+		//		putBubble (skel, this);
 	}
 
 	public User getUser ()

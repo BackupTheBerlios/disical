@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.10 2002/02/13 17:34:19 deafman Exp $
+// $Id: DisicalInvited.java,v 1.11 2002/02/13 21:28:34 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -15,6 +15,7 @@ import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbInvited;
 import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.db.DbInvitation;
+import de.cwrose.disical.util.HackHelper;
 
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
@@ -86,6 +87,7 @@ public class DisicalInvited extends InvitedPOA {
 	}
 
 	public User getUser() {
+		HackHelper.printObj(System.out, "D-I:", this.user);
 		return this.user;
 	}
 
@@ -159,8 +161,8 @@ public class DisicalInvited extends InvitedPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public Invited _this() {
-		Invited obj = super._this();
+	public Invited _this(org.omg.CORBA.ORB orb) {
+		Invited obj = super._this(orb);
 		try {
 			bubble.blow(obj);
 		}

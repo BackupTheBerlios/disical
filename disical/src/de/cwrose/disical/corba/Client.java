@@ -82,6 +82,9 @@ public class Client {
 				System.out.println ("S-U:"+(Object)stepn+" "+stepn.getLogin());
 
 				stepn.setEmail("plantiko@informatik.hu-berlin.de");
+				System.out.println(stepn.getLogin() + " " 
+								   + stepn.getName() + " " + stepn.getEmail());
+
 				stepn.persist();
 				invitation.invite(stepn);
 				//invitation.invite(fabian);

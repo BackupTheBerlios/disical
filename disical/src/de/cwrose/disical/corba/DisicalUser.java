@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.23 2002/02/13 17:34:19 deafman Exp $
+// $Id: DisicalUser.java,v 1.24 2002/02/13 21:28:34 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -304,8 +304,8 @@ public class DisicalUser extends UserPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public User _this() {
-		User obj = super._this();
+	public User _this(org.omg.CORBA.ORB orb) {
+		User obj = super._this(orb);
 		try {
 			bubble.blow(obj);
 		}

@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.24 2002/02/13 17:10:23 deafman Exp $
+// $Id: disical.idl,v 1.25 2002/02/13 21:28:34 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 module de {
   module cwrose {
@@ -108,14 +108,14 @@ module de {
 			void setLocation(in string location);
 			void setSubject(in string subject);
 			void setDescription(in string description);
-			void setLogin(in User login);
+			void setUser(in User login);
 			
 			long long getStartTime();
 			long long getEndTime();
 			string getLocation();
 			string getSubject();
 			string getDescription();
-			User getLogin();
+			User getUser();
 			
 			void setIndex(in long _index);
 			long getIndex(); 

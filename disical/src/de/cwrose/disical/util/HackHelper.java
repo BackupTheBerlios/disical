@@ -18,7 +18,7 @@ public final class HackHelper
 		e.printStackTrace (out);
 	}
 
-	public final static void printObj (PrintStream out, String s, Object o)
+	public final static void printObj (PrintStream out, String s, org.omg.CORBA.Object o)
 	{
 		out.println (s + "Class: "+o.getClass().toString() + " Ref:" + o);
 	}

@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.16 2002/02/13 17:34:19 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.17 2002/02/13 21:28:34 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -202,8 +202,8 @@ public class DisicalInvitation extends InvitationPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public Invitation _this() {
-		Invitation obj = super._this();
+	public Invitation _this(org.omg.CORBA.ORB orb) {
+		Invitation obj = super._this(orb);
 		try {
 			bubble.blow(obj);
 		}
