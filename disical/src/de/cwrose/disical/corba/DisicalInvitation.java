@@ -1,8 +1,7 @@
 package de.cwrose.disical.corba;
 
-import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
-import org.omg.CORBA.*;
+import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 
 public class DisicalInvitation extends InvitationPOA {
@@ -64,6 +63,14 @@ public class DisicalInvitation extends InvitationPOA {
 	}
 
 	public void delete() {
+		DisicalInvitation invitationImpl = new DisicalInvitation();
+
+		invitationImpl.setFromUser(fromuser);
+		invitationImpl.setToUser(touser);
+		invitationImpl.setInvitationDate(date);
+		invitationImpl.setStatus(status);
+
+		//dbDeleteInvitation(invitationImpl);
 		System.out.println("comes later");
 	}
 
@@ -76,17 +83,17 @@ public class DisicalInvitation extends InvitationPOA {
 		invitationImpl.setInvitationDate(date);
 		invitationImpl.setStatus(status);
 
-		boolean success = true; //dbPersistinvitation(invitationImpl);
+		boolean success = true; //dbPersistInvitation(invitationImpl);
 		
 		return success;
 	}
 
 	public void destroy() {
 		POA poa = _default_POA();
-        try {
-            byte[] id = poa.servant_to_id(this);
-            poa.deactivate_object(id);
-        }
-        catch (org.omg.CORBA.UserException ex) {}
-    }
+		try {
+			byte[] id = poa.servant_to_id(this);
+			poa.deactivate_object(id);
+		}
+		catch (org.omg.CORBA.UserException ex) {}
+	}
 }

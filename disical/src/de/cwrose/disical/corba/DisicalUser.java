@@ -1,8 +1,8 @@
 package de.cwrose.disical.corba;
 
-import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.corba.*;
-import org.omg.CORBA.*;
+import de.cwrose.disical.corba.disiorb.*;
+import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 
 public class DisicalUser extends UserPOA {
@@ -176,10 +176,10 @@ public class DisicalUser extends UserPOA {
 	public void destroy() {
 
 		POA poa = _default_POA();
-        try {
-            byte[] id = poa.servant_to_id(this);
-                poa.deactivate_object(id);
-        }
-        catch (org.omg.CORBA.UserException ex) {}
+		try {
+			byte[] id = poa.servant_to_id(this);
+			poa.deactivate_object(id);
+		}
+	catch (org.omg.CORBA.UserException ex) {}
 	}
 }

@@ -1,7 +1,7 @@
 package de.cwrose.disical.corba;
 
 import de.cwrose.disical.corba.disiorb.*;
-import org.omg.CORBA.*;
+import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 
 public class DisicalDate extends DatePOA {

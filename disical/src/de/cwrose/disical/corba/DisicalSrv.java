@@ -1,14 +1,9 @@
 package de.cwrose.disical.corba;
 
 import de.cwrose.disical.corba.*;
-import de.cwrose.disical.corba.disiorb.*;
-import java.io.*;
-import java.util.*;
-import org.omg.CORBA.*;
-import org.omg.PortableServer.*;
-import org.omg.CosNaming.*;
-import org.omg.PortableServer.POA;
-
+import de.cwrose.disical.corba.disiorb.Server;
+import de.cwrose.disical.corba.Exceptions.*;
+import org.omg.CORBA.ORB;
 
 public class DisicalSrv {
 
@@ -17,16 +12,30 @@ public class DisicalSrv {
 	public static void main(String[] args) {
 
 
-		CSetup disisetup = new CSetup(args);
-		orb = disisetup.getORB();
+		CSetup disisetup = new CSetup();
+		orb = disisetup.getORB(args);
 		
 		DisicalServer serverImpl = new DisicalServer();
 		Server server = serverImpl._this(orb);
 		
 		disisetup.setObjCount(1);
-		disisetup.setNC(serverImpl.Id, serverImpl.Kind, 0);
-
-		disisetup.initPOA();
+		try {
+			disisetup.setNC(serverImpl.Id, serverImpl.Kind, 0);
+		}
+		catch (NoNameServer e) {
+			System.err.println( e.toString() );
+		}
+		catch (NoBindNC e) {
+			System.err.println( e.toString() );
+		}
+		
+		try {
+			disisetup.initPOA();
+		}
+		catch (NoPOA e) {
+			System.err.println( e.toString() );
+		}
+		
 		disisetup.orbRun();
 		
 		try {
