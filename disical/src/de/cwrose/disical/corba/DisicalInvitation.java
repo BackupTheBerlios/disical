@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.20 2002/03/06 15:45:05 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.21 2002/03/06 15:49:00 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,13 +11,14 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbDate;
 import de.cwrose.disical.db.DbInvitation;
 import de.cwrose.disical.db.DbInvited;
+import de.cwrose.disical.db.EmptySeqException;
 
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;

@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.27 2002/03/06 15:45:05 deafman Exp $
+// $Id: DisicalUser.java,v 1.28 2002/03/06 15:49:00 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -35,6 +35,7 @@ import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.db.DbDate;
 import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbInvitation;
+import de.cwrose.disical.db.EmptySeqException;
 
 import org.exolab.castor.jdo.Database;
 import org.exolab.castor.jdo.PersistenceException;
