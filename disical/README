@@ -1,6 +1,11 @@
 DiSiCal
 =======
 
+    DiSiCal (Distributed Simple Calendar) is a CORBA/Java application for 
+    managing the appointments of a small to medium-sized user group via a 
+    web based interface.  DiSiCal is intended to be used as an example project 
+    in courses on distributed computing.
+
     Copyright (C) 2001 Carsten Rose, Cornelius Keller, Fabian Mueller, 
 	Stefan Plantikow
 
