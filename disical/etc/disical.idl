@@ -1,0 +1,62 @@
+/* ich bezeichne das mal an realitätsnahe Pseudo-IDL
+ * bisher ungetestet!!!
+ */
+
+module disical {
+
+/* ServerInterface */
+	interface Server {
+		void createUser(in string login, 
+						in string name, 
+						in string pwd,
+						in string email);
+
+		User login(in string login, 
+					in string pwd);
+	};
+
+/*	Userinterface */
+	interface User {
+		readonly attribute string login;
+		readonly attribute string Name;
+		readonly attribute string Email;
+		readonly attribute string Passwd;
+
+		void changePW( in string newPW );
+
+		void getUserInfo(out string name, 
+						out string pwd, 
+						out string email);
+		void setUserInfo(in string name, 
+						in string pwd, 
+						in string email);
+
+		void deleteUser();
+	};
+
+/* alle ersteinmal als string, kann noch verändert werden */
+/* Dateinterface */
+	interface Date {
+		readonly attribute string StartTime;
+		readonly attribute string EndTime;
+		readonly attribute string Location;
+		readonly attribute string Subject;
+
+		void createDate(in string start, 
+						in string end, 
+						in string location, 
+						in string subject);
+		void deleteDate();
+
+		void setStartTime(in string Time);
+		void setEndTime(in string Time);
+		void setLocation(in string location);
+		void setSubject(in string subject);
+
+		void getStartTime(out string Time);
+		void getEndTime(out string Time);
+		void getLocation(out string location);
+		void getSubject(out string subject);
+	};
+};
+
