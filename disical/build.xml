@@ -1,17 +1,22 @@
 <!-- DiSiCal Main Build Script -->
-<!-- Currently maintained by -->
-<!-- $Id: build.xml,v 1.7 2002/01/04 22:26:57 deafman Exp $ -->
+<!-- Currently maintained by stepn -->
+<!-- $Id: build.xml,v 1.8 2002/01/05 20:04:26 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
 
 
-<!-- All other tragets must depend on this one ! -->
+<!-- *** 'init' *********************************************************** -->
+<!-- All other targets must depend on this one ! -->
 <target name="init">
 
   <property name="disical.version" value="0.0.0pre_bigbang" />
 
   <!-- Setting Project properties: Default directories -->
+
+  <!-- Normally these variables should never change, but it's good -->
+  <!-- common Makefile practice to have variables for one's -->
+  <!-- directories -- just in case things change. -->
   <property name="dir.src" value="src" />
   <property name="dir.lib" value="lib" />
   <property name="dir.bin" value="bin" />
@@ -20,7 +25,14 @@
   <property name="dir.etc" value="etc" />
   <property name="dir.ns" value="de/cwrose/disical"/>
 
-  <!-- Runtime .properties-file locations, adjust via java -D --> 
+  <!-- Runtime .properties-file locations, adjust via                -->
+  <!-- java -D disical.cfg=/your/vanilla/foo/bar/cfg                 --> 
+
+  <!-- This variable is used by all run_XXX targets to specify the   -->
+  <!-- location of config files to be used (e.g. db configuration)   -->
+  <!-- It defaults to ${dir.etc}/cfg.                                -->
+  <!-- To understand how this scheme works in practice, see static   -->
+  <!-- class util.CfgReader                                          -->
   <property name="disical.cfg" value="${dir.etc}/cfg" />
 
   <!-- Setting Project properties: build process flags -->
@@ -38,12 +50,18 @@
   <property name="mod.OB" value="OB.jar" />
 
 
-  <!-- Setting Project properties: Read User's *Local* properties file -->
+  <!-- Setting Project properties: Read User's *Local* properties -->
+
+  <!-- This allows the customization of the build process without -->
+  <!-- having to change build.xml (and thus committing changes to -->
+  <!-- CVS).  Set any build.xml-Properties you like in your       -->
+  <!-- ${dir.etc}/local-build.properties or even create your own  -->
+  <!-- ones.  Non-ant-users: This is your #ifdef.                 -->
   <touch file="${dir.etc}/local-build.properties" />
   <property file="${dir.etc}/local-build.properties" />
 
 
-  <!-- Initial build activities: Timestamp + Create package output dirs -->
+  <!-- Initial build activities: Tstamp + Create pk output dirs -->
   <tstamp />
   <mkdir dir="${dir.out}/${dir.ns}/db" />
   <mkdir dir="${dir.out}/${dir.ns}/corba" />
@@ -52,7 +70,9 @@
 
 
 
+<!-- *** 'util' *********************************************************** -->
 <!-- Build util related java sources -->
+
 <target name="util" depends="init,clean_jar">
   <javac srcdir="${dir.src}" destdir="${dir.out}" 
          debug="${build.debug}" optimize="${build.optimize}">
@@ -67,13 +87,14 @@
 
 
 
+<!-- *** 'db' ************************************************************* -->
 <!-- Build db related java sources -->
 <target name="db" depends="init,util,clean_jar">
   <javac srcdir="${dir.src}" destdir="${dir.out}" 
          debug="${build.debug}" optimize="${build.optimize}">
 	<classpath>
 	  <pathelement path="${java.class.path}" />
-	  <path id="db.classpath">
+	  <path id="db.classpath"> <!-- name classpath for later reference -->
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
@@ -92,6 +113,8 @@
 
 
 
+<!-- *** 'CORBA' ********************************************************** -->
+
 <!-- Make the basic CORBA-Stuff -->
 <target name="idl" depends="init,clean_jar">
   <exec dir="${dir.src}/${dir.ns}/corba" executable="jidl">
@@ -102,7 +125,6 @@
 <target name="clean_idl">
   <delete dir="${dir.src}/${dir.ns}/corba/disiorb" />
 </target>
-
 
 
 
@@ -125,6 +147,13 @@
 
 
 
+<!-- *** 'JAR' ************************************************************ -->
+
+<!-- The jar file is build in ${dir.lib} not in ${dir.dist}, as one   -->
+<!-- might expect.                                                    -->
+<!-- ${dir.dist} is reserved for packaging .tar.gz/.zip-files for the -->
+<!-- binary distribution (currently unfinished ant-task 'dist').      -->
+
 <!-- Make jar containing all necessary class files -->
 <target name="jar" depends="init,corba,db">
   <jar 
@@ -140,15 +169,18 @@
 
 
 
+<!-- *** MAIN TARGETS ***************************************************** -->
 <!-- Build all -->
 <target name="all" depends="init,jar"/>
 
 <!-- Clean all -->
-<target name="clean" depends="init,clean_idl,clean_corba,clean_db,clean_util" />
+<target name="clean" 
+        depends="init,clean_idl,clean_corba,clean_db,clean_util" />
 
 
 
-<!-- Example run target -->
+<!-- *** Sample Programs *************************************************  -->
+
 <target name="listprops" depends="init,jar">
   <java classname="de.cwrose.disical.util.CfgTester" fork="yes">
   <classpath>
@@ -161,7 +193,11 @@
   </java>
 </target>
 
-<!-- Run bsh class browser -->
+
+
+
+<!-- *** bsh Class Browser ************************************************ -->
+
 <target name="bsh" depends="init,jar">
   <java classname="bsh.Console" fork="yes">
   <classpath>
@@ -175,7 +211,11 @@
 </target>
 
 
+
+
+<!-- *** 'dist' ********************************************************** --> 
 <!-- Make zip containing bindist of all necessary files -->
+
 <target name="dist" depends="init,all">
   <zip zipfile="${dir.dist}/disical-${disical.version}.zip">
     <fileset dir="${disical.cfg}" file="./**" />
