@@ -25,6 +25,9 @@
   	
   </class>
 
+
+
+
   <key-generator name="SEQUENCE" alias="appointments_keygen">
       <param name="sequence" value="appointments_id_seq" />
   </key-generator>
@@ -32,7 +35,7 @@
   <class name="de.cwrose.disical.db.DbDate"
          identity="index" key-generator="appointments_keygen">
 
-  	<map-to table="appointments" />
+    <map-to table="appointments" />
 	
     <field name="index" type="integer">
 	   <sql name="id" type="integer" />
@@ -58,8 +61,96 @@
   		<sql name="subject" type="varchar"/>
   	</field>
 
+  	<field name="description" type="string">
+  		<sql name="descr" type="varchar"/>
+  	</field>
+
   </class>
+
+
+
   
+  <key-generator name="SEQUENCE" alias="invitations_keygen">
+      <param name="sequence" value="invitations_id_seq" />
+  </key-generator>
+
+  <class name="de.cwrose.disical.db.DbInvitation"
+         identity="index" key-generator="invitations_keygen">
+
+    <map-to table="invitations" />
+	
+    <field name="index" type="integer">
+	   <sql name="id" type="integer" />
+    </field>
+
+  	<field name="login" type="de.cwrose.disical.db.DbUser" >
+  		<sql name="login" />
+  	</field>
+
+	<field name="startTime" type="java.sql.Timestamp" >
+	    <sql name="starttime" type="timestamp" />
+    </field>
+
+	<field name="endTime" type="java.sql.Timestamp" >
+	    <sql name="stoptime" type="timestamp" />
+    </field>
+
+  	<field name="location" type="string">
+  		<sql name="location" type="varchar"/>
+  	</field>
+
+  	<field name="subject" type="string">
+  		<sql name="subject" type="varchar"/>
+  	</field>
+
+  	<field name="description" type="string">
+  		<sql name="descr" type="varchar"/>
+  	</field>
+
+	<field name="invited" type="de.cwrose.disical.db.DbInvited" 
+	       collection="" >
+		<sql many-key="invitation" />
+    </field>
+  </class>
+
+
+
+
+  <key-generator name="SEQUENCE" alias="invited_keygen">
+      <param name="sequence" value="invited_id_seq" />
+  </key-generator>
+
+  <class name="de.cwrose.disical.db.DbInvited"
+         identity="index" key-generator="invited_keygen">
+
+    <map-to table="invited" />
+	
+    <field name="index" type="integer">
+	   <sql name="id" type="integer" />
+    </field>
+
+  	<field name="invitation" type="de.cwrose.disical.db.DbInvitation" >
+  		<sql name="invitation" />
+  	</field>
+
+	<field name="user" type="de.cwrose.disical.db.DbUser" >
+	    <sql name="login" type="timestamp" />
+    </field>
+
+	<field name="date" type="de.cwrose.disical.DbDate" >
+	    <sql name="date" />
+    </field>
+
+  	<field name="state" type="short">
+  		<sql name="state" type="integer"/>
+  	</field>
+
+  	<field name="notify" type="boolean">
+  		<sql name="notify" type="boolean"/>
+  	</field>
+
+  </class>
+
 </mapping>
 
 

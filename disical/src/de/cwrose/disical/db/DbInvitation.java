@@ -4,50 +4,53 @@ import de.cwrose.disical.corba.disiorb.Date;
 import de.cwrose.disical.corba.disiorb.User;
 import de.cwrose.disical.corba.DisicalDate;
 import de.cwrose.disical.corba.DisicalUser;
+import de.cwrose.disical.corba.DisicalInvitation;
+import de.cwrose.disical.corba.DisicalInvited;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
 import java.sql.Timestamp;
 
-public final class DbDate extends DbPersistable
+public final class DbInvitation extends DbPersistable
 {
-	private Date skel;
+	private Invitation skel;
+	private DisicalInvitation stub;
 
-	public DbDate ()
+	public DbInvitation ()
 	throws PersistenceException
 	{
 		super ();
-		DisicalDate stub = new DisicalDate ();
+		stub = new DisicalInvitation ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
 		putBubble (skel, this);
 	}
 
-	public Date getDate ()
+	public DbInvitation getInvitation ()
 	{
 		return this.skel;
 	}
 
 
 
-	public static Date createDate(User u,  Timestamp start, Timestamp stop, 
-			String subject, String location, String descr)
+	public static Date createInvitation(User u,  Timestamp start, 
+	Timestamp stop, String subject, String location, String descr)
 		throws PersistenceException
 	{
-		DbDate dd = new DbDate ();
-		dd.setSubject (subject);
-		dd.setLocation (location);
-		dd.setStartTime (start);
-		dd.setEndTime (stop);
-		dd.setDescription (descr);
+		DbInvitation di = new DbInvitation ();
+		di.setSubject (subject);
+		di.setLocation (location);
+		di.setStartTime (start);
+		di.setEndTime (stop);
+		di.setDescription (descr);
 
 		// Fill up external references
 		System.out.println (u.getLogin ());
-		dd.setLogin ((DbUser)lookupBubble(u));
+		di.setLogin ((DbUser)lookupBubble(u));
 
-		Date d = dd.getDate ();
-		d.persist ();
-		dd.growOld();
-		return d;
+		Invitation i = di.getDate ();
+		i.persist ();
+		di.growOld();
+		return i;
 	}
 
 
@@ -55,14 +58,14 @@ public final class DbDate extends DbPersistable
 
 	/* Property: Login */
 
-	public DbUser getLogin () 
+	public DbUser getUser () 
 	throws PersistenceException
     {
-		return (DbUser)lookupBubble(skel.getLogin ());
+		return (DbUser)lookupBubble(skel.getFromUser ());
 	}
 
-	public void setLogin (DbUser login) {
-		skel.setLogin (login.getUser ());
+	public void setUser (DbUser login) {
+		skel.setFromUser (login.getUser ());
 	}
 
 
@@ -93,6 +96,7 @@ public final class DbDate extends DbPersistable
 
 
 
+
 	/* Property: Description */
 
 	public String getDescription () {
@@ -105,6 +109,7 @@ public final class DbDate extends DbPersistable
 
 
 
+
 	/* Property: Index */
 
 	public int getIndex () {
@@ -114,7 +119,6 @@ public final class DbDate extends DbPersistable
 	public void setIndex (int index) {
 		skel.setIndex (index);
 	}
-
 
 
 	/* Property: startTime */
