@@ -1,0 +1,59 @@
+Die fiesen kleinen Details der Architektur....
+
+
+
+Build System (Ant-Skript)
+-------------------------
+
+build.xml liest (insofern vorhanden etc/local-build.properties).
+Diese Datei wird vom CVS ignoriert und gibt einem somit die
+Moeglichkeit lokale Anpassungen vorzunehmen.
+
+
+
+Datenbank
+---------
+
+Nach der Installation starten mit pgsql/bin/postmaster -D $(DB_HOME) -i.
+Name der Datenbank ist disical.
+
+Die Firewallkonfig muss TCP-Verbindungen auf den db-Port erlauben.
+
+Mann kann das auch bequem von ant machen lassen, wenn man die passenden 
+Properties eingestellt hat.
+
+ant start_db 
+ant stop_db 
+ant reset_db (Alles Loeschen + Tabellen Neu anlegen)
+
+Voraussetzung: muss als DB-User aufgerufen werden.
+
+
+
+Properties
+----------
+
+util.CfgReader liefert fuer alle ausfuehrbaren Klassen benoetigte Properties.
+
+Q: Wie kriegen wir Parameter (wie zB DB-user/Passwort) in das Programm
+A: Ueber das Systemproperty disical.cfg wird dass
+   Konfigurationsverzeichnis gesetzt.  Dies enthaelt
+
+	server.properties
+	client.properties
+
+	...
+
+	Diese werden automatisch von util.CfgReader ausgelesen.
+
+Q: Wie kann ich lokal kleine Aenderungen an den Properties vornehmen ?
+A:	Bevor in ${disical.cfg}/foo.cfg nachgesehen wird, sucht CfgReader in
+	${disical.cfg.local} (default=${disical.cfg}/local/foo.cfg d.h. 
+    etc/cfg/local/foo.cfg in den CVS-Quellen)
+
+	d.h. man kann das Passwort fuer den eigenen lokalen postgres Db-Nutzer 
+   einfach in etc/cfg/local/server.properties schreiben:
+
+	db.password = "FeeFaFoFoo"
+
+	(chmod 0400 nicht vergessen)
