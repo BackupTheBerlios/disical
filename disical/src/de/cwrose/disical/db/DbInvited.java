@@ -128,11 +128,12 @@ public final class DbInvited extends DbPersistable
 
 
 	protected final static Invited [] enum2array (Enumeration enum)
+		throws EmptySeqException
 	{
 		Vector v = new Vector ();
 
 		if (!enum.hasMoreElements ())
-				return null;
+			throw new EmptySeqException ("Invited");
 
 		while (enum.hasMoreElements ())
 			{

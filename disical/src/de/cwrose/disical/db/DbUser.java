@@ -101,7 +101,7 @@ public final class DbUser extends DbPersistable
 	}
 
 	public  Date[] listDatesByLocation (String location)
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -116,11 +116,12 @@ public final class DbUser extends DbPersistable
 		db.begin();
 		QueryResults res = oql.execute();
 		db.commit();
+
 		return (Date [])DbDate.enum2array(res);
 	}
 	
 	public  User[] listAllUsers ()
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -136,7 +137,7 @@ public final class DbUser extends DbPersistable
 	}
 
 	public  Date[] listDatesBySubject (String subject)
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -155,7 +156,7 @@ public final class DbUser extends DbPersistable
 	}
 
 	public  Date[] listDatesByTime (Timestamp startTime, Timestamp stopTime)
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -240,8 +241,12 @@ public final class DbUser extends DbPersistable
 	}
 
 	protected final static User [] enum2array (Enumeration enum)
+		throws EmptySeqException
 	{
 		Vector v = new Vector ();
+
+		if (!enum.hasMoreElements ())
+			throw new EmptySeqException ("User");
 
 		for (; enum.hasMoreElements (); )
 			{

@@ -152,11 +152,12 @@ public final class DbDate extends DbPersistable
 
 
 	protected final static Date [] enum2array (Enumeration enum)
+		throws EmptySeqException 
 	{
 		Vector v = new Vector ();
 
-		//		if (!enum.hasMoreElements ())
-		//	return null;
+		if (!enum.hasMoreElements ())
+			throw new EmptySeqException ("Date");
 
 		for (;enum.hasMoreElements ();)
 			{

@@ -162,7 +162,7 @@ public final class DbInvitation extends DbPersistable
 
 
 	public Invited[] getAllInvited ()
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -181,7 +181,7 @@ public final class DbInvitation extends DbPersistable
 	}
 
 	public  Invited[] getAllNotifiedInv ()
-		throws org.exolab.castor.jdo.PersistenceException
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
 	{
 		Database  db = DbManager.getConnection ();
 
@@ -226,11 +226,12 @@ public final class DbInvitation extends DbPersistable
 	}
 
 	protected final static Invitation [] enum2array (Enumeration enum)
+		throws EmptySeqException
 	{
 		Vector v = new Vector ();
 
 		if (!enum.hasMoreElements ())
-				return null;
+			throw new EmptySeqException ("Invitation");
 
 		while (enum.hasMoreElements ())
 			{
