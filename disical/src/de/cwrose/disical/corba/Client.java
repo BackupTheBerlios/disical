@@ -83,7 +83,7 @@ public class Client {
 					server.createUser("stepn", "Stefan Plantikow", 
 									  "foo", "foo@bar.com");
 				User fabian = 
-					server.createUser("fabian", "Fabian Müller", 
+					server.createUser("fabian", "Fabian Mueller", 
 									  "hello", "baltarzar@t-online.de");
 				User conny = 
 					server.createUser("conny", "Cornelius Keller", 
