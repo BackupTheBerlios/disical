@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.23 2002/01/27 14:55:58 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.24 2002/01/27 15:37:05 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -61,10 +61,10 @@
   <!-- ones.  Non-ant-users: This is your #ifdef.                 -->
   <touch file="${dir.etc}/local-build.properties" />
   <property file="${dir.etc}/local-build.properties" />
-  <property file="${disical.cfg}/server.properties" />
-  <property file="${disical.cfg}/velocity.properties" />
   <property file="${disical.cfg}/local/server.properties" />
+  <property file="${disical.cfg}/server.properties" />
   <property file="${disical.cfg}/local/velocity.properties" />
+  <property file="${disical.cfg}/velocity.properties" />
 
   <!-- Initial build activities: Tstamp + Create pk output dirs -->
   <tstamp />
@@ -264,6 +264,16 @@
 
 <target name="clean_corba" depends="init">
   <delete dir="${dir.out}/${dir.ns}/corba" />
+</target>
+
+
+
+<target name="ns_start" depends="init">
+  <exec executable="${shell-file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${ob-dir}${ob-bin-ns}${shell-quote}" />
+  </exec>
 </target>
 
 
