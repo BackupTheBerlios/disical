@@ -1,6 +1,7 @@
 package de.cwrose.disical.db;
 
 import de.cwrose.disical.corba.disiorb.User;
+import de.cwrose.disical.corba.disiorb.Invitation;
 import de.cwrose.disical.corba.disiorb.Date;
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.DisicalSrv;
@@ -174,6 +175,22 @@ public final class DbUser extends DbPersistable
 		QueryResults res = oql.execute();
 		db.commit();
 		return (Date [])DbDate.enum2array(res);
+	}
+
+	public  Invitation[] listAllInvitations ()
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
+	{
+		Database  db = DbManager.getConnection ();
+
+		// OQL 
+		OQLQuery oql = db.getOQLQuery 
+("SELECT i FROM de.cwrose.disical.db.DbInvitaions i WHERE i.login=$1; ");
+		oql.bind (getLogin());
+		// Get Results
+		db.begin();
+		QueryResults res = oql.execute();
+		db.commit();
+		return (Invitation [])DbInvitation.enum2array(res);
 	}
 
 	public static User createUser (String login, String pwd, 
