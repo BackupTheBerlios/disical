@@ -70,7 +70,7 @@ public final class DbUser extends DbPersistable
 		DbUser bubble = new DbUser ();
 		User usr = bubble.getUser ();
 		usr.setLogin (login); 
-		usr.setPasswd (pwd);
+		bubble.setPassword (pwd);
 		usr.setName (name);
 		usr.setEmail (email);
 		usr.persist ();
