@@ -115,7 +115,8 @@ public interface DateOperations
     /***/
 
     User
-    getUser();
+    getUser()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0

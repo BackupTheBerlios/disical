@@ -18,37 +18,42 @@ public final class DbDate extends DbPersistable
 	throws PersistenceException
 	{
 		super ();
-		DisicalDate stub = new DisicalDate ();
-		stub.setBubble (this);
-		skel = stub._this (DisicalSrv.orb);
-		//		putBubble (skel, this);
+
+		DisicalDate servant = new DisicalDate ();
+		super.setServant (servant);
+		servant.setBubble (this);
 	}
 
-	public Date getDate ()
+
+	private DisicalDate getDateServant ()
 	{
-		return this.skel;
+		return (DisicalDate)this.getServant ();
 	}
 
+	private Date getDateSkel ()
+	{
+		return this.getDateServant ()._this (DisicalSrv.orb);
+	}
 
-
-	public static Date createDate(User u,  Timestamp start, Timestamp stop, 
-			String subject, String location, String descr)
+	public static Date createDate
+		(String login,  
+		 Timestamp start, Timestamp stop, 
+		 String subject, String location, String descr)
 		throws PersistenceException
 	{
 		DbDate dd = new DbDate ();
-		dd.setSubject (subject);
-		dd.setLocation (location);
-		dd.setStartTime (start);
-		dd.setEndTime (stop);
-		dd.setDescription (descr);
+		DisicalDate servant = dd.getDateServant ();
+		servant.setSubject (subject);
+		servant.setLocation (location);
+		servant.setStartTime (start.getTime ());
+		servant.setEndTime (stop.getTime ());
+		servant.setDescription (descr);
+		servant.setLogin (login);
 
-		// Fill up external references
-		System.out.println (u.getLogin ());
-		dd.setLogin ((DbUser)lookupBubble(u));
-
-		Date d = dd.getDate ();
+		Date d = dd.getDateSkel ();
 		d.persist ();
 		dd.growOld();
+
 		return d;
 	}
 
@@ -57,14 +62,14 @@ public final class DbDate extends DbPersistable
 
 	/* Property: Login */
 
-	public DbUser getLogin () 
+	public String getLogin () 
 	throws PersistenceException
     {
-		return (DbUser)lookupBubble(skel.getLogin ());
+		return getDateServant().getLogin();
 	}
 
-	public void setLogin (DbUser login) {
-		skel.setLogin (login.getUser ());
+	public void setLogin (String login) {
+		getDateServant().setLogin (login);
 	}
 
 
@@ -73,11 +78,11 @@ public final class DbDate extends DbPersistable
 	/* Property: Subject */
 
 	public String getSubject () {
-		return skel.getSubject ();
+		return getDateServant().getSubject ();
 	}
 
 	public void setSubject (String subject) {
-		skel.setSubject (subject);
+		getDateServant().setSubject (subject);
 	}
 
 
@@ -86,11 +91,11 @@ public final class DbDate extends DbPersistable
 	/* Property: Location */
 
 	public String getLocation () {
-		return skel.getLocation ();
+		return getDateServant().getLocation ();
 	}
 
 	public void setLocation (String location) {
-		skel.setLocation (location);
+		getDateServant().setLocation (location);
 	}
 
 
@@ -98,11 +103,11 @@ public final class DbDate extends DbPersistable
 	/* Property: Description */
 
 	public String getDescription () {
-		return skel.getDescription ();
+		return getDateServant().getDescription ();
 	}
 
 	public void setDescription (String location) {
-		skel.setDescription (location);
+		getDateServant().setDescription (location);
 	}
 
 
@@ -110,11 +115,11 @@ public final class DbDate extends DbPersistable
 	/* Property: Index */
 
 	public int getIndex () {
-		return skel.getIndex ();
+		return getDateServant().getIndex ();
 	}
 
 	public void setIndex (int index) {
-		skel.setIndex (index);
+		getDateServant().setIndex (index);
 	}
 
 
@@ -123,12 +128,12 @@ public final class DbDate extends DbPersistable
 
 	public void setStartTime (java.sql.Timestamp t)
 	{
-		skel.setStartTime (t.getTime ());
+		getDateServant().setStartTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getStartTime ()
 	{
-		return new java.sql.Timestamp (skel.getStartTime ());
+		return new java.sql.Timestamp (getDateServant().getStartTime ());
 	}
 
 
@@ -137,12 +142,12 @@ public final class DbDate extends DbPersistable
 
 	public void setEndTime (java.sql.Timestamp t)
 	{
-		skel.setEndTime (t.getTime ());
+		getDateServant().setEndTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getEndTime ()
 	{
-		return new java.sql.Timestamp (skel.getEndTime ());
+		return new java.sql.Timestamp (getDateServant().getEndTime ());
 	}
 
 
@@ -157,7 +162,7 @@ public final class DbDate extends DbPersistable
 			{
 				DbDate o = (DbDate)enum.nextElement ();
 				o.growOld ();
-				v.addElement (o.getDate ());
+				v.addElement (o.getDateSkel());
 			}
 
 		return (Date [])v.toArray ();

@@ -1,5 +1,6 @@
 package de.cwrose.disical.db;
 
+import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.corba.disiorb.Date;
 import de.cwrose.disical.corba.disiorb.User;
 import de.cwrose.disical.corba.disiorb.Invitation;
@@ -19,8 +20,6 @@ import java.util.Vector;
 
 public final class DbInvitation extends DbPersistable
 {
-	private Invitation skel;
-	private DisicalInvitation stub;
 	private Vector toUsers = new Vector ();
 	private int index = 0;
 
@@ -28,35 +27,40 @@ public final class DbInvitation extends DbPersistable
 	throws PersistenceException
 	{
 		super ();
-		stub = new DisicalInvitation ();
-		stub.setBubble (this);
-		skel = stub._this (DisicalSrv.orb);
-		//		putBubble (skel, this);
+
+		DisicalInvitation servant = new DisicalInvitation ();
+		super.setServant (servant);
+		servant.setBubble (this);
 	}
 
-	public Invitation getInvitation ()
+	private DisicalInvitation getInvitationServant ()
 	{
-		return this.skel;
+		return (DisicalInvitation)this.getServant ();
 	}
 
+	private Invitation getInvitationSkel ()
+	{
+		return this.getInvitationServant ()._this (DisicalSrv.orb);
+	}
 
-
-	public static Invitation createInvitation(User u,  Timestamp start, 
+	public static Invitation createInvitation(String login,  Timestamp start, 
 	Timestamp stop, String subject, String location, String descr)
 		throws PersistenceException
 	{
 		DbInvitation di = new DbInvitation ();
-		
-		di.setSubject (subject);
-		di.setLocation (location);
-		di.setStartTime (start);
-		di.setEndTime (stop);
-		di.setDescription (descr);
-		di.setUser ((DbUser)lookupBubble(u));
+		DisicalInvitation servant = di.getInvitationServant ();
+
+		servant.setSubject (subject);
+		servant.setLocation (location);
+		servant.setStartTime (start.getTime ());
+		servant.setEndTime (stop.getTime ());
+		servant.setDescription (descr);
+		servant.setLogin (login);
 
 		System.out.println ("STARTTIME:"+start);
 		System.out.println ("STOPTTIME:"+stop);
-		Invitation i = di.getInvitation ();
+
+		Invitation i = di.getInvitationSkel ();
 		i.persist ();
 		di.growOld();
 		return i;
@@ -67,14 +71,14 @@ public final class DbInvitation extends DbPersistable
 
 	/* Property: Login */
 
-	public DbUser getUser () 
+	public String getLogin () 
 	throws PersistenceException
     {
-		return (DbUser)lookupBubble(skel.getFromUser ());
+		return getInvitationServant ().getLogin ();
 	}
 
-	public void setUser (DbUser login) {
-		skel.setFromUser (login.getUser ());
+	public void setLogin (String login) {
+		getInvitationServant ().setLogin (login);
 	}
 
 
@@ -83,11 +87,11 @@ public final class DbInvitation extends DbPersistable
 	/* Property: Subject */
 
 	public String getSubject () {
-		return skel.getSubject ();
+		return getInvitationServant().getSubject ();
 	}
 
 	public void setSubject (String subject) {
-		skel.setSubject (subject);
+		getInvitationServant().setSubject (subject);
 	}
 
 
@@ -96,11 +100,11 @@ public final class DbInvitation extends DbPersistable
 	/* Property: Location */
 
 	public String getLocation () {
-		return skel.getLocation ();
+		return getInvitationServant().getLocation ();
 	}
 
 	public void setLocation (String location) {
-		skel.setLocation (location);
+		getInvitationServant().setLocation (location);
 	}
 
 
@@ -109,11 +113,11 @@ public final class DbInvitation extends DbPersistable
 	/* Property: Description */
 
 	public String getDescription () {
-		return skel.getDescription ();
+		return getInvitationServant().getDescription ();
 	}
 
 	public void setDescription (String location) {
-		skel.setDescription (location);
+		getInvitationServant().setDescription (location);
 	}
 
 
@@ -134,12 +138,12 @@ public final class DbInvitation extends DbPersistable
 
 	public void setStartTime (java.sql.Timestamp t)
 	{
-		skel.setStartTime (t.getTime ());
+		getInvitationServant().setStartTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getStartTime ()
 	{
-		return new java.sql.Timestamp (skel.getStartTime ());
+		return new java.sql.Timestamp (getInvitationServant().getStartTime ());
 	}
 
 
@@ -148,12 +152,12 @@ public final class DbInvitation extends DbPersistable
 
 	public void setEndTime (java.sql.Timestamp t)
 	{
-		skel.setEndTime (t.getTime ());
+		getInvitationServant().setEndTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getEndTime ()
 	{
-		return new java.sql.Timestamp (skel.getEndTime ());
+		return new java.sql.Timestamp (getInvitationServant().getEndTime ());
 	}
 
 
@@ -166,7 +170,7 @@ public final class DbInvitation extends DbPersistable
 		OQLQuery oql = db.getOQLQuery 
 			("SELECT i FROM de.cwrose.disical.db.DbInvited i "+
 			 "WHERE i.login=$1 and i.invitation=$2");
-		oql.bind (this.getUser().getLogin());
+		oql.bind (this.getLogin());
 		oql.bind (this.getIndex ());
 
 		// Get Results
@@ -186,7 +190,7 @@ public final class DbInvitation extends DbPersistable
 		OQLQuery oql = db.getOQLQuery 
 			("SELECT i FROM de.cwrose.disical.db.DbInvited i "+
 			 "WHERE i.login=$1 and i.notify=$2 and i.invitation=$3");
-		oql.bind (this.getUser().getLogin());
+		oql.bind (this.getLogin());
 		oql.bind (s);
 		oql.bind (this.getIndex ());
 
@@ -195,6 +199,30 @@ public final class DbInvitation extends DbPersistable
 		QueryResults res = oql.execute();
 		db.commit();
 		return (Invited [])DbInvited.enum2array(res);
+	}
+
+	public static Invitation lookupInvitation (int invId)
+		throws org.exolab.castor.jdo.PersistenceException,
+			   IllegalArgumentException, IllegalStateException
+	{
+		DbInvitation bubble;
+
+		/* OQL */
+		Database     db  = DbManager.getConnection ();
+		OQLQuery     oql = db.getOQLQuery 
+			("SELECT i FROM de.cwrose.disical.db.DbInvitation i WHERE i.id=$1");
+		oql.bind (invId);
+		db.begin();
+		QueryResults res = oql.execute();
+		if (!res.hasMore ())
+			throw new IllegalArgumentException 
+				("You don't have the right password!  Go away!");
+		
+		bubble = ((DbInvitation) res.next ());
+		bubble.growOld ();
+		db.commit();
+
+		return bubble.getInvitationSkel ();
 	}
 
 	protected final static Invitation [] enum2array (Enumeration enum)
@@ -208,7 +236,7 @@ public final class DbInvitation extends DbPersistable
 			{
 				DbInvitation o = (DbInvitation)enum.nextElement ();
 				o.growOld ();
-				v.addElement (o.getInvitation ());
+				v.addElement (o.getInvitationSkel ());
 			}
 
 		return (Invitation [])v.toArray ();

@@ -7,8 +7,9 @@ import de.cwrose.disical.*;
 import de.cwrose.disical.util.HackHelper;
 public class Client {
 
-	private static void printDate(Date date) {
-		System.out.println("User : "+date.getLogin());
+	private static void printDate(Date date) 
+	throws jdoPersistenceEx {
+		System.out.println("User : "+date.getUser());
 		System.out.println("Start: "+date.getStartTime());
 		System.out.println("Ende : "+date.getEndTime());
 		System.out.println("Betr : "+date.getSubject());
@@ -16,7 +17,8 @@ public class Client {
 		System.out.println("Discr: "+date.getDescription()+"\n");
 	}
 
-	private static void printInvited(Invited[] invited) {
+	private static void printInvited(Invited[] invited) 
+	throws jdoPersistenceEx {
 
 		for (int i = 0; i < invited.length; i++){
 			System.out.print("CC "+(i+1)+":"+invited[i]);
@@ -24,7 +26,8 @@ public class Client {
 		System.out.println("\n");
 	}
 
-	private static void printInvitation(Invitation inv) {
+	private static void printInvitation(Invitation inv) 
+	throws jdoPersistenceEx {
 		System.out.println("Von  : "+inv.getFromUser());
 		System.out.println("Start: "+inv.getStartTime());
 		System.out.println("Ende : "+inv.getEndTime());

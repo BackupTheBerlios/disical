@@ -124,7 +124,8 @@ public interface InvitationOperations
     /***/
 
     User
-    getFromUser();
+    getFromUser()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getAllInvited:1.0

@@ -41,8 +41,8 @@
 	   <sql name="id" type="integer" />
     </field>
 
-  	<field name="login" type="de.cwrose.disical.db.DbUser" >
-  		<sql name="login" />
+  	<field name="login" type="string" >
+  		<sql name="login" type="varchar" />
   	</field>
 
 	<field name="startTime" type="java.sql.Timestamp" >
@@ -83,8 +83,8 @@
 	   <sql name="id" type="integer" />
     </field>
 
-  	<field name="user" type="de.cwrose.disical.db.DbUser">
-  		<sql name="login" />
+  	<field name="login" type="string">
+  		<sql name="login" type="varchar" />
   	</field>
 
 	<field name="startTime" type="java.sql.Timestamp" >
@@ -125,16 +125,12 @@
 	   <sql name="id" type="integer" />
     </field>
 
-  	<field name="invitation" type="de.cwrose.disical.db.DbInvitation" >
-  		<sql name="invitation" />
+  	<field name="invitation" type="integer" >
+  		<sql name="invitation" type="integer" />
   	</field>
 
-	<field name="user" type="de.cwrose.disical.db.DbUser" >
-	    <sql name="login" />
-    </field>
-
-	<field name="date" type="de.cwrose.disical.db.DbDate" >
-	    <sql name="date" />
+	<field name="login" type="string" >
+	    <sql name="login" type="varchar" />
     </field>
 
   	<field name="state" type="short">

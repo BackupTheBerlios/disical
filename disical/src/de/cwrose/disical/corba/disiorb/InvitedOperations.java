@@ -27,7 +27,8 @@ public interface InvitedOperations
     /***/
 
     Invitation
-    getInvitation();
+    getInvitation()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invited/getUser:1.0
@@ -35,15 +36,8 @@ public interface InvitedOperations
     /***/
 
     User
-    getUser();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invited/getDate:1.0
-    //
-    /***/
-
-    Date
-    getDate();
+    getUser()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invited/accept:1.0

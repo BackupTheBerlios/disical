@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.11 2002/02/13 21:28:34 deafman Exp $
+// $Id: DisicalInvited.java,v 1.12 2002/02/13 23:39:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -28,9 +28,8 @@ import java.sql.Timestamp;
 public class DisicalInvited extends InvitedPOA {
 
 	private DbInvited bubble = null;
-	private Invitation invitation = null;
-	private User user = null;
-	private Date date = null;
+	private int invId = -1;
+	private String login = null;
 	private short status;
 	
 	public void setBubble( DbInvited bubble) {
@@ -70,29 +69,41 @@ public class DisicalInvited extends InvitedPOA {
 		return true;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setInvitationIndex(int invId) {
+		this.invId = invId;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public int getInvitationIndex() {
+		return this.invId;
 	}
 
-	public void setInvitation(Invitation invitation) {
-		this.invitation = invitation;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
-	public Invitation getInvitation() {
-		return this.invitation;
+	public String getLogin() {
+		return login;
 	}
 
-	public User getUser() {
-		HackHelper.printObj(System.out, "D-I:", this.user);
-		return this.user;
+	public Invitation getInvitation()
+		throws jdoPersistenceEx
+	{
+		try {
+			return DbInvitation.lookupInvitation (getInvitationIndex ());
+		}
+		catch (PersistenceException pex) {
+			throw new jdoPersistenceEx(pex.getMessage());
+		}
 	}
 
-	public Date getDate() {
-		return this.date;
+	public User getUser() 
+	throws jdoPersistenceEx {
+		try {
+			return DbUser.lookupUser (this.getLogin ());
+		}
+		catch (PersistenceException pex) {
+			throw new jdoPersistenceEx(pex.getMessage());
+		}
 	}
 
 	public void accept()
@@ -102,14 +113,14 @@ public class DisicalInvited extends InvitedPOA {
 		    DbInvited bubble = getBubble();				
 			if (bubble.getState () != 2) {
 				bubble.setState ((short)2);
-				Invitation i = bubble.getInvitation().getInvitation();
-				this.setDate 
-					(DbDate.createDate 
-					 (this.getUser(), 
-					  new Timestamp(i.getStartTime ()),
-					  new Timestamp(i.getEndTime ()), 
-					  i.getSubject (), i.getLocation (), i.getDescription ()));
+				Invitation i = getInvitation ();
+				DbDate.createDate 
+					(bubble.getLogin (),
+					 new Timestamp(i.getStartTime ()),
+					 new Timestamp(i.getEndTime ()), 
+					 i.getSubject (), i.getLocation (), i.getDescription ());
 				this.persist ();
+				// FIXME: DESTROY i
 			}
 		}
 		catch (PersistenceException e) {
@@ -117,20 +128,14 @@ public class DisicalInvited extends InvitedPOA {
 		}
 	}
 
-	public void reject()
-		throws jdoPersistenceEx {
-		try	{
-			DbInvited bubble = getBubble();
-			if (bubble.getState () != 3) {
-				bubble.setState ((short)3);
-				bubble.getDate ().getDate().deleteDate ();
-				bubble.setDate (null);
-				this.persist ();
+	public void reject() 
+	throws jdoPersistenceEx {
+		if (status () != 3) 
+			{
+				setStatus ((short)3);
+				if (!this.persist ())
+					throw new jdoPersistenceEx ("Reject failed!");
 			}
-		}
-		catch (PersistenceException e) {
-			throw new jdoPersistenceEx(e.getMessage());
-		}
 	}
 
 	public short status() {
@@ -161,14 +166,4 @@ public class DisicalInvited extends InvitedPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public Invited _this(org.omg.CORBA.ORB orb) {
-		Invited obj = super._this(orb);
-		try {
-			bubble.blow(obj);
-		}
-		catch(PersistenceException e) {
-			System.out.println("Ups, cannot blow my bubble!");
-		}
-		return obj;
-	}
 }

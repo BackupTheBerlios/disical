@@ -12,25 +12,28 @@ import java.util.Vector;
 
 public final class DbUser extends DbPersistable
 {
-	private User skel;
 	private String pwd;
-
 	private boolean isLoginUser;
 
 	public DbUser ()
 	throws PersistenceException
 	{
 		super ();
-		DisicalUser stub = new DisicalUser ();
-		stub.setBubble (this);
-		skel = stub._this (DisicalSrv.orb);
+
+		DisicalUser servant = new DisicalUser ();
+		super.setServant (servant);
+		servant.setBubble (this);
 		this.isLoginUser = false;
-		//		putBubble (skel, this);
 	}
 
-	public User getUser ()
+	private DisicalUser getUserServant ()
 	{
-		return this.skel;
+		return (DisicalUser)this.getServant ();
+	}
+
+	private User getUserSkel ()
+	{
+		return this.getUserServant ()._this (DisicalSrv.orb);
 	}
 
 	public boolean isLoginUser ()
@@ -70,7 +73,31 @@ public final class DbUser extends DbPersistable
 		bubble.beLoginUser ();
 		db.commit();
 
-		return bubble.getUser ();
+		return bubble.getUserSkel ();
+	}
+
+	public static User lookupUser (String login)
+		throws org.exolab.castor.jdo.PersistenceException,
+			   IllegalArgumentException, IllegalStateException
+	{
+		DbUser bubble;
+
+		/* OQL */
+		Database     db  = DbManager.getConnection ();
+		OQLQuery     oql = db.getOQLQuery 
+			("SELECT u FROM de.cwrose.disical.db.DbUser u WHERE u.login=$1");
+		oql.bind (login);
+		db.begin();
+		QueryResults res = oql.execute();
+		if (!res.hasMore ())
+			throw new IllegalArgumentException 
+				("You don't have the right password!  Go away!");
+		
+		bubble = ((DbUser) res.next ());
+		bubble.growOld ();
+		db.commit();
+
+		return bubble.getUserSkel ();
 	}
 
 	public  Date[] listDatesByLocation (String location)
@@ -153,24 +180,24 @@ public final class DbUser extends DbPersistable
 		throws PersistenceException
 	{
 		DbUser bubble = new DbUser ();
-		User usr = bubble.getUser ();
-		usr.setLogin (login); 
+		DisicalUser servant = bubble.getUserServant ();
+		servant.setLogin (login); 
 		bubble.setPassword (pwd);
-		usr.setName (name);
-		usr.setEmail (email);
-		usr.persist ();
+		servant.setName (name);
+		servant.setEmail (email);
+		servant.persist ();
 
-		return usr;
+		return bubble.getUserSkel ();
     }
 
 	/* Property: Login */
 
 	public String getLogin () {
-		return skel.getLogin ();
+		return getUserServant().getLogin ();
 	}
 
 	public void setLogin (String login) {
-		skel.setLogin (login);
+		getUserServant ().setLogin (login);
 	}
 
 
@@ -192,11 +219,11 @@ public final class DbUser extends DbPersistable
 	/* Property: Name */
 
 	public String getName () {
-		return skel.getName ();
+		return getUserServant().getName ();
 	}
 
 	public void setName (String name) {
-		skel.setName (name);
+		getUserServant().setName (name);
 	}
 
 
@@ -205,11 +232,11 @@ public final class DbUser extends DbPersistable
 	/* Property: Email */
 
 	public String getEmail () {
-		return skel.getEmail ();
+		return getUserServant().getEmail ();
 	}
 
 	public void setEmail (String email) {
-		skel.setEmail (email);
+		getUserServant().setEmail (email);
 	}
 
 	protected final static User [] enum2array (Enumeration enum)
@@ -223,9 +250,8 @@ public final class DbUser extends DbPersistable
 			{
 				DbUser o = (DbUser)enum.nextElement ();
 				o.growOld ();
-				v.addElement (o.getUser ());
+				v.addElement (o.getUserSkel ());
 			}
-
 		return (User [])v.toArray ();
 	}
 }

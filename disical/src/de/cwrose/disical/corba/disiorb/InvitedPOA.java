@@ -54,7 +54,6 @@ public abstract class InvitedPOA
         {
             "accept",
             "destroy",
-            "getDate",
             "getInvitation",
             "getUser",
             "persist",
@@ -89,22 +88,19 @@ public abstract class InvitedPOA
         case 1: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 2: // getDate
-            return _OB_op_getDate(in, handler);
-
-        case 3: // getInvitation
+        case 2: // getInvitation
             return _OB_op_getInvitation(in, handler);
 
-        case 4: // getUser
+        case 3: // getUser
             return _OB_op_getUser(in, handler);
 
-        case 5: // persist
+        case 4: // persist
             return _OB_op_persist(in, handler);
 
-        case 6: // reject
+        case 5: // reject
             return _OB_op_reject(in, handler);
 
-        case 7: // status
+        case 6: // status
             return _OB_op_status(in, handler);
         }
 
@@ -140,24 +136,21 @@ public abstract class InvitedPOA
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_getDate(org.omg.CORBA.portable.InputStream in,
-                   org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        Date _ob_r = getDate();
-        out = handler.createReply();
-        DateHelper.write(out, _ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
     _OB_op_getInvitation(org.omg.CORBA.portable.InputStream in,
                          org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        Invitation _ob_r = getInvitation();
-        out = handler.createReply();
-        InvitationHelper.write(out, _ob_r);
+        try
+        {
+            Invitation _ob_r = getInvitation();
+            out = handler.createReply();
+            InvitationHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -166,9 +159,17 @@ public abstract class InvitedPOA
                    org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_r = getUser();
-        out = handler.createReply();
-        UserHelper.write(out, _ob_r);
+        try
+        {
+            User _ob_r = getUser();
+            out = handler.createReply();
+            UserHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

@@ -13,84 +13,24 @@ public class DbPersistable {
 	   or updated when persisted to the db */
 	private boolean create_persistable = true;
 
-	/* Maps CORBA.Object -> bubble */
-	private static Hashtable reverseMapping;
+	/* TimeStamp for Castor Long TRansactions */
+	private long jdoTimeStamp = 
+		org.exolab.castor.jdo.TimeStampable.NO_TIMESTAMP;
 
-	static
-	{
-		// Initialize Hashes 
-		reverseMapping = new Hashtable ();
-	}
-	
+	/* The skel */
+	private org.omg.PortableServer.Servant servant = null;
+
 	public DbPersistable () {
 	}
 
-
-
-
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Put bubble p under entry o 
-     * @throws PersistenceException on overwrite
-     */
-	protected static void putBubble(org.omg.CORBA.Object o, DbPersistable p)
-	throws PersistenceException
-    {
-		if (reverseMapping.containsKey (o))
-			throw new PersistenceException 
-				("Attempt to overwrite bubble for CORBA object");
-		reverseMapping.put (o, p);
+	protected final void setServant (org.omg.PortableServer.Servant servant) {
+		this.servant = servant;
 	}
 
-
-
-	/**
-     * Update bubble p under entry p
-     * @throws PersistenceException if not updateabnle 
-	 */
-	protected static void updateBubble(org.omg.CORBA.Object o, DbPersistable p)
-    {
-		reverseMapping.put (o, p);
-    }
-
-
-
-	/**
-     * Lookup bubble for entry o
-     * @throws PersistenceException if not found
-	 */
-    protected static DbPersistable lookupBubble(org.omg.CORBA.Object o)
-	throws PersistenceException {
-		DbPersistable p = null;
-		/*
-		if (!reverseMapping.containsKey (o)) {
-			Exception e = new PersistenceException 
-				("Bubble not found for exsiting	CORBA object");
-			e.printStackTrace(System.out);
-			}*/
-		try	{
-			p = (DbPersistable)reverseMapping.get(o);
-			//System.out.println ("DbPersistable.retBubble: "+p);
-			return p;
-		}
-		catch (ClassCastException e) {
-			throw new PersistenceException 
-				("Non-DbPersistable registered as bubble for CORBA " +
-				 "object.  Ouch.");
-		}
+	protected final org.omg.PortableServer.Servant getServant ()
+	{
+		return this.servant;
 	}
-
-
-
-
-	// ------------------------------------------------------------------------
-
-    public void blow (org.omg.CORBA.Object obj) 
-    throws PersistenceException 
-    {
-		putBubble (obj, this);
-    }
 
 	public final void growOld ()
 	{
@@ -158,7 +98,6 @@ public class DbPersistable {
 				("Can't delete object that is not persistent !");
 	}
 
-
 	public static Throwable filterEx(Throwable t)
 	{
 		if (t instanceof DataObjectAccessException)
@@ -176,5 +115,11 @@ public class DbPersistable {
 		return t;
 	}
 
+	public long jdoGetTimeStamp () { 
+		return this.jdoTimeStamp; 
+	}
 
+	public void jdoSetTimeStamp (long jdoTimeStamp) {
+		this.jdoTimeStamp = jdoTimeStamp;
+	}
 }

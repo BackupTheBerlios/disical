@@ -14,8 +14,6 @@ import java.util.Vector;
 
 public final class DbInvited extends DbPersistable
 {
-	private Invited skel;
-	private DisicalInvited stub;
 	private int index = 0;
 	private boolean notify = false;
 
@@ -23,97 +21,80 @@ public final class DbInvited extends DbPersistable
 	throws PersistenceException
 	{
 		super ();
-		stub = new DisicalInvited ();
-		stub.setBubble (this);
-		skel = stub._this (DisicalSrv.orb);
-		//		putBubble (skel, this);
+
+		DisicalInvited servant = new DisicalInvited ();
+		super.setServant (servant);
+		servant.setBubble (this);
 	}
 
-	public Invited getInvited ()
+	private DisicalInvited getInvitedServant ()
 	{
-		return this.skel;
+		return (DisicalInvited) this.getServant ();
 	}
 
-	protected DisicalInvited getDisicalInvited ()
+	private Invited getInvitedSkel ()
 	{
-		return this.stub;
+		return getInvitedServant ()._this (DisicalSrv.orb);
 	}
 
-	public static Invited createInvited (Invitation i, User u)
+	public static Invited createInvited (int invId, String toUser)
 
 		throws PersistenceException
 	{
 		DbInvited bubble = new DbInvited ();
-		DisicalInvited inv = bubble.getDisicalInvited ();
-		inv.setInvitation (i);
-		System.out.println ("U-U:"+(Object)u+" "+u.getLogin());
-		inv.setUser (u);
-		
-		inv.persist ();
+		DisicalInvited inv = bubble.getInvitedServant ();
+
+		inv.setInvitationIndex (invId);
+		inv.setLogin (toUser);		
+
+		Invited i = bubble.getInvitedSkel ();
+		i.persist ();
 		bubble.growOld();
-		return bubble.getInvited ();
+
+		return i;
     }
 
-	/* Property: User */
 
-	public DbUser getUser () 
+
+
+	/* Property: Login */
+
+	public String getLogin () 
 	throws PersistenceException
     {
-		return (DbUser)lookupBubble(stub.getUser ());
+		return getInvitedServant().getLogin ();
 	}
 
-	public void setUser (DbUser login) {
-		updateBubble (login.getUser (), login);
-		stub.setUser (login.getUser ());
+	public void setLogin (String login) {
+		getInvitedServant ().setLogin (login);
 	}
 
 
 
 	/* Property: Invitation */
 
-	public DbInvitation getInvitation () 
+	public int getInvitation () 
 	throws PersistenceException
     {
-		return (DbInvitation)lookupBubble(skel.getInvitation ());
+		return getInvitedServant ().getInvitationIndex ();
 	}
 
-	public void setInvitation (DbInvitation inv) {
-		updateBubble (inv.getInvitation (), inv);
-		stub.setInvitation (inv.getInvitation ());
+	public void setInvitation (int invId) {
+		getInvitedServant ().setInvitationIndex (invId);
 	}
-
-
-
-	/* Property: Date */
-
-	public DbDate getDate () 
-	throws PersistenceException
-    {
-		Date date = stub.getDate ();
-		if (date == null)
-			return (DbDate)lookupBubble(date);
-		else
-			return null;
-	}
-
-	public void setDate (DbDate date) {
-		updateBubble (date.getDate (), date);
-		stub.setDate (date.getDate ());
-	}
-
 
 
 	/* Property: State */
 
 	public short getState ()
 	{
-		return skel.status ();
+		return getInvitedServant().status ();
 	}
 
 	public void setState (short s)
 						 
 	{
-		stub.setStatus (s);
+		getInvitedServant ().setStatus (s);
 	}
 
 
@@ -122,13 +103,29 @@ public final class DbInvited extends DbPersistable
 
 	public boolean getNotify ()
 	{
-		return stub.getNotify ();
+		return getInvitedServant().getNotify ();
 	}
 
 	public void setNotify (boolean b)
 	{
-		stub.setNotify (b);
+		getInvitedServant().setNotify (b);
 	}
+
+
+
+
+	/* Property: Index */
+
+	public int getIndex () {
+		return index;
+	}
+
+	public void setIndex (int index) {
+		this.index = index;
+	}
+
+
+
 
 	protected final static Invited [] enum2array (Enumeration enum)
 	{
@@ -141,20 +138,10 @@ public final class DbInvited extends DbPersistable
 			{
 				DbInvited o = (DbInvited)enum.nextElement ();
 				o.growOld ();
-				v.addElement (o.getInvited ());
+				v.addElement (o.getInvitedSkel ());
 			}
 
 		return (Invited [])v.toArray ();
 	}
-
-	/* Property: Index */
-
-	public int getIndex () {
-		return index;
-	}
-
-	public void setIndex (int index) {
-		this.index = index;
-	}
-
 }
+

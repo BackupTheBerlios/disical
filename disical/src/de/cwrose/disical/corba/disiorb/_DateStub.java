@@ -627,6 +627,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public User
     getUser()
+        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -650,6 +651,8 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally

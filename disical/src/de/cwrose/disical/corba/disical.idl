@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.25 2002/02/13 21:28:34 deafman Exp $
+// $Id: disical.idl,v 1.26 2002/02/13 23:39:23 stepn Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 module de {
   module cwrose {
@@ -115,7 +115,8 @@ module de {
 			string getLocation();
 			string getSubject();
 			string getDescription();
-			User getUser();
+			User getUser()
+			  raises (jdoPersistenceEx);
 			
 			void setIndex(in long _index);
 			long getIndex(); 
@@ -152,7 +153,8 @@ module de {
 			string getLocation();
 			string getSubject();
 			string getDescription();
-			User getFromUser();
+			User getFromUser()
+			  raises (jdoPersistenceEx);
 			
 			seqInvited getAllInvited()
 			  raises (jdoPersistenceEx);
@@ -171,9 +173,11 @@ module de {
 		  /* Invited - Interface */
 		  interface Invited {
 
-			Invitation getInvitation();
-			User getUser();
-			Date getDate();
+			Invitation getInvitation()
+			  raises (jdoPersistenceEx);
+
+			User getUser()
+			  raises (jdoPersistenceEx);
 
 			void accept()
 			  raises (jdoPersistenceEx);

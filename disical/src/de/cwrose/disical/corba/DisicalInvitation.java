@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.17 2002/02/13 21:28:34 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.18 2002/02/13 23:39:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -33,12 +33,12 @@ public class DisicalInvitation extends InvitationPOA {
 	public final static String Id = "Invitation";
 	public final static String Kind = "";
 
-	private User fromuser;
 	private long startTime;
 	private long endTime;
 	private String location;
 	private String subject;
 	private String description;
+	private String login;
 
 	private DbInvitation bubble = null;
 
@@ -84,7 +84,7 @@ public class DisicalInvitation extends InvitationPOA {
 		try	{
 			System.out.println ("D-U:"+(Object)u+" "+u.getLogin());
 			DbInvitation inv = getBubble();
-			DbInvited.createInvited (inv.getInvitation(),u);
+			DbInvited.createInvited (inv.getIndex (), u.getLogin ());
 		}
 		catch (PersistenceException e) {
 			throw new jdoPersistenceEx(e.getMessage());
@@ -145,12 +145,18 @@ public class DisicalInvitation extends InvitationPOA {
 		}
 	}
 
-	public User getFromUser() {
-		return fromuser;
+	public User getFromUser() 
+	throws jdoPersistenceEx {
+		try	{
+			return de.cwrose.disical.db.DbUser.lookupUser (this.getLogin ());
+		}
+		catch (PersistenceException pex) {
+			throw new jdoPersistenceEx(pex.getMessage());
+		}
 	}
 
 	public void setFromUser(User fromUser) {
-		fromuser = fromUser;
+		this.setLogin (fromUser.getLogin ());
 	}
 
 	public void setStartTime(long Time) {
@@ -202,15 +208,11 @@ public class DisicalInvitation extends InvitationPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public Invitation _this(org.omg.CORBA.ORB orb) {
-		Invitation obj = super._this(orb);
-		try {
-			bubble.blow(obj);
-		}
-		catch(PersistenceException e) {
-			System.out.println("Ups, cannot blow my bubble!");
-		}
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-		return obj;
+	public String getLogin() {
+		return login;
 	}
 }

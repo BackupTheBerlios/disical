@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.21 2002/02/13 21:28:34 deafman Exp $
+// $Id: DisicalDate.java,v 1.22 2002/02/13 23:39:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,11 +17,12 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
+import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.db.DbManager;
 
 import org.omg.CORBA.ORB;
@@ -42,7 +43,7 @@ public class DisicalDate extends DatePOA {
 	private String location = null;
 	private String subject = null;
 	private String description = null;
-	private User login = null;
+	private String login = null;
 	private int _index;
 
 	/* Client doesnt see the bubble.. ooh */
@@ -139,12 +140,29 @@ public class DisicalDate extends DatePOA {
 		this.description = description;
 	}
 
-	public void setLogin(User login) {
+	public void setLogin(String login) {
 		this.login = login;
 	}
 
-	public User getLogin() {
+	public String getLogin() {
 		return login;
+	}
+
+	public User getUser()
+		throws jdoPersistenceEx
+	{
+		try {
+			return DbUser.lookupUser(this.getLogin());
+		}
+		catch (PersistenceException pex)
+			{
+				throw new jdoPersistenceEx(pex.getMessage ());
+			}
+	}
+
+	public void setUser(User usr)
+	{
+		setLogin (usr.getLogin ());
 	}
 
 	public long getStartTime() {
@@ -186,14 +204,4 @@ public class DisicalDate extends DatePOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public Date _this(org.omg.CORBA.ORB orb) {
-		Date obj = super._this(orb);
-		try {
-			bubble.blow(obj);
-		}
-		catch(PersistenceException e) {
-			System.out.println("Ups, cannot blow my bubble!");
-		}
-		return obj;
-	}
 }

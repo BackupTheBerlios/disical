@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.24 2002/02/13 21:28:34 deafman Exp $
+// $Id: DisicalUser.java,v 1.25 2002/02/13 23:39:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -137,8 +137,7 @@ public class DisicalUser extends UserPOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			User u = this.getBubble().getUser();
-			// DbUser.deleteUser(u);
+			this.getBubble().delete (db);
 			db.commit();
 		}
 		catch (org.exolab.castor.jdo.PersistenceException e)
@@ -154,7 +153,10 @@ public class DisicalUser extends UserPOA {
 		throws jdoPersistenceEx {
 
 		try {
-			return DbDate.createDate(getBubble().getUser(), new Timestamp(start), new Timestamp (end), subject, location, description);
+			return DbDate.createDate
+				(getLogin (), 
+				 new Timestamp(start), new Timestamp (end), 
+				 subject, location, description);
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());
@@ -281,7 +283,7 @@ public class DisicalUser extends UserPOA {
 
 		try {
 			invitation = 
-				DbInvitation.createInvitation(getBubble().getUser(),
+				DbInvitation.createInvitation(this.getLogin (),
 											  new java.sql.Timestamp(start),
 											  new java.sql.Timestamp(end),
 											  subject, location, description);
@@ -304,14 +306,4 @@ public class DisicalUser extends UserPOA {
 		catch (org.omg.CORBA.UserException ex) {}
 	}
 
-	public User _this(org.omg.CORBA.ORB orb) {
-		User obj = super._this(orb);
-		try {
-			bubble.blow(obj);
-		}
-		catch(PersistenceException e) {
-			System.out.println("Ups, cannot blow my bubble!");
-		}
-		return obj;
-	}
 }

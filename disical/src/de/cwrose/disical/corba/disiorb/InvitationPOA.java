@@ -244,9 +244,17 @@ public abstract class InvitationPOA
                        org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_r = getFromUser();
-        out = handler.createReply();
-        UserHelper.write(out, _ob_r);
+        try
+        {
+            User _ob_r = getFromUser();
+            out = handler.createReply();
+            UserHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
