@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.30 2002/01/29 14:16:42 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.31 2002/01/30 17:00:12 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -179,7 +179,27 @@
 	  </path>    
     </classpath>
     commit;
-    create database ${db-name}
+    create database ${db-name};
+  </sql>
+
+  <sql
+    driver="${db-driver-class}"
+    url="${db-url-connect}" 
+    userid="${db-username}" password="${db-password}">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> 
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+	CREATE FUNCTION plpgsql_call_handler () 
+	RETURNS OPAQUE AS '${pg-plpgsql}' LANGUAGE 'C';
+
+	CREATE TRUSTED PROCEDURAL LANGUAGE 'plpgsql'
+    HANDLER plpgsql_call_handler
+    LANCOMPILER 'PL/pgSQL';
   </sql>
   <sql
     driver="${db-driver-class}"
