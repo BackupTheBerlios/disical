@@ -140,7 +140,7 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                         server = client.getServer();
                          user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
                          System.out.println(cancel);
-                         dlg.setMessage(dlg.login + " " + dlg.password);
+                         
                     }
                     catch (jdoPersistenceEx e) {
                         System.out.println(e.toString());

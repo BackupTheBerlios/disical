@@ -61,8 +61,8 @@ public class RegisterDialog extends javax.swing.JDialog {
         
         jPanel2.setLayout(new java.awt.GridLayout(5, 2));
         
-        jPanel2.setPreferredSize(new java.awt.Dimension(230, 80));
         jPanel2.setMinimumSize(new java.awt.Dimension(200, 80));
+        jPanel2.setPreferredSize(new java.awt.Dimension(230, 80));
         jLabel6.setText("Name:");
         jPanel2.add(jLabel6);
         
@@ -153,6 +153,17 @@ public class RegisterDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // Add your handling code here:
+        System.out.println("Hallo");
+        this.login = logininput.getText();
+        this.password = passwordField.getText();
+        this.email = emailinput.getText();
+        this.name = nameinput.getText();
+        this.password = passwordField.getText();
+        cancel = false;
+        setVisible(false);
+        dispose();
+        
+        
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void emailinputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailinputActionPerformed

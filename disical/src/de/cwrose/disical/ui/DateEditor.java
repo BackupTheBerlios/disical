@@ -87,7 +87,6 @@ public class DateEditor extends javax.swing.JDialog {
         jPanel2.add(startLabel);
         
         startTime.setText("jLabel6");
-        startTime.setForeground(java.awt.Color.black);
         jPanel2.add(startTime);
         
         startchange.setText("change");
@@ -105,7 +104,6 @@ public class DateEditor extends javax.swing.JDialog {
         jPanel3.add(stopLabel);
         
         stopTime.setText("jLabel6");
-        stopTime.setForeground(java.awt.Color.black);
         jPanel3.add(stopTime);
         
         stopchange.setText("change");
@@ -125,26 +123,26 @@ public class DateEditor extends javax.swing.JDialog {
         getContentPane().add(jPanel1, gridBagConstraints1);
         
         jPanel4.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints gridBagConstraints3;
+        java.awt.GridBagConstraints gridBagConstraints2;
         
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         
-        commentText.setPreferredSize(new java.awt.Dimension(10, 17));
         commentText.setMinimumSize(new java.awt.Dimension(10, 17));
+        commentText.setPreferredSize(new java.awt.Dimension(10, 17));
         jPanel5.add(commentText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 180, 140));
         
-        gridBagConstraints3 = new java.awt.GridBagConstraints();
-        gridBagConstraints3.gridx = 0;
-        gridBagConstraints3.gridy = 1;
-        gridBagConstraints3.anchor = java.awt.GridBagConstraints.SOUTH;
-        jPanel4.add(jPanel5, gridBagConstraints3);
+        gridBagConstraints2 = new java.awt.GridBagConstraints();
+        gridBagConstraints2.gridx = 0;
+        gridBagConstraints2.gridy = 1;
+        gridBagConstraints2.anchor = java.awt.GridBagConstraints.SOUTH;
+        jPanel4.add(jPanel5, gridBagConstraints2);
         
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel3.setText("Comment:");
-        gridBagConstraints3 = new java.awt.GridBagConstraints();
-        gridBagConstraints3.gridx = 0;
-        gridBagConstraints3.gridy = 0;
-        jPanel4.add(jLabel3, gridBagConstraints3);
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        gridBagConstraints2 = new java.awt.GridBagConstraints();
+        gridBagConstraints2.gridx = 0;
+        gridBagConstraints2.gridy = 0;
+        jPanel4.add(jLabel3, gridBagConstraints2);
         
         gridBagConstraints1 = new java.awt.GridBagConstraints();
         gridBagConstraints1.gridx = 0;
@@ -158,8 +156,8 @@ public class DateEditor extends javax.swing.JDialog {
         jPanel6.add(jLabel5);
         
         locationText.setText(" ");
-        locationText.setPreferredSize(new java.awt.Dimension(50, 21));
         locationText.setMinimumSize(new java.awt.Dimension(50, 21));
+        locationText.setPreferredSize(new java.awt.Dimension(50, 21));
         locationText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 locationTextActionPerformed(evt);
@@ -179,8 +177,8 @@ public class DateEditor extends javax.swing.JDialog {
         jPanel7.add(jLabel6);
         
         eventText.setText(" ");
-        eventText.setPreferredSize(new java.awt.Dimension(50, 21));
         eventText.setMinimumSize(new java.awt.Dimension(50, 21));
+        eventText.setPreferredSize(new java.awt.Dimension(50, 21));
         jPanel7.add(eventText);
         
         gridBagConstraints1 = new java.awt.GridBagConstraints();
