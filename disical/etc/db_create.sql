@@ -5,7 +5,7 @@ create table auth (
 	email     varchar ( 32 ),
 	isAdmin   boolean,
 	
-	primary key ( login ),
+	primary key ( login )
 );
 create index auth_email_idx on auth ( email );
 

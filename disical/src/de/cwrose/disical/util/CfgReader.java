@@ -2,6 +2,58 @@ package de.cwrose.disical.util;
 
 import java.io.*;
 import java.util.*;
+import java.io.StringWriter;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.Template;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.app.VelocityEngine;
+
+/***
+ * Utility class that implements Properties as VelocityContext.
+ * While all Properties Objects handled by CfgReader are in fact
+ * CfgProperties-Objects, this is invisible to CfgReader-users.
+ *
+ * @author stepn
+ * @revision $Revision: 1.3 $
+ */
+final class CfgProperties 
+extends Properties 
+implements org.apache.velocity.context.Context
+{
+	 public CfgProperties () {
+		  super ();
+	 }
+
+	 public CfgProperties (Properties parent) {
+		  super ();
+
+		  this.putAll (parent);
+	 }
+
+	 public Object put (java.lang.String key,java.lang.Object value) {
+		  return this.put (key, value);
+	 }
+
+	 public Object get (java.lang.String key) {
+		  return super.get (key);
+	 }
+
+	 public Object remove (java.lang.String key) {
+		  return super.remove (key);
+	 }
+
+	 public Object [] getKeys () {
+		  return super.keySet ().toArray ();
+	 }
+
+	 public boolean containsKey (String key) {
+		  return super.containsKey (key);
+	 }
+}
+
 
 /*
  * Static singleton used to access configuration files of the disical
@@ -10,7 +62,7 @@ import java.util.*;
  * as the java vm.
  * 
  * @author Stefan Plantikow <stepn@users.berlios.de>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see java.lang.System#getProperty
  * 
  */
@@ -19,53 +71,16 @@ public final class CfgReader
 	 public final static String MAIN_DIR = "disical.cfg";
 	 public final static String LOCAL_DIR = "disical.cfg.local";
 	 public final static String CFG_EXT = ".properties";
+	 public final static String XML_EXT = ".xml";
+	 public final static String CFG_LOG = "CfgReader:";
 
 	 static Hashtable cfgs;
 	 static File mainDir;
 	 static File localDir;
 
 	 static 
-	 {
-                 /* Verstgeh ich nicht, gibt meiner Meinung nach immer null zurück, da es  
-                  * Da es das System Property "disical.cfg" nicht gibt.
-                  *
-                  * Oder versteh ich System.getProperty falsch?
-                  * Soweit ich das verstehe kann man damit nur ganz bestimmte System Properties, 
-                  * wie die jvm (java.vm.name) oder das Working Directory bestimmen 
-                  * (user.dir).
-                  *
-                  * Soweit ich weiss gibt es auch ein Config File fuer die JVM, um 
-                  * solche properties zu setzen, aber dazu finde ich gerade nichts im
-                  * javadoc und die Frage ist auch ob wir das wollen
-                  *
-                  * Ansonsten finde ich die Idee einer Zentralen Classe zum verwalten
-                  * der Configuration sehr gut, auch dass man die Configuration ueber 
-                  * eine statische Methode bekommt.
-                  * Ich habe mir darueber auch schon gedanken gemacht und mir einige 
-                  * Compliziertere möglichkeiten angschaut, ueber jndi (PASX Framework)
-                  * , aber da ich da bis jetzt noch nicht so ganz durchsteige, glaube 
-                  * ich langsam, das man sich damit noch mehr ärger macht als man sich 
-                  * vorteile verschafft.
-                  *
-                  * Ein vorschlag von mir wäre noch, dem CfgReader eine Statische 
-                  * Methode hinzuzufuegen, die ein fuer DiSiCal configuriertes Castor 
-                  * Database Object zurückgibt. Das wuerde es ermöglichen, dass Objekte
-                  * selber auf das Persistenz layer zugreifen koennen, um sich selbst 
-                  * zu persistieren. Überhaupt haette man so einen einfachen zugriff 
-                  * auf Castor. Das löst  meiner Erfahrung nach manche Probleme mit Castor, 
-                  * insbesondere beim erzeugen des Database Objekts und dem Einlesen der
-                  * xml cofigurations Dateien database.xml oder mapping.xml.
-                  *
-                  * Ups, eigentlich sollte das nur eine Frage zum Code werden, ich glaube
-                  * ich verlege weitere Design & Planungsaktivitäten auf das Forum.
-                  * bitte löscht diesen commentar einfach wieder, wenn er nicht mehr 
-                  * aktuell ist.
-                  *
-                  * Gruss Conny
-                  *
-                  */
-                  
-                  String mainStr = System.getProperty (MAIN_DIR);
+	 {                  
+        String mainStr = System.getProperty (MAIN_DIR);
 		  mainDir = new File (mainStr);
 
 		  String localStr = System.getProperty (LOCAL_DIR);
@@ -109,15 +124,20 @@ public final class CfgReader
      * @throws MissingCfgException if there is no cfg file in
      * LOCAL_DIR or MAIN_DIR
      */
-	 public static Properties readCfg (String cfg)
+	 public static Properties readCfg (String cfg) 
 	 throws CfgMissingException
 	 {
-		  Properties props = (Properties) cfgs.get (cfg);
+		  return (Properties) _readCfg (cfg);
+	 }
+
+	 private static CfgProperties _readCfg (String cfg)
+	 throws CfgMissingException
+	 {
+		  CfgProperties props = (CfgProperties) cfgs.get (cfg);
 		  if (props != null)
 				return props;
 
-		  props = readProps (mainDir, cfg, null);
-		  props = readProps (localDir, cfg, props);
+		  props = readProps (localDir, cfg, readProps (mainDir, cfg, null));
 		  
 		  if (props == null)
 				throw new CfgMissingException (cfg);
@@ -126,11 +146,12 @@ public final class CfgReader
 		  return props;
 	 }
 
-	 static Properties readProps (File parent, String cfg, Properties pred)
+	 static CfgProperties readProps (File parent, 
+												String cfg, CfgProperties pred)
 	 {
 		  File fd = new File (parent, cfg + CFG_EXT);
-		  Properties props = (pred == null) ? 
-				new Properties () : new Properties (pred);
+		  CfgProperties props = (pred == null) ? 
+				new CfgProperties () : new CfgProperties (pred);
 
 		  try 
 		  {
@@ -143,5 +164,44 @@ public final class CfgReader
 		  
 		  return props;
 	 }  
+
+    /**
+     * @param readLocal if true, read file from local cfg directory
+     * @return Buffered File Reader to cfg.xml.
+     */
+	 public static Reader getXmlFileReader (String cfg, boolean readLocal) 
+    throws FileNotFoundException {
+		  return new BufferedReader (new FileReader 
+			   (new File (readLocal ? localDir : mainDir, cfg + XML_EXT)));
+	 }
+
+    /**
+     * Calls getXmlFileReader(cfg,false).
+     * @see getXmlFileReader(String,boolean)
+     */
+	 public static Reader getXmlFileReader (String cfg) 
+    throws FileNotFoundException {
+		  return getXmlFileReader (cfg, false);
+	 }
+
+    /**
+     * Parses reader using Velocity Template Enginge with VelocityContext
+     * containing all String values from getProps (cfg) and writes the result
+     * to writer.
+     */
+	 public static boolean evaluateTemplate (String cfg, 
+														  java.io.Writer writer, 
+														  java.io.Reader reader) 
+		  throws 
+		  ResourceNotFoundException, MethodInvocationException, 
+		  ParseErrorException, CfgMissingException, Exception 
+	 {
+		  CfgProperties props = _readCfg (cfg);
+		  VelocityEngine ve = new VelocityEngine ();
+		  ve.init (readCfg ("velocity"));
+		  return ve.evaluate (props, writer, CFG_LOG+cfg, reader);
+	 }
 } 
+
+
 

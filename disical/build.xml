@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.13 2002/01/12 18:07:22 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.14 2002/01/12 23:04:33 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -38,7 +38,7 @@
   <!-- Setting Project properties: build process flags -->
   <property name="build.debug" value="on" />
   <property name="build.optimize" value="off" />
-  <property name="db.log" value="${dir.etc}/db.log" />	
+  <property name="db-log" value="${dir.etc}/db.log" />	
   
   <!-- Setting Project properties: Classpath components -->
   <property name="mod.castor" value="castor-0.9.3.9.jar" />
@@ -48,6 +48,7 @@
   <property name="mod.transaction" value="jta1.0.1.jar" />
   <property name="mod.bsh" value="bsh-1.2b3.jar" />
   <property name="mod.OB" value="OB.jar" />
+  <property name="mod.velocity" value="velocity-dep-1.2.jar" />
 
 
   <!-- Setting Project properties: Read User's *Local* properties -->
@@ -60,8 +61,9 @@
   <touch file="${dir.etc}/local-build.properties" />
   <property file="${dir.etc}/local-build.properties" />
   <property file="${disical.cfg}/server.properties" />
+  <property file="${disical.cfg}/velocity.properties" />
   <property file="${disical.cfg}/local/server.properties" />
-
+  <property file="${disical.cfg}/local/velocity.properties" />
 
   <!-- Initial build activities: Tstamp + Create pk output dirs -->
   <tstamp />
@@ -78,6 +80,12 @@
 <target name="util" depends="init,clean_jar">
   <javac srcdir="${dir.src}" destdir="${dir.out}" 
          debug="${build.debug}" optimize="${build.optimize}">
+	 <classpath>
+	   <pathelement path="${java.class.path}" />
+	   <path> <!-- name classpath for later reference -->
+	     <pathelement location="${dir.lib}/${mod.velocity}" />
+	   </path>
+    </classpath>
     <include name="${dir.ns}/util/**/*.java" />
   </javac>
 </target>
@@ -113,54 +121,54 @@
 </target>
 
 <target name="pg_init" depends="init">
-  <exec executable="${shell.file}" 
+  <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
-    <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.initdb} ${pg.root}${shell.quote}" />
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-initdb} ${pg-root}${shell-quote}" />
   </exec>
 </target>
 
 <target name="pg_start" depends="init">
-  <exec executable="${shell.file}" 
+  <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
-    <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -W -l ${db.log} -D ${pg.root} start -o -i${shell.quote}" />
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -W -l ${db-log} -D ${pg-root} start -o -i${shell-quote}" />
   </exec>
 </target>
 
 <target name="pg_stop" depends="init">
-  <exec executable="${shell.file}" 
+  <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
-    <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -D ${pg.root} stop${shell.quote}" />
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -D ${pg-root} stop${shell-quote}" />
   </exec>
 </target>
 
 <target name="pg_status" depends="init">
-  <exec executable="${shell.file}" 
+  <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
-    <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -D ${pg.root} status${shell.quote}" />
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -D ${pg-root} status${shell-quote}" />
   </exec>
 </target>
 
 <target name="pg_restart" depends="init">
-  <exec executable="${shell.file}" 
+  <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
-    <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -l ${db.log} -W -D ${pg.root} restart -o -i${shell.quote}" />
+    <arg line="${shell-exec}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -l ${db-log} -W -D ${pg-root} restart -o -i${shell-quote}" />
   </exec>
 </target>
 
 <target name="pg_destroy" depends="init">
-  <delete dir="${pg.root}" includeEmptyDirs="true" />
+  <delete dir="${pg-root}" includeEmptyDirs="true" />
 </target>
 
 <target name="db_create" depends="init">
   <sql
-    driver="${db.driver.class}"
-    url="${db.url.boot}" 
-    userid="${db.username}" password="${db.password}">
+    driver="${db-driver-class}"
+    url="${db-url-boot}" 
+    userid="${db-username}" password="${db-password}">
     <classpath>
 	  <pathelement path="${java.class.path}" />
 	  <path> 
@@ -173,9 +181,9 @@
     create database disical
   </sql>
   <sql
-    driver="${db.driver.class}"
-    url="${db.url.connect}" 
-    userid="${db.username}" password="${db.password}"
+    driver="${db-driver-class}"
+    url="${db-url-connect}" 
+    userid="${db-username}" password="${db-password}"
     src="${dir.etc}/db_create.sql">
     <classpath>
 	  <pathelement path="${java.class.path}" />
@@ -190,9 +198,9 @@
 
 <target name="db_drop" depends="init">
  <sql
-    driver="${db.driver.class}"
-    url="${db.url.connect}"
-    userid="${db.username}" password="${db.password}"
+    driver="${db-driver-class}"
+    url="${db-url-connect}"
+    userid="${db-username}" password="${db-password}"
     src="${dir.etc}/db_drop.sql"
     onerror="continue">
     <classpath>
@@ -205,9 +213,9 @@
     </classpath>
   </sql>
   <sql
-    driver="${db.driver.class}"
-    url="${db.url.boot}"
-    userid="${db.username}" password="${db.password}">
+    driver="${db-driver-class}"
+    url="${db-url-boot}"
+    userid="${db-username}" password="${db-password}">
     <classpath>
 	  <pathelement path="${java.class.path}" />
 	  <path> <!-- name classpath for later reference -->
@@ -300,13 +308,27 @@
   <classpath>
     <pathelement path="${java.class.path}" />
 	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+	 <pathelement location="${dir.lib}/${mod.velocity}" />
   </classpath>
   <arg value="server" />
   <arg value="client" />
+  <arg value="velocity" />
   <sysproperty key="disical.cfg" value="${disical.cfg}" />
   </java>
 </target>
 
+<target name="mapping" depends="init,jar">
+  <java classname="de.cwrose.disical.util.VeloTester" fork="yes">
+  <classpath>
+    <pathelement path="${java.class.path}" />
+	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+	 <pathelement location="${dir.lib}/${mod.velocity}" />
+  </classpath>
+  <arg value="server" />
+  <arg value="database" />
+  <sysproperty key="disical.cfg" value="${disical.cfg}" />
+  </java>
+</target>
 
 
 
