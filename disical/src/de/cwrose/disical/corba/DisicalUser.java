@@ -53,10 +53,9 @@ public class DisicalUser extends UserPOA {
 	public void setPasswd(String oldPW, String newPW) 
 		throws wrongPwEx {
 		String bubblePW = bubble.getPassword();
-		if (!bubblePW.equals(oldPW)) {
+		if (!bubblePW.equals(oldPW)) 
 			throw new wrongPwEx("You've entered an INVALID Passwd!");
 		bubble.setPassword (newPW);
-		}
 	}
 
 	public String getLogin() {
@@ -69,10 +68,6 @@ public class DisicalUser extends UserPOA {
 
 	public String getEmail() {
 		return email;
-	}
-
-	public boolean persist() {
-		return bubble.persist ();
 	}
 
 	public void do_persist(Database db) 
