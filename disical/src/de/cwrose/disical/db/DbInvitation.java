@@ -176,6 +176,25 @@ public final class DbInvitation extends DbPersistable
 		return (Invited [])getToUsers().toArray();
 	}
 
+	public  Date[] getAllNotifiedInv ()
+		throws org.exolab.castor.jdo.PersistenceException
+	{
+		Database  db = DbManager.getConnection ();
+
+		// OQL 
+		OQLQuery oql = db.getOQLQuery 
+			("SELECT i FROM de.cwrose.disical.db.DbInvited i "+
+			 "WHERE i.login=$1 and i.notify=true and i.invitation=$2");
+		oql.bind (this.getUser().getLogin());
+		oql.bind (this.getIndex ());
+
+		// Get Results
+		db.begin();
+		QueryResults res = oql.execute();
+		db.commit();
+		return (Date [])DbDate.enum2array(res);
+	}
+
 	protected final static Invitation [] enum2array (Enumeration enum)
 	{
 		Vector v = new Vector ();

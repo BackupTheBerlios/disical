@@ -16,6 +16,7 @@ public final class DbInvited extends DbPersistable
 {
 	private Invited skel;
 	private DisicalInvited stub;
+	private int index = 0;
 
 	public DbInvited ()
 	throws PersistenceException
@@ -137,4 +138,15 @@ public final class DbInvited extends DbPersistable
 
 		return (Invited [])v.toArray ();
 	}
+
+	/* Property: Index */
+
+	public int getIndex () {
+		return index;
+	}
+
+	public void setIndex (int index) {
+		this.index = index;
+	}
+
 }
