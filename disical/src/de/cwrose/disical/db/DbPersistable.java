@@ -86,7 +86,7 @@ public class DbPersistable {
 
 	// ------------------------------------------------------------------------
 
-    protected void blow (org.omg.CORBA.Object obj) 
+    public void blow (org.omg.CORBA.Object obj) 
     throws PersistenceException 
     {
 		putBubble (obj, this);

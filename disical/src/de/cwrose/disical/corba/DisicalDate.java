@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.19 2002/02/13 17:10:23 deafman Exp $
+// $Id: DisicalDate.java,v 1.20 2002/02/13 17:34:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -187,8 +187,13 @@ public class DisicalDate extends DatePOA {
 	}
 
 	public Date _this() {
-		Date obj = super();
-		bubble.blow(obj);
+		Date obj = super._this();
+		try {
+			bubble.blow(obj);
+		}
+		catch(PersistenceException e) {
+			System.out.println("Ups, cannot blow my bubble!");
+		}
 		return obj;
 	}
 }

@@ -81,9 +81,11 @@ public class Client {
 									  "start", "ckeller@informatik.hu-berlin.de");
 				System.out.println ("S-U:"+(Object)stepn+" "+stepn.getLogin());
 
-			invitation.invite(stepn);
-			//invitation.invite(fabian);
-			//invitation.invite(conny);
+				stepn.setEmail("plantiko@informatik.hu-berlin.de");
+				stepn.persist();
+				invitation.invite(stepn);
+				//invitation.invite(fabian);
+				//invitation.invite(conny);
 
 			}
 			catch (jdoPersistenceEx e) {
