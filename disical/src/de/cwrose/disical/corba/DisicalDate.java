@@ -15,10 +15,6 @@ public class DisicalDate extends DatePOA {
 	private String subject = null;
 	private String login = null;
 	private int _index;
-  
-	public void setStartTime(long Time) {
-		startTime = Time;
-	}
 
 	public void setEndTime(long Time) {
 		endTime = Time;

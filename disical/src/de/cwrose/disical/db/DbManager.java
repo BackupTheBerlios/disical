@@ -12,7 +12,7 @@ import de.cwrose.disical.corba.disiorb.*;
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DbManager {
 	private static JDO jdo;
@@ -31,14 +31,17 @@ public class DbManager {
 				Writer writer = new StringWriter ();
 				CfgReader.evaluateTemplate 
 					(props.getProperty ("db-mgr-props"), 
-					writer, CfgReader.getXmlFileReader(props.getProperty("db-mgr-jdocfg")));
+					writer, CfgReader.getXmlFileReader
+					 (props.getProperty("db-mgr-jdocfg")));
 				writer.flush ();
 				Reader reader = new StringReader (writer.toString());
 				EntityResolver resolver = new CfgEntityResolver ();
-				jdo.loadConfiguration (new org.xml.sax.InputSource (reader), resolver, null);
+				jdo.loadConfiguration 
+					(new org.xml.sax.InputSource (reader), resolver, null);
 			}
 			jdo.setClassLoader (jdo.getClass ().getClassLoader ());
-			jdo.setDatabasePooling (props.getProperty("db-mgr-pooling") == "enabled");
+			jdo.setDatabasePooling 
+				(props.getProperty("db-mgr-pooling") == "enabled");
 		}
 		catch (Exception e)
 		{
@@ -49,25 +52,11 @@ public class DbManager {
 		}			
 	}
 	
-	static Database getConnection() throws DatabaseNotFoundException, PersistenceException
+	static Database getConnection() 
+		throws DatabaseNotFoundException, PersistenceException
 	{
 		return jdo.getDatabase ();
 	}	
 	
-	/**
-	 * Little tester. Initializes JDO, gets a db connection and quits after rollback.
-	 */
-	public static void main (String argv []) throws DatabaseNotFoundException, PersistenceException
-	{
-		System.out.println ("Hello Database !");
-		Database db = DbManager.getConnection ();
-		System.out.println ("Hello Castor !");
-		User u = new DbUser ().getUser ();
-		u.setLogin ("carsten");
-		u.setName ("Carsten Rose");
-		u.setPasswd ("foobar");
-		u.setEmail ("carsten@localhost");
-		u.persist ();
-		System.out.println ("Ciao !");
-	}
-}
+} /* Class */
+

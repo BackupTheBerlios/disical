@@ -19,8 +19,6 @@ create table appointments (
 );
 create index appointments_login_idx 
 	on appointments ( login );
--- create index appointments_start_idx 
---	on appointments ( startDate, startTime );
 create index appointments_subject_idx 
 	on appointments ( subject );
 	
