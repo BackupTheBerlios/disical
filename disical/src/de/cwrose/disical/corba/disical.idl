@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.26 2002/02/13 23:39:23 stepn Exp $
+// $Id: disical.idl,v 1.27 2002/03/06 15:31:07 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 module de {
   module cwrose {
@@ -27,6 +27,7 @@ module de {
 		  /* some exceptions has to pass the ORB */
 		  exception wrongPwEx {};
 		  exception jdoPersistenceEx {};
+		  exception emptySeqEx {};
 		  
 		  /* ServerInterface */
 		  interface Server {
@@ -71,19 +72,19 @@ module de {
 			
 			seqDate listDatesByTime(in long long start,
 									in long long end)
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 			
 			seqDate listDatesByLocation(in string location)
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 			
 			seqDate listDatesBySubject(in string subject)
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 			
 			seqUser listAllUsers()
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 
 			seqInvitation getInvitations()
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 
 			Invitation createInvitation(in long long start, 
 										in long long end, 
@@ -157,9 +158,9 @@ module de {
 			  raises (jdoPersistenceEx);
 			
 			seqInvited getAllInvited()
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 			seqInvited getAllNotifiedInv()
-			  raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx, emptySeqEx);
 
 			void delete()
 			  raises (jdoPersistenceEx);

@@ -117,7 +117,8 @@ public interface UserOperations
     Date[]
     listDatesByTime(long start,
                     long end)
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByLocation:1.0
@@ -126,7 +127,8 @@ public interface UserOperations
 
     Date[]
     listDatesByLocation(String location)
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesBySubject:1.0
@@ -135,7 +137,8 @@ public interface UserOperations
 
     Date[]
     listDatesBySubject(String subject)
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listAllUsers:1.0
@@ -144,7 +147,8 @@ public interface UserOperations
 
     User[]
     listAllUsers()
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/getInvitations:1.0
@@ -153,7 +157,8 @@ public interface UserOperations
 
     Invitation[]
     getInvitations()
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/createInvitation:1.0

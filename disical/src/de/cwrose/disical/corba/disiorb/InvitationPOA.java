@@ -195,6 +195,11 @@ public abstract class InvitationPOA
             out = handler.createExceptionReply();
             jdoPersistenceExHelper.write(out, _ob_ex);
         }
+        catch(emptySeqEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            emptySeqExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -213,6 +218,11 @@ public abstract class InvitationPOA
         {
             out = handler.createExceptionReply();
             jdoPersistenceExHelper.write(out, _ob_ex);
+        }
+        catch(emptySeqEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            emptySeqExHelper.write(out, _ob_ex);
         }
         return out;
     }

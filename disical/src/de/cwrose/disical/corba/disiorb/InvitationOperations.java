@@ -134,7 +134,8 @@ public interface InvitationOperations
 
     Invited[]
     getAllInvited()
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getAllNotifiedInv:1.0
@@ -143,7 +144,8 @@ public interface InvitationOperations
 
     Invited[]
     getAllNotifiedInv()
-        throws jdoPersistenceEx;
+        throws jdoPersistenceEx,
+               emptySeqEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0

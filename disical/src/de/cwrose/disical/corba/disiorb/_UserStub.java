@@ -593,7 +593,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     public Date[]
     listDatesByTime(long _ob_a0,
                     long _ob_a1)
-        throws jdoPersistenceEx
+        throws jdoPersistenceEx,
+               emptySeqEx
     {
         while(true)
         {
@@ -621,6 +622,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
 
                     if(_ob_id.equals(jdoPersistenceExHelper.id()))
                         throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -651,7 +654,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public Date[]
     listDatesByLocation(String _ob_a0)
-        throws jdoPersistenceEx
+        throws jdoPersistenceEx,
+               emptySeqEx
     {
         while(true)
         {
@@ -678,6 +682,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
 
                     if(_ob_id.equals(jdoPersistenceExHelper.id()))
                         throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -708,7 +714,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public Date[]
     listDatesBySubject(String _ob_a0)
-        throws jdoPersistenceEx
+        throws jdoPersistenceEx,
+               emptySeqEx
     {
         while(true)
         {
@@ -735,6 +742,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
 
                     if(_ob_id.equals(jdoPersistenceExHelper.id()))
                         throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -765,7 +774,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public User[]
     listAllUsers()
-        throws jdoPersistenceEx
+        throws jdoPersistenceEx,
+               emptySeqEx
     {
         while(true)
         {
@@ -791,6 +801,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
 
                     if(_ob_id.equals(jdoPersistenceExHelper.id()))
                         throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -821,7 +833,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public Invitation[]
     getInvitations()
-        throws jdoPersistenceEx
+        throws jdoPersistenceEx,
+               emptySeqEx
     {
         while(true)
         {
@@ -847,6 +860,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
 
                     if(_ob_id.equals(jdoPersistenceExHelper.id()))
                         throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
