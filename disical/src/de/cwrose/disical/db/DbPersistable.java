@@ -45,6 +45,7 @@ implements org.exolab.castor.jdo.TimeStampable {
 			throw new PersistenceException 
 				("Attempt to overwrite bubble for CORBA object");
 		reverseMapping.put (o, p);
+		HackHelper.printObj (System.out, "PUT_BUBBLE: ", o);
 	}
 
 
@@ -93,6 +94,7 @@ implements org.exolab.castor.jdo.TimeStampable {
     public void blow (org.omg.CORBA.Object obj) 
     throws PersistenceException 
     {
+		HackHelper.printObj (System.out, "BLOW: ", obj);
 		putBubble (obj, this);
     }
 
