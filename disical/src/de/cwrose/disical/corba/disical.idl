@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.15 2002/01/30 17:11:44 deafman Exp $
+// $Id: disical.idl,v 1.16 2002/01/30 21:18:10 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 module de {
   module cwrose {
@@ -21,6 +21,7 @@ module de {
 		  typedef sequence <Date> seqDate;
 		  typedef sequence <Invitation> seqInvitation;
 		  typedef sequence <User> seqUser;
+		  typedef sequence <Invited> seqInvited;
 		  
 		  /* some exceptions has to pass the ORB */
 		  exception wrongPwEx {};
@@ -64,10 +65,6 @@ module de {
 							in long long end, 
 							in string location, 
 							in string subject)
-			  raises (jdoPersistenceEx);
-			
-			/* get an known Date from the db */
-			Date selectDate(in long index)
 			  raises (jdoPersistenceEx);
 			
 			seqDate listDatesByTime(in long long start,
@@ -128,20 +125,23 @@ module de {
 		  /* Interface Invitation */
 		  interface Invitation {
 			
-			long getIndex();
-			User getFromUser();
-			seqUser getToUser();
-			Date getInvitationDate();
-			
-			void setIndex(in long index);
+			void setStartTime(in long long Time);
+			void setEndTime(in long long Time);
+			void setLocation(in string location);
+			void setSubject(in string subject);
+			void setDescription(in string description);
 			void setFromUser(in User fromUser);
-			void setToUser(in seqUser toUser);
-			void setInvitationDate(in Date newdate);
-					
-			void setInvitation(in seqUser toUser, 
-							   in Date invitationDate)
-			  raises (jdoPersistenceEx);
+
+			long long getStartTime();
+			long long getEndTime();
+			string getLocation();
+			string getSubject();
+			string getDescription();
+			User getFromUser();
 			
+			seqInvited getAllInvited();
+			seqInvited getAllNotifiedInv();
+
 			void delete()
 			  raises (jdoPersistenceEx);
 			

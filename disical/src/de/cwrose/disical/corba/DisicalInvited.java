@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.1 2002/01/30 17:11:44 deafman Exp $
+// $Id: DisicalInvited.java,v 1.2 2002/01/30 21:18:10 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -22,6 +22,9 @@ import org.exolab.castor.jdo.PersistenceException;
 public class DisicalInvited extends InvitedPOA {
 
 	private DbInvited bubble = null;
+	private Invitation invitation = null;
+	private User user = null;
+	private Date date = null;
 	private short status;
 	private boolean notify;
 	
@@ -61,81 +64,53 @@ public class DisicalInvited extends InvitedPOA {
 		return true;
 	}
 
-
-	public Invitation getInvitation() 
-		throws jdoPersistenceEx {
-
-		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//getBubble().setInvitation(toUser, invitationDate);
-			db.commit();
-		}
-		catch (PersistenceException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new jdoPersistenceEx(e.getMessage());
-		}
-
-		return null;
-
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public User getUser() 
-		throws jdoPersistenceEx {
-
-		return null;
-
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public Date getDate()
-		throws jdoPersistenceEx {
+	public void setInvitation(Invitation invitation) {
+		this.invitation = invitation;
+	}
 
-		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//getBubble().setInvitation(toUser, invitationDate);
-			db.commit();
-		}
-		catch (PersistenceException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new jdoPersistenceEx(e.getMessage());
-		}
+	public Invitation getInvitation() {
+		return this.invitation;
+	}
 
-		return null;
+	public User getUser() {
+		return this.user;
+	}
 
+	public Date getDate() {
+		return this.date;
 	}
 
 	public void accept()
 		throws jdoPersistenceEx {
 
 		this.status = 2;
-
+		this.persist();
 	}
 
 	public void reject()
 		throws jdoPersistenceEx {
 
 		this.status = 3;
-
+		this.persist();
 	}
 
-	public short status()
-		throws jdoPersistenceEx {
+	public short status() {
+		return this.status;
+	}
 
-		
-		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//getBubble().setInvitation(toUser, invitationDate);
-			db.commit();
-		}
-		catch (PersistenceException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new jdoPersistenceEx(e.getMessage());
-		}
+	public void setNotify(boolean notify) {
+		this.notify = notify;
+	}
 
+	public boolean getNotify() {
+		return this.notify;
 	}
 }

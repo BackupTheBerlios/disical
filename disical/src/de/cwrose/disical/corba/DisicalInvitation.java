@@ -1,19 +1,17 @@
-// $Id: DisicalInvitation.java,v 1.7 2002/01/30 17:11:44 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.8 2002/01/30 21:18:10 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
  * CORBA Implementation for the Invitation-Object of the Calendar
  * 
  * (set|get)FromUser (disiorb.User)
- * (set|get)ToUser (disiorb.User[])
- * (set|get)InvitationDate (disical.Date)
+ * (set|get)
  * boolean persist();
- * void setInvitation(disical.User, disical.User[], disical.Date, short);
- * void deleteInvitation();
+ * void delete();
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -31,11 +29,12 @@ public class DisicalInvitation extends InvitationPOA {
 	public final static String Id = "Invitation";
 	public final static String Kind = "";
 
-	private int _index;
 	private User fromuser;
-	private User[] touser;
-	private Date date;
-	private short status;
+	private long startTime;
+	private long endUser;
+	private String location;
+	private String subject;
+	private String description;
 
 	private DbInvitation bubble = null;
 
@@ -48,7 +47,6 @@ public class DisicalInvitation extends InvitationPOA {
 	public DbDate getBubble () {
 		return this.bubble;
 	}
-
 
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
@@ -75,45 +73,15 @@ public class DisicalInvitation extends InvitationPOA {
 		return true;
 	}
 
-	public int getIndex() {
-		return _index;
-	}
-
-	public User getFromUser() {
-		return fromuser;
-	}
-
-	public User[] getToUser() {
-		return touser;
-	}
-
-	public Date getInvitationDate() {
-		return date;
-	}
-
-	public void setIndex(int index) {
-		_index = index;
-	}
-
-	public void setFromUser(User fromUser) {
-		fromuser = fromUser;
-	}
-
-	public void setToUser(User[] toUser) {
-		touser = toUser;
-	}
-
-	public void setInvitationDate(Date date) {
-		this.date = date;
-	}
-
-	public void setInvitation(User[] toUser, Date invitationDate)
+	public static Invited[] getAllInvited()
 		throws jdoPersistenceEx {
-		
+
+		Invited[] invitedList = null;
+
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//getBubble().setInvitation(toUser, invitationDate);
+			//
 			db.commit();
 		}
 		catch (PersistenceException e) {
@@ -121,6 +89,28 @@ public class DisicalInvitation extends InvitationPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+			
+		return invitedList;
+	}
+
+	public static Invited[] getAllNotifiedInv()
+		throws jdoPersistenceEx {
+
+		Invited[] invitedList = null;
+
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+			
+		return invitedList;
 	}
 
 	public void delete()
@@ -137,7 +127,54 @@ public class DisicalInvitation extends InvitationPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+	}
 
+	public User getFromUser() {
+		return fromuser;
+	}
+
+	public void setFromUser(User fromUser) {
+		fromuser = fromUser;
+	}
+
+	public void setStartTime(long Time) {
+		this.startTime = Time;
+	}
+
+	public long getStartTime() {
+		return this.startTime;
+	}
+
+	public void setEndTime(long Time) {
+		this.endTime = Time;
+	}
+
+	public long getEndTime() {
+		return this.endTime;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getSubject() {
+		return this.subject;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return this.description;
 	}
 
 	public void destroy() {

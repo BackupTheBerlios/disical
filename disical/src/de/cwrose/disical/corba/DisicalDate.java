@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.15 2002/01/30 17:11:44 deafman Exp $
+// $Id: DisicalDate.java,v 1.16 2002/01/30 21:18:10 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -84,6 +84,40 @@ public class DisicalDate extends DatePOA {
 		return true;
 	}
 
+	public void deleteDate()
+		throws jdoPersistenceEx {
+
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//getBubble().delete();
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+
+	}
+
+	public void changeDate(long start, long end, 
+						   String location, String subject) 
+		throws jdoPersistenceEx {
+		
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//getBubble().updateDate(new Timestamp(start), new Timestamp(stop), subject, location);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+	}
+
 	public void setStartTime(long Time) {
 		startTime = Time;
 	}
@@ -140,39 +174,6 @@ public class DisicalDate extends DatePOA {
 		return	_index;
 	}
 
-	public void deleteDate()
-		throws jdoPersistenceEx {
-
-		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//getBubble().delete();
-			db.commit();
-		}
-		catch (PersistenceException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new jdoPersistenceEx(e.getMessage());
-		}
-
-	}
-
-	public void changeDate(long start, long end, 
-						   String location, String subject) 
-		throws jdoPersistenceEx {
-		
-		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//getBubble().updateDate(new Timestamp(start), new Timestamp(stop), subject, location);
-			db.commit();
-		}
-		catch (PersistenceException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new jdoPersistenceEx(e.getMessage());
-		}
-	}
 
 	public void destroy() {
 
