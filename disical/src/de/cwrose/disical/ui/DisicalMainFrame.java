@@ -20,7 +20,9 @@ import de.cwrose.disical.corba.Exceptions.*;
 public class DisicalMainFrame extends javax.swing.JFrame implements ActionListener {
     boolean online = false; // true if user is logged in
     Server server = null;
+    DisicalCli client = null;
     User user = null;
+    String[] args = null;
     
     /** Creates new form DisicalMainFrame */
     public DisicalMainFrame() {
@@ -132,10 +134,9 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
             dlg.show();
             cancel = dlg.cancel;
             if (!cancel) {
-                DisicalCli client = null;
+           
                 if (server == null) {
-                    client = new DisicalCli(null);
-                    
+                    client = new DisicalCli(new String[0]);                    
                     try {
                         server = client.getServer();
                          user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
@@ -215,6 +216,7 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
      */
     public static void main(String args[]) {
         new DisicalMainFrame().show();
+       // this.args = args;
     }
     
     public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
