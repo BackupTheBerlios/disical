@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.12 2002/01/12 04:18:10 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.13 2002/01/12 18:07:22 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -124,7 +124,7 @@
   <exec executable="${shell.file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
     <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -l ${db.log} -W -D ${pg.root} start -o -i${shell.quote}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -W -l ${db.log} -D ${pg.root} start -o -i${shell.quote}" />
   </exec>
 </target>
 
@@ -132,7 +132,7 @@
   <exec executable="${shell.file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
     <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -W -D ${pg.root} stop${shell.quote}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -D ${pg.root} stop${shell.quote}" />
   </exec>
 </target>
 
@@ -163,7 +163,7 @@
     userid="${db.username}" password="${db.password}">
     <classpath>
 	  <pathelement path="${java.class.path}" />
-	  <path> <!-- name classpath for later reference -->
+	  <path> 
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
@@ -179,7 +179,7 @@
     src="${dir.etc}/db_create.sql">
     <classpath>
 	  <pathelement path="${java.class.path}" />
-	  <path> <!-- name classpath for later reference -->
+	  <path> 
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
@@ -197,7 +197,7 @@
     onerror="continue">
     <classpath>
 	  <pathelement path="${java.class.path}" />
-	  <path> <!-- name classpath for later reference -->
+	  <path> 
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
@@ -339,5 +339,11 @@
 
 </project>
 <!-- EOF -->
+
+
+
+
+
+
 
 
