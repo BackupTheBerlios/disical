@@ -1,4 +1,4 @@
-// $Id: DisicalServer.java,v 1.11 2002/01/29 14:16:42 deafman Exp $
+// $Id: DisicalServer.java,v 1.12 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.disiorb.*;
@@ -26,6 +26,8 @@ public class DisicalServer extends ServerPOA {
 	public final static String Id = "Server";
 	public final static String Kind = "";
 
+	/* creates a new login-user 
+	 */
 	public User createUser(String login, String name, String pwd, String email) 
 		throws jdoPersistenceEx
     {
@@ -42,6 +44,8 @@ public class DisicalServer extends ServerPOA {
 		}
 	}
 
+	/* allows a user to login to the server
+	 */
 	public User login(String login, String pwd) 
 		throws wrongPwEx, jdoPersistenceEx 
 	{
@@ -62,6 +66,8 @@ public class DisicalServer extends ServerPOA {
 		return newUser;
 	}
 	
+	/* destroys the initial object in the poa
+	 */
 	public void destroy() {
 	
 	    POA poa = _default_POA();

@@ -1,13 +1,23 @@
-// $Id: DisicalInvited.java,v 1.13 2002/02/14 01:57:45 deafman Exp $
+// $Id: DisicalInvited.java,v 1.14 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
  * CORBA-Object to set the Invitation-Status
  *
- * 
+ * (set|get)IntitationIndex (int)
+ * (set|get)Login (String)
+ * Invitation getInvitation()
+ * User getUser()
+ * void accept()
+ * void reject()
+ * short status()
+ * void setStatus (short)
+ * (set|get)Notify (boolean)
+ * void destroy()
+ * void do_persist()
  *
  * @author deafman
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -43,11 +53,11 @@ public class DisicalInvited extends InvitedPOA {
 		return this.bubble;
 	}
 
-
+	/* writes this.object to the db (wrapper)
+	 */
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		//		System.out.println ("PERSIST: "+getFromUser().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
 		bubble.persist (db);
 	}
 
@@ -69,6 +79,8 @@ public class DisicalInvited extends InvitedPOA {
 		return true;
 	}
 
+	/* set/get the Invitation-Index in the db
+	 */
 	public void setInvitationIndex(int invId) {
 		this.invId = invId;
 	}
@@ -77,6 +89,8 @@ public class DisicalInvited extends InvitedPOA {
 		return this.invId;
 	}
 
+	/* sets/gets the loginname of the object
+	 */
 	public void setLogin(String login) {
 		this.login = login;
 	}
@@ -85,6 +99,8 @@ public class DisicalInvited extends InvitedPOA {
 		return login;
 	}
 
+	/* looks up an invitation, that matches to this.object
+	 */
 	public Invitation getInvitation()
 		throws jdoPersistenceEx
 	{
@@ -96,6 +112,8 @@ public class DisicalInvited extends InvitedPOA {
 		}
 	}
 
+	/* get the user (invitor) to this.object
+	 */
 	public User getUser() 
 	throws jdoPersistenceEx {
 		try {
@@ -106,6 +124,8 @@ public class DisicalInvited extends InvitedPOA {
 		}
 	}
 
+	/* accepts a invitation (setStatus...)
+	 */
 	public void accept()
 		throws jdoPersistenceEx 
 	{
@@ -128,6 +148,8 @@ public class DisicalInvited extends InvitedPOA {
 		}
 	}
 
+	/* rejects an invitation (setStatus...)
+	 */
 	public void reject() 
 	throws jdoPersistenceEx {
 		if (status () != 3) 
@@ -138,16 +160,21 @@ public class DisicalInvited extends InvitedPOA {
 			}
 	}
 
+	/* returns the current status
+	 */
 	public short status() {
 		return this.status;
 	}
 
-
+	/* sets the status (needed by accept and reject)
+	 */
 	public void setStatus(short s)
 	{
 		this.status = s;
 	}
    
+	/* sets/gets the notify-flag
+	 */
 	public void setNotify(boolean notify) {
 		getBubble().setNotify(notify ? 1 : 0);
 	}
@@ -156,6 +183,8 @@ public class DisicalInvited extends InvitedPOA {
 		return (getBubble().getNotify() == 1);
 	}
 
+	/* destroys this.pbject in the POA
+	 */
 	public void destroy() {
 
 		POA poa = _default_POA();

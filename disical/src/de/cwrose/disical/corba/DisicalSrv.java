@@ -1,4 +1,4 @@
-// $Id: DisicalSrv.java,v 1.7 2002/01/31 03:08:04 deafman Exp $
+// $Id: DisicalSrv.java,v 1.8 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -6,7 +6,7 @@ package de.cwrose.disical.corba;
  * OR of the disiorb.Server-Obj to the NC
  *
  * @author deafman
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.Server;
@@ -22,11 +22,14 @@ public class DisicalSrv {
 
 	public static void main(String[] args) throws Exception /* lots of */{
 
-
+		/* setup the ORB */
 		CSetup disisetup = new CSetup();
-		orb = disisetup.getORB(args);
+		/* get the created ORB */
+		orb = disisetup.getORB(args); 
 
+		/* create the initial object... */
 		DisicalServer serverImpl = new DisicalServer();
+		/* ...and anounce it to the nameservice */
 		Server server = serverImpl._this(orb);
 		disisetup.setCORBAObj(server);
 		disisetup.setObjCount(1);
@@ -38,8 +41,9 @@ public class DisicalSrv {
 		}
 		catch (NoBindNC e) {
 			System.err.println( e.toString() );
-		}
+		} // anounce done
 		
+		/* initialize the POA */
 		try {
 			disisetup.initPOA();
 		}
@@ -60,6 +64,7 @@ public class DisicalSrv {
 				throw e;
 		}
 		
+		/* when the server is done, unbind from the nc */
 		try {
 			disisetup.nc.unbind(disisetup.ncName);
 		}

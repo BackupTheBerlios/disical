@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.30 2002/03/07 20:43:20 stepn Exp $
+// $Id: DisicalUser.java,v 1.31 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -13,6 +13,7 @@ package de.cwrose.disical.corba;
  * disiorb.Date createDate 
  * 		(long start, long end, String location, String subject);
  * disiorb.Date selectDate(int index) ??? (obsolete)
+ * disiorb.User[] listAllUsers();
  * disiorb.Date[] selectDatesByTime(long start, long end);
  * disiorb.Date[] selectDatesByLocation(String location);
  * disiorb.Date[] selectDatesBySubject(String subject);
@@ -22,10 +23,17 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
-import de.cwrose.disical.corba.*;
-import de.cwrose.disical.corba.disiorb.*;
+import de.cwrose.disical.corba.disiorb.UserPOA;
+import de.cwrose.disical.corba.disiorb.User;
+import de.cwrose.disical.corba.disiorb.Date;
+import de.cwrose.disical.corba.disiorb.Invitation;
+
+import de.cwrose.disical.corba.disiorb.wrongPwEx;
+import de.cwrose.disical.corba.disiorb.jdoPersistenceEx;
+import de.cwrose.disical.corba.disiorb.emptySeqEx;
+
 import de.cwrose.disical.util.HackHelper;
 
 import org.omg.CORBA.ORB;
@@ -54,10 +62,10 @@ public class DisicalUser extends UserPOA {
 	private static int dateLimit   = 1000;
 	private static int inviteLimit =  100;
 
-	/* Client doesnt see the bubble.. ooh */
-
 	private DbUser bubble = null;
 
+	/* sets reference to the DB-User-Interface
+	 */
 	public void setBubble (DbUser bubble) {
 		if (this.bubble != null)
 			throw new IllegalStateException ("DisicalUser: "
@@ -65,28 +73,39 @@ public class DisicalUser extends UserPOA {
 		this.bubble = bubble;
 	}
 
+	/* returns the User-Object that came from the DB
+	 */
 	public DbUser getBubble () {
 		return this.bubble;
 	}
 
+	/* sets the Login-User-Flag
+	 */
 	private boolean isLoginUser ()
 	{
 		return bubble.isLoginUser ();
 	}
 
-	
+	/* sets the loginname
+	 */
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
+	/* sets the canonial name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/* sets email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
+	/* sets passwd directly on the db
+	 */
 	public void setPasswd(String oldPW, String newPW) 
 		throws wrongPwEx {
 		String bubblePW = bubble.getPassword();
@@ -95,6 +114,8 @@ public class DisicalUser extends UserPOA {
 		bubble.setPassword (newPW);
 	}
 
+	/* get login, name and email
+	 */
 	public String getLogin() {
 		return login;
 	}
@@ -107,14 +128,16 @@ public class DisicalUser extends UserPOA {
 		return email;
 	}
 
+	/* wrapper to the persist-routine
+	 */
 	protected void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-
-		//		System.out.println ("PERSIST: "+getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getUser ()))+"/"+(Object)bubble);
 		bubble.persist (db);
 	}
 
+	/* wtites the maipulated user-obj. to the db
+	 */
 	public boolean persist ()
 	{
 		try 
@@ -133,6 +156,8 @@ public class DisicalUser extends UserPOA {
 		return true;
 	}
 
+	/* deletes this.object on the db
+	 */
 	public void deleteUser() 
 	throws jdoPersistenceEx {
 
@@ -150,6 +175,8 @@ public class DisicalUser extends UserPOA {
 		}
 	}
 
+	/* writes a date with the given attributes to the db
+	 */
 	public Date createDate (long start, long end, String location, 
 							String subject, String description)
 		throws jdoPersistenceEx {
@@ -167,6 +194,8 @@ public class DisicalUser extends UserPOA {
 		}
 	}
 
+	/* selects a date with a given index (obsolete)
+	 */
 	public Date selectDate(int index) 
 		throws jdoPersistenceEx {
 
@@ -187,6 +216,28 @@ public class DisicalUser extends UserPOA {
 		return selDate;
 	}
 
+	/* returns lists of all users in the db
+	 */
+	public User[] listAllUsers()
+		throws jdoPersistenceEx, emptySeqEx
+	{
+		try {
+			return getBubble().listAllUsers ();
+		}
+		catch (PersistenceException e) {
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+			
+	}
+
+	/* returns all Dates of the login-user, that matches 
+	 * in the given period of time
+	*/
 	public Date[] listDatesByTime(long start, long end)
 		throws jdoPersistenceEx, emptySeqEx {
 
@@ -209,23 +260,9 @@ public class DisicalUser extends UserPOA {
 		return dateList;
 	}
 
-	public User[] listAllUsers()
-		throws jdoPersistenceEx, emptySeqEx
-	{
-		try {
-			return getBubble().listAllUsers ();
-		}
-		catch (PersistenceException e) {
-			throw new jdoPersistenceEx(e.getMessage());
-		}
-		catch (EmptySeqException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new emptySeqEx(e.getMessage());
-		}
-			
-	}
-
+	/* returns all dates of the login-user
+	 * that matches to the given location
+	 */
 	public Date[] listDatesByLocation(String location)
 		throws jdoPersistenceEx , emptySeqEx {
 
@@ -250,6 +287,9 @@ public class DisicalUser extends UserPOA {
 		
 	}
 
+	/* returns all dates of the login-user
+	 * that matches to the given subject
+	 */
 	public Date[] listDatesBySubject(String subject)
 		throws jdoPersistenceEx , emptySeqEx {
 			
@@ -272,6 +312,8 @@ public class DisicalUser extends UserPOA {
 		return dateList;
 	}
 
+	/* returns all invitations of the login-user
+	 */
 	public Invitation[] getInvitations()
 		throws jdoPersistenceEx , emptySeqEx {
 			
@@ -294,6 +336,9 @@ public class DisicalUser extends UserPOA {
 		return invitationList;
 	}
 
+	/* creates an Invitation without setting the invited users
+	 * (will be done with the invitation-object by using invite() )
+	 */
 	public Invitation createInvitation(long start, long end, 
 								String subject, String location, 
 								String description) 
@@ -316,6 +361,8 @@ public class DisicalUser extends UserPOA {
 		return invitation;
 	}
 
+	/* destroys this.object in the poa
+	 */
 	public void destroy() {
 
 		POA poa = _default_POA();

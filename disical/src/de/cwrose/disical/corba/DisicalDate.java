@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.23 2002/03/06 13:51:21 deafman Exp $
+// $Id: DisicalDate.java,v 1.24 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -65,7 +65,6 @@ public class DisicalDate extends DatePOA {
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		//System.out.println ("PERSIST: "+getLogin().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
 		bubble.persist (db);
 	}
 
@@ -129,20 +128,42 @@ public class DisicalDate extends DatePOA {
 		startTime = Time;
 	}
 
+	public long getStartTime() {
+		return startTime;
+	}
+
 	public void setEndTime(long Time) {
 		endTime = Time;
 	}
 
+	public long getEndTime() {
+		return endTime;
+	}
+
+	/* set/get location
+	 */
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getLocation() {
+		return location;
 	}
 
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
+	public String getSubject() {
+		return subject;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public void setLogin(String login) {
@@ -151,6 +172,11 @@ public class DisicalDate extends DatePOA {
 
 	public String getLogin() {
 		return login;
+	}
+
+	public void setUser(User usr)
+	{
+		setLogin (usr.getLogin ());
 	}
 
 	public User getUser()
@@ -163,31 +189,6 @@ public class DisicalDate extends DatePOA {
 			{
 				throw new jdoPersistenceEx(pex.getMessage ());
 			}
-	}
-
-	public void setUser(User usr)
-	{
-		setLogin (usr.getLogin ());
-	}
-
-	public long getStartTime() {
-		return startTime;
-	}
-
-	public long getEndTime() {
-		return endTime;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public String getDescription() {
-		return description;
 	}
 
 	public void setIndex(int _index) {

@@ -1,17 +1,25 @@
-// $Id: DisicalInvitation.java,v 1.22 2002/03/07 20:43:20 stepn Exp $
+// $Id: DisicalInvitation.java,v 1.23 2002/03/20 11:06:19 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
  * CORBA Implementation for the Invitation-Object of the Calendar
  * 
+ * void invite (User)
+ * Invited[] getAllInvited()
+ * Invited[] getAllNotifiedInv()
  * (set|get)FromUser (disiorb.User)
- * (set|get)
- * boolean persist();
+ * (set|get)StartTime (long)
+ * (set|get)EndTime (long)
+ * (set|get)Location (String)
+ * (set|get)Subject (String)
+ * (set|get)Description (String)
+ * (set|get)Login (String)
+ * boolean do_persist()
  * void delete();
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -53,10 +61,11 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.bubble;
 	}
 
+	/* writes this.object to the db (wrapper)
+	 */
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		//		System.out.println ("PERSIST: "+getFromUser().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
 		bubble.persist (db);
 	}
 
@@ -78,7 +87,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return true;
 	}
 
-	/* invite a collegue */
+	/* invite a collegue 
+	 */
 	public void invite (User u)
 		throws jdoPersistenceEx
 	{
@@ -92,7 +102,8 @@ public class DisicalInvitation extends InvitationPOA {
 		}
 	}
 
-	/* get the invited buddies */
+	/* get the invited buddies 
+	 */
 	public Invited[] getAllInvited()
 		throws jdoPersistenceEx, emptySeqEx {
 
@@ -120,6 +131,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return invitedList;
 	}
 	
+	/*  get all invited buddies where the notify-flag is set
+	 */
 	public Invited[] getAllNotifiedInv()
 		throws jdoPersistenceEx, emptySeqEx {
 		
@@ -140,6 +153,8 @@ public class DisicalInvitation extends InvitationPOA {
 			
 	}
 
+	/* delete this.object from the db
+	 */
 	public void delete()
  		throws jdoPersistenceEx {
 
@@ -156,6 +171,8 @@ public class DisicalInvitation extends InvitationPOA {
 		}
 	}
 
+	/* set/get the inviting user
+	 */
 	public User getFromUser() 
 	throws jdoPersistenceEx {
 		try	{
@@ -170,6 +187,8 @@ public class DisicalInvitation extends InvitationPOA {
 		this.setLogin (fromUser.getLogin ());
 	}
 
+	/* set/get the starttime
+	 */
 	public void setStartTime(long Time) {
 		this.startTime = Time;
 	}
@@ -178,6 +197,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.startTime;
 	}
 
+	/* set/get the endtime
+	 */
 	public void setEndTime(long Time) {
 		this.endTime = Time;
 	}
@@ -186,6 +207,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.endTime;
 	}
 
+	/* set/get the location
+	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -194,6 +217,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.location;
 	}
 
+	/* set/get the subject
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
@@ -202,6 +227,8 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.subject;
 	}
 
+	/* set/get a more detailes description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -210,6 +237,18 @@ public class DisicalInvitation extends InvitationPOA {
 		return this.description;
 	}
 
+	/* set/get the login-user
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	/* destroys this.object in the poa
+	 */
 	public void destroy() {
 		POA poa = _default_POA();
 		try {
@@ -217,13 +256,5 @@ public class DisicalInvitation extends InvitationPOA {
 			poa.deactivate_object(id);
 		}
 		catch (org.omg.CORBA.UserException ex) {}
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getLogin() {
-		return login;
 	}
 }
