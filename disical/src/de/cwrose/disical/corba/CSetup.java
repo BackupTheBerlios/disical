@@ -29,10 +29,13 @@ public class CSetup {
 	private org.omg.CORBA.Object serverObj = null;
 
 	public CSetup() {
+		try {
+			Properties props = Cfg.Reader.readCfg ("corba");
+/*
             props.put ("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
             props.put ("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
             props.put ("ooc.config", "/etc/OB.conf");
-		
+*/		
 	}
 
 	public void setCORBAObj(org.omg.CORBA.Object obj) {
