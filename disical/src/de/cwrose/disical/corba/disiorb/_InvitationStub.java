@@ -34,10 +34,10 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     final public static java.lang.Class _ob_opsClass = InvitationOperations.class;
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/fromUser:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
     //
     public User
-    fromUser()
+    getFromUser()
     {
         while(true)
         {
@@ -47,7 +47,7 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream in = null;
                 try
                 {
-                    out = _request("fromUser", true);
+                    out = _request("getFromUser", true);
                     in = _invoke(out);
                     User _ob_r = UserHelper.read(in);
                     return _ob_r;
@@ -70,13 +70,13 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("fromUser", _ob_opsClass);
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getFromUser", _ob_opsClass);
                 if(_ob_so == null)
                     continue;
                 InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
                 try
                 {
-                    return _ob_self.fromUser();
+                    return _ob_self.getFromUser();
                 }
                 finally
                 {
@@ -87,10 +87,10 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/toUser:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getToUser:1.0
     //
     public User[]
-    toUser()
+    getToUser()
     {
         while(true)
         {
@@ -100,7 +100,7 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream in = null;
                 try
                 {
-                    out = _request("toUser", true);
+                    out = _request("getToUser", true);
                     in = _invoke(out);
                     User[] _ob_r = seqUserHelper.read(in);
                     return _ob_r;
@@ -123,13 +123,13 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("toUser", _ob_opsClass);
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getToUser", _ob_opsClass);
                 if(_ob_so == null)
                     continue;
                 InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
                 try
                 {
-                    return _ob_self.toUser();
+                    return _ob_self.getToUser();
                 }
                 finally
                 {
@@ -140,10 +140,10 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/InvitationDate:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getInvitationDate:1.0
     //
     public Date
-    InvitationDate()
+    getInvitationDate()
     {
         while(true)
         {
@@ -153,7 +153,7 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream in = null;
                 try
                 {
-                    out = _request("InvitationDate", true);
+                    out = _request("getInvitationDate", true);
                     in = _invoke(out);
                     Date _ob_r = DateHelper.read(in);
                     return _ob_r;
@@ -176,13 +176,13 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("InvitationDate", _ob_opsClass);
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getInvitationDate", _ob_opsClass);
                 if(_ob_so == null)
                     continue;
                 InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
                 try
                 {
-                    return _ob_self.InvitationDate();
+                    return _ob_self.getInvitationDate();
                 }
                 finally
                 {
@@ -246,6 +246,168 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setFromUser:1.0
+    //
+    public void
+    setFromUser(User _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setFromUser", true);
+                    UserHelper.write(out, _ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setFromUser", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setFromUser(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setToUser:1.0
+    //
+    public void
+    setToUser(User[] _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setToUser", true);
+                    seqUserHelper.write(out, _ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setToUser", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setToUser(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitationDate:1.0
+    //
+    public void
+    setInvitationDate(Date _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setInvitationDate", true);
+                    DateHelper.write(out, _ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setInvitationDate", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setInvitationDate(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStatus:1.0
     //
     public void
@@ -289,6 +451,221 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     _ob_self.setStatus(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitation:1.0
+    //
+    public void
+    setInvitation(User[] _ob_a0,
+                  Date _ob_a1)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setInvitation", true);
+                    seqUserHelper.write(out, _ob_a0);
+                    DateHelper.write(out, _ob_a1);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setInvitation", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setInvitation(_ob_a0, _ob_a1);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0
+    //
+    public void
+    delete()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("delete", true);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("delete", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.delete();
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/persist:1.0
+    //
+    public boolean
+    persist()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("persist", true);
+                    in = _invoke(out);
+                    boolean _ob_r = in.read_boolean();
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("persist", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.persist();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/destroy:1.0
+    //
+    public void
+    destroy()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("destroy", true);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("destroy", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.destroy();
                     return;
                 }
                 finally

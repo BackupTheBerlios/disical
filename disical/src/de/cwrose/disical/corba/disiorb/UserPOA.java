@@ -55,6 +55,7 @@ public abstract class UserPOA
             "changePW",
             "createDate",
             "deleteUser",
+            "destroy",
             "getEmail",
             "getInvitations",
             "getLogin",
@@ -67,7 +68,6 @@ public abstract class UserPOA
             "persist",
             "selectDate",
             "setEmail",
-            "setInvitation",
             "setLogin",
             "setName",
             "setPasswd",
@@ -104,44 +104,44 @@ public abstract class UserPOA
         case 2: // deleteUser
             return _OB_op_deleteUser(in, handler);
 
-        case 3: // getEmail
+        case 3: // destroy
+            return _OB_op_destroy(in, handler);
+
+        case 4: // getEmail
             return _OB_op_getEmail(in, handler);
 
-        case 4: // getInvitations
+        case 5: // getInvitations
             return _OB_op_getInvitations(in, handler);
 
-        case 5: // getLogin
+        case 6: // getLogin
             return _OB_op_getLogin(in, handler);
 
-        case 6: // getName
+        case 7: // getName
             return _OB_op_getName(in, handler);
 
-        case 7: // getPasswd
+        case 8: // getPasswd
             return _OB_op_getPasswd(in, handler);
 
-        case 8: // getUserInfo
+        case 9: // getUserInfo
             return _OB_op_getUserInfo(in, handler);
 
-        case 9: // listDatesByLocation
+        case 10: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 10: // listDatesBySubject
+        case 11: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 11: // listDatesByTime
+        case 12: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 12: // persist
+        case 13: // persist
             return _OB_op_persist(in, handler);
 
-        case 13: // selectDate
+        case 14: // selectDate
             return _OB_op_selectDate(in, handler);
 
-        case 14: // setEmail
+        case 15: // setEmail
             return _OB_op_setEmail(in, handler);
-
-        case 15: // setInvitation
-            return _OB_op_setInvitation(in, handler);
 
         case 16: // setLogin
             return _OB_op_setLogin(in, handler);
@@ -191,6 +191,16 @@ public abstract class UserPOA
     {
         org.omg.CORBA.portable.OutputStream out = null;
         deleteUser();
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_destroy(org.omg.CORBA.portable.InputStream in,
+                   org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        destroy();
         out = handler.createReply();
         return out;
     }
@@ -328,18 +338,6 @@ public abstract class UserPOA
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_a0 = in.read_string();
         setEmail(_ob_a0);
-        out = handler.createReply();
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_setInvitation(org.omg.CORBA.portable.InputStream in,
-                         org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        User[] _ob_a0 = seqUserHelper.read(in);
-        Date _ob_a1 = DateHelper.read(in);
-        setInvitation(_ob_a0, _ob_a1);
         out = handler.createReply();
         return out;
     }

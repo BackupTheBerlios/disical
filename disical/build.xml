@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.17 2002/01/15 12:17:20 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.18 2002/01/16 19:27:13 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -261,7 +261,7 @@
           <pathelement path="${java.class.path}" />
           <pathelement location="${dir.lib}/${mod.OB}" />
         </classpath>
-     <include name="${dir.ns}/corba/DisicalSrv.java" />
+     <include name="${dir.ns}/corba/**/*.java" />
   </javac>
 </target>
 

@@ -170,19 +170,18 @@ public interface UserOperations
     listDatesBySubject(String subject);
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/User/setInvitation:1.0
-    //
-    /***/
-
-    void
-    setInvitation(User[] toUser,
-                  Date invitationDate);
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/User/getInvitations:1.0
     //
     /***/
 
     Invitation[]
     getInvitations();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/User/destroy:1.0
+    //
+    /***/
+
+    void
+    destroy();
 }

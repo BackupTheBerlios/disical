@@ -22,28 +22,28 @@ package de.cwrose.disical.corba.disiorb;
 public interface InvitationOperations
 {
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/fromUser:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
     //
     /***/
 
     User
-    fromUser();
+    getFromUser();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/toUser:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getToUser:1.0
     //
     /***/
 
     User[]
-    toUser();
+    getToUser();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/InvitationDate:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getInvitationDate:1.0
     //
     /***/
 
     Date
-    InvitationDate();
+    getInvitationDate();
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getStatus:1.0
@@ -54,10 +54,67 @@ public interface InvitationOperations
     getStatus();
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setFromUser:1.0
+    //
+    /***/
+
+    void
+    setFromUser(User fromUser);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setToUser:1.0
+    //
+    /***/
+
+    void
+    setToUser(User[] toUser);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitationDate:1.0
+    //
+    /***/
+
+    void
+    setInvitationDate(Date newdate);
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStatus:1.0
     //
     /***/
 
     void
     setStatus(short newStatus);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitation:1.0
+    //
+    /***/
+
+    void
+    setInvitation(User[] toUser,
+                  Date invitationDate);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0
+    //
+    /***/
+
+    void
+    delete();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/persist:1.0
+    //
+    /***/
+
+    boolean
+    persist();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/destroy:1.0
+    //
+    /***/
+
+    void
+    destroy();
 }

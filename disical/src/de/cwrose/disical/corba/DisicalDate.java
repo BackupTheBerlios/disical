@@ -15,57 +15,41 @@ class DisicalDate extends DatePOA {
 	private String subject = null;
 	private short _index;
 
-	public void deleteDate(){
-
-		//dbDeleteDate(_index);
-
-		POA poa = _default_POA();
-		try {
-			byte[] id = poa.servant_to_id(this);
-			poa.deactivate_object(id);
-		}
-		catch (org.omg.CORBA.UserException ex) {}	
-		
-	}
 
 	public void setStartTime(String Time) {
-		//dbSetStartTime(Time, _index);
 		startTime = Time;
 	}
 
 	public void setEndTime(String Time) {
-		//dbSetEndTime(Time, _index);
 		endTime = Time;
 	}
 
 	public void setLocation(String location) {
-		//dbSetLocation(location, _index);
 		this.location = location;
 	}
 
 	public void setSubject(String subject) {
-		//dbSetLocation(subject, _index);
 		this.subject = subject;
 	}
 
 	public String getStartTime() {
 		return startTime;
-		//return dbGetStartTime(_index);
 	}
 
 	public String getEndTime() {
 		return endTime;
-		//return dbGetEndTime(_index);
 	}
 
 	public String getLocation() {
 		return location;
-		//return dbGetLocation(_index);
 	}
 
 	public String getSubject() {
 		return subject;
-		//return dbGetSubject(_index);
+	}
+
+	public void setIndex(short _index) {
+		this._index = _index;
 	}
 
 	public short getIndex() {
@@ -73,8 +57,21 @@ class DisicalDate extends DatePOA {
 	}
 
 	public boolean persist() {
-		//return dbPersist(this);
-		return true;
+		DisicalDate dateImpl = new DisicalDate();
+
+		dateImpl.setStartTime(startTime);
+		dateImpl.setEndTime(endTime);
+		dateImpl.setLocation(location);
+		dateImpl.setSubject(subject);
+
+		Date date = dateImpl._this(DisicalSrv.orb);
+
+		boolean success = true; //dbPersistDate(date);
+		return success;
+	}
+	
+	public void deleteDate() {
+		System.out.println("Delete Date on DB");
 	}
 
 	public void changeDate(String start, String end, String location, String subject) {
@@ -84,4 +81,13 @@ class DisicalDate extends DatePOA {
 		this.subject = subject;
 	}
 
+	public void destroy() {
+
+		POA poa = _default_POA();
+		try {
+			byte[] id = poa.servant_to_id(this);
+			poa.deactivate_object(id);
+		}
+		catch (org.omg.CORBA.UserException ex) {}
+	}	
 }

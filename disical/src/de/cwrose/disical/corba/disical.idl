@@ -27,7 +27,7 @@ module de {
 				in string name, 
 				in string pwd,
 				in string email);
-
+		
 		User login(in string login, 
 			in string pwd);
 	};
@@ -52,6 +52,7 @@ module de {
 
 		User getUserInfo();
 
+		/* User userInfo */
 		void setUserInfo(in User userInfo);
  
 		void deleteUser();
@@ -63,6 +64,7 @@ module de {
 				in string end, 
 				in string location, 
 				in string subject);
+
 		/* ok, the index might be of different type (typedef dbkey..) :-) */
 		Date selectDate(in long index);
 
@@ -73,9 +75,11 @@ module de {
 
 		seqDate listDatesBySubject(in string subject);
 
-		void setInvitation(in seqUser toUser, in Date invitationDate);
-
 		seqInvitation getInvitations();
+
+		/* destroy the corba-object in the poa */
+		void destroy();
+
 	};
 
 
@@ -98,6 +102,7 @@ module de {
 		string getSubject();
 
 		/* nun nötig, um den index eines Dates zu erhalten */
+		void setIndex(in short _index);
 		short getIndex(); 
 
 		/* persist routine zum abgleich der db */
@@ -111,17 +116,30 @@ module de {
 				in string end,
 				in string location,
 				in string subject);
+
+		/* destroy the obkect in the poa */
+		void destroy();
 	};
 
 /* Interface Invitation */
 	interface Invitation {
 
-		User fromUser();
-		seqUser toUser();
-		Date InvitationDate();
+		User getFromUser();
+		seqUser getToUser();
+		Date getInvitationDate();
 		short getStatus();
+
+		void setFromUser(in User fromUser);
+		void setToUser(in seqUser toUser);
+		void setInvitationDate(in Date newdate);
 		void setStatus(in short newStatus);
 
+		void setInvitation(in seqUser toUser, in Date invitationDate);
+
+		void delete();
+		boolean persist();
+
+		void destroy();
 	};
 				};
 			};

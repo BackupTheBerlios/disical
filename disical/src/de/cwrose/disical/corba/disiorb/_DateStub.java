@@ -462,6 +462,60 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0
+    //
+    public void
+    setIndex(short _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setIndex", true);
+                    out.write_short(_ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setIndex", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                DateOperations _ob_self = (DateOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setIndex(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getIndex:1.0
     //
     public short
@@ -670,6 +724,59 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     _ob_self.changeDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/destroy:1.0
+    //
+    public void
+    destroy()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("destroy", true);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("destroy", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                DateOperations _ob_self = (DateOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.destroy();
                     return;
                 }
                 finally

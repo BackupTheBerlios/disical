@@ -86,6 +86,14 @@ public interface DateOperations
     getSubject();
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0
+    //
+    /***/
+
+    void
+    setIndex(short index);
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getIndex:1.0
     //
     /***/
@@ -119,4 +127,12 @@ public interface DateOperations
                String end,
                String location,
                String subject);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/destroy:1.0
+    //
+    /***/
+
+    void
+    destroy();
 }

@@ -54,6 +54,7 @@ public abstract class DatePOA
         {
             "changeDate",
             "deleteDate",
+            "destroy",
             "getEndTime",
             "getIndex",
             "getLocation",
@@ -61,6 +62,7 @@ public abstract class DatePOA
             "getSubject",
             "persist",
             "setEndTime",
+            "setIndex",
             "setLocation",
             "setStartTime",
             "setSubject"
@@ -93,34 +95,40 @@ public abstract class DatePOA
         case 1: // deleteDate
             return _OB_op_deleteDate(in, handler);
 
-        case 2: // getEndTime
+        case 2: // destroy
+            return _OB_op_destroy(in, handler);
+
+        case 3: // getEndTime
             return _OB_op_getEndTime(in, handler);
 
-        case 3: // getIndex
+        case 4: // getIndex
             return _OB_op_getIndex(in, handler);
 
-        case 4: // getLocation
+        case 5: // getLocation
             return _OB_op_getLocation(in, handler);
 
-        case 5: // getStartTime
+        case 6: // getStartTime
             return _OB_op_getStartTime(in, handler);
 
-        case 6: // getSubject
+        case 7: // getSubject
             return _OB_op_getSubject(in, handler);
 
-        case 7: // persist
+        case 8: // persist
             return _OB_op_persist(in, handler);
 
-        case 8: // setEndTime
+        case 9: // setEndTime
             return _OB_op_setEndTime(in, handler);
 
-        case 9: // setLocation
+        case 10: // setIndex
+            return _OB_op_setIndex(in, handler);
+
+        case 11: // setLocation
             return _OB_op_setLocation(in, handler);
 
-        case 10: // setStartTime
+        case 12: // setStartTime
             return _OB_op_setStartTime(in, handler);
 
-        case 11: // setSubject
+        case 13: // setSubject
             return _OB_op_setSubject(in, handler);
         }
 
@@ -147,6 +155,16 @@ public abstract class DatePOA
     {
         org.omg.CORBA.portable.OutputStream out = null;
         deleteDate();
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_destroy(org.omg.CORBA.portable.InputStream in,
+                   org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        destroy();
         out = handler.createReply();
         return out;
     }
@@ -224,6 +242,17 @@ public abstract class DatePOA
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_a0 = in.read_string();
         setEndTime(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setIndex(org.omg.CORBA.portable.InputStream in,
+                    org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        short _ob_a0 = in.read_short();
+        setIndex(_ob_a0);
         out = handler.createReply();
         return out;
     }

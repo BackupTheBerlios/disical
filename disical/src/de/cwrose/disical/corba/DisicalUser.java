@@ -1,8 +1,9 @@
 package de.cwrose.disical.corba;
 
 import de.cwrose.disical.corba.disiorb.*;
-import de.cwrose.disical.corba.disiorb.UserPackage.*;
+import de.cwrose.disical.corba.*;
 import org.omg.CORBA.*;
+import org.omg.PortableServer.POA;
 
 class DisicalUser extends UserPOA {
 
@@ -14,19 +15,6 @@ class DisicalUser extends UserPOA {
 	private String email = null;
 	private String passwd = null;
 
-	public String getLogin() { return login; }
-	public String getName() { return name; }
-	public String getEmail() { return email; }
-	public String getPasswd() { return passwd; }
-
-	public DisicalUser ()
-	{
-	}
-	
-	public void setPasswd(String newPW) {
-		passwd = newPW;
-	}
-	
 	public void setLogin(String login) {
 		this.login = login;
 	}
@@ -38,32 +26,65 @@ class DisicalUser extends UserPOA {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public void setPasswd(String newPW) {
+		passwd = newPW;
+	}
 
-	public sUser getUserInfo() {
+	public String getLogin() {
+		return login;
+	}
 
-		sUser user = new sUser();
+	public String getName() {
+		return name;
+	}
 
-		//Login = dbGetLogin();
-		//Name = dbGetName();
-		//Passwd = dbGetPWD();
-		//Email = dbGetEmail();
+	public String getEmail() {
+		return email;
+	}
 
-		user.login = Login;
-		user.name = Name;
-		user.pwd = Passwd;
-		user.email = Email;
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public boolean persist() {
+		DisicalUser newUserImpl = new DisicalUser();
+
+		newUserImpl.setLogin(login);
+		newUserImpl.setName(name);
+		newUserImpl.setEmail(email);
+		newUserImpl.setPasswd(passwd);
+
+		User newUser = newUserImpl._this(DisicalSrv.orb);
+		boolean success = true; //dbPersistUser(newUser);
+
+		return success;
+	}
+
+	public void changePW(String newPW) {
+		passwd = newPW;
+	}
+
+	public User getUserInfo() {
+
+		DisicalUser userImpl = new DisicalUser();
+		userImpl.setLogin(login);
+		userImpl.setName(name);
+		userImpl.setEmail(email);
+		userImpl.setPasswd(passwd);
+
+		User user = userImpl._this(DisicalSrv.orb);
 
 		return user;
 	}
 
-	public void setUserInfo(sUser user) {
-
-		Name = user.name;
-		Passwd = user.pwd;
-		Email = user.email;
+	public void setUserInfo(User user) {
+		//dbSetUser(user);
+		System.out.println("comes next");
 	}
 
 	public void deleteUser() {
+		// dbDeleteUser();
 		System.out.println("comes next");
 	}
 
@@ -83,25 +104,55 @@ class DisicalUser extends UserPOA {
 
 	}
 
-	public Date selectDate(short index) {
+	public Date selectDate(int index) {
 
 		DisicalDate selDateImpl = new DisicalDate();
 		Date selDate = selDateImpl._this(DisicalSrv.orb);
-		
-		//return dbGetDate(index);
+		selDate = null; //dbGetDate(index);
+
 		return selDate;
 
 	}
 
-	public Date findDate(String start, String end, String location,
-             				String subject, short index) {
+	public Date[] listDatesByTime(String start, String end) {
 
-		DisicalDate findDateImpl = new DisicalDate();
-		Date findDate = findDateImpl._this(DisicalSrv.orb);
-		
-		//return dbFindDate(start, end, location, subject, index);
-		return findDate;
+		Date[] dateList = new Date[1000];
+		dateList = null; //dbGetDatesByTime(String start, String end);
+		return dateList;
 
 	}
 
+	public Date[] listDatesByLocation(String location) {
+
+		Date[] dateList = new Date[1000];
+		dateList = null; //dbGetDatesByLocation(String location);
+		return dateList;
+
+	}
+
+	public Date[] listDatesBySubject(String subject) {
+
+		Date[] dateList = new Date[1000];
+		dateList = null; //dbGetDatesBySubject(String subject);
+		return dateList;
+
+	}
+
+	public Invitation[] getInvitations() {
+
+		Invitation[] invitationList = new Invitation[100];
+		invitationList = null; //dbGetInvitations(this.login);
+		return invitationList;
+
+	}
+
+	public void destroy() {
+
+		POA poa = _default_POA();
+        try {
+            byte[] id = poa.servant_to_id(this);
+                poa.deactivate_object(id);
+        }
+        catch (org.omg.CORBA.UserException ex) {}
+	}
 }
