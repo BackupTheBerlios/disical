@@ -1,0 +1,111 @@
+<!-- DiSiCal Main Build Script -->
+<!-- Currently maintaned by $Id: build.xml,v 1.1 2001/12/21 22:42:31 stepn Exp $ -->
+<project name="DiSiCal" default="all" basedir="./">
+
+
+
+
+<!-- All other tragets must depend on this one ! -->
+<target name="init">
+
+  <property name="disical.version" value="0.0.0pre_bigbang" />
+
+  <!-- Setting Project properties: Default directories -->
+  <property name="dir.src" value="src" />
+  <property name="dir.lib" value="lib" />
+  <property name="dir.bin" value="bin" />
+  <property name="dir.out" value="classes" />
+  <property name="dir.dist" value="dist" />
+  <property name="dir.etc" value="etc" />
+  <property name="dir.ns" value="de/cwrose"/>
+
+
+  <!-- Setting Project properties: build process flags -->
+  <property name="build.debug" value="on" />
+  <property name="build.optimize" value="off" />
+
+  
+  <!-- Setting Project properties: Classpath components -->
+  <property name="mod.castor" value="castor-0.9.3.9.jar" />
+  <property name="mod.castor.xml" value="castor-0.9.3.9-xml.jar" />
+  <property name="mod.jdbc" value="jdbc-se2.0.jar" />
+  <property name="mod.pgsql" value="postgresql.jar" />
+  <property name="mod.transaction" value="jta1.0.1.jar" />
+
+
+  <!-- Setting Project properties: Read User's *Local* properties file -->
+  <touch file="${dir.etc}/local-build.properties" />
+  <property file="${dir.etc}/local-build.properties" />
+
+
+  <!-- Initial build activities: Timestamp + Create package output dirs -->
+  <tstamp />
+  <mkdir dir="${dir.out}/${dir.ns}/db" />
+  <mkdir dir="${dir.out}/${dir.ns}/corba" />
+  <mkdir dir="${dir.out}/${dir.ns}/ui" />
+</target>
+
+
+
+
+<!-- Build db related java sources -->
+<target name="db" depends="init,clean_jar">
+  <javac srcdir="${dir.src}" destdir="${dir.out}" 
+         debug="${build.debug}" optimize="${build.optimize}">
+	<classpath id="classpath.db">
+	  <pathelement path="${java.class.path}" />
+	  <pathelement location="${dir.lib}/${mod.transaction}" />
+	  <pathelement location="${dir.lib}/${mod.jdbc}" />
+	  <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  <pathelement location="${dir.lib}/${mod.castor}" />
+	  <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	</classpath>
+    <include name="${dir.ns}/db/**/*.java" />
+  </javac>
+</target>
+
+<target name="clean_db">
+  <delete dir="${dir.out}/${dir.ns}/db" />
+</target>
+
+
+
+
+<!-- Make jar containing all necessary class files -->
+<target name="jar" depends="init,db">
+  <jar 
+    jarfile="${dir.lib}/disical-${disical.version}.jar"
+    basedir="${dir.out}" 
+  />
+</target>
+
+<target name="clean_jar" depends="init">
+  <delete file="${dir.lib}/disical-${disical.version}.jar" />
+</target>
+
+
+
+
+<!-- Build all -->
+<target name="all" depends="init,jar"/>
+
+<!-- Clean all -->
+<target name="clean" depends="init,clean_db" />
+
+
+
+
+<!-- Make zip containing bindist of all necessary files -->
+<target name="dist" depends="init,all">
+  <zip zipfile="${dir.dist}/disical-${disical.version}.zip">
+    <fileset dir="${dir.etc}" file="./**" />
+    <fileset dir="${dir.lib}" file="./**" />
+    <fileset dir="${dir.bin}" file="./**" />
+    <fileset dir="${dir.docs}" file="./**" />    
+  </zip>
+</target>
+
+</project>
+<!-- EOF -->
+
+
