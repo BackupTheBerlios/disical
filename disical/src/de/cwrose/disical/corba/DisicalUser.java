@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.21 2002/01/31 04:46:23 stepn Exp $
+// $Id: DisicalUser.java,v 1.22 2002/02/13 17:10:23 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -58,7 +58,8 @@ public class DisicalUser extends UserPOA {
 
 	public void setBubble (DbUser bubble) {
 		if (this.bubble != null)
-			throw new IllegalStateException ("Don't burst my bubble, fool!");
+			throw new IllegalStateException ("DisicalUser: "
+											 +"Don't burst my bubble, fool!");
 		this.bubble = bubble;
 	}
 
@@ -300,6 +301,12 @@ public class DisicalUser extends UserPOA {
 			byte[] id = poa.servant_to_id(this);
 			poa.deactivate_object(id);
 		}
-	catch (org.omg.CORBA.UserException ex) {}
+		catch (org.omg.CORBA.UserException ex) {}
+	}
+
+	public User _this() {
+		User obj = super();
+		bubble.blow(obj);
+		return obj;
 	}
 }

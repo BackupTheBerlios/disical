@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.18 2002/02/05 15:06:53 deafman Exp $
+// $Id: DisicalDate.java,v 1.19 2002/02/13 17:10:23 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -51,7 +51,8 @@ public class DisicalDate extends DatePOA {
 
 	public void setBubble (DbDate bubble) {
 		if (this.bubble != null)
-			throw new IllegalStateException ("Don't burst my bubble, fool!");
+			throw new IllegalStateException ("DisicalDate: "
+											 +"Don't burst my bubble, fool!");
 		this.bubble = bubble;
 	}
 
@@ -183,5 +184,11 @@ public class DisicalDate extends DatePOA {
 			poa.deactivate_object(id);
 		}
 		catch (org.omg.CORBA.UserException ex) {}
-	}	
+	}
+
+	public Date _this() {
+		Date obj = super();
+		bubble.blow(obj);
+		return obj;
+	}
 }

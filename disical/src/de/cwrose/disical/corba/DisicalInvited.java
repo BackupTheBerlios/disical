@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.8 2002/02/05 15:06:53 deafman Exp $
+// $Id: DisicalInvited.java,v 1.9 2002/02/13 17:10:23 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -34,7 +34,8 @@ public class DisicalInvited extends InvitedPOA {
 	
 	public void setBubble( DbInvited bubble) {
 		if (this.bubble != null)
-			throw new IllegalStateException ("Don't burst my bubble, fool!");
+			throw new IllegalStateException ("DisicalInvited: "
+											 +"Don't burst my bubble, fool!");
 		this.bubble = bubble;
 	}
 
@@ -146,5 +147,21 @@ public class DisicalInvited extends InvitedPOA {
 
 	public boolean getNotify() {
 		return getBubble().getNotify();
+	}
+
+	public void destroy() {
+
+		POA poa = _default_POA();
+		try {
+			byte[] id = poa.servant_to_id(this);
+			poa.deactivate_object(id);
+		}
+		catch (org.omg.CORBA.UserException ex) {}
+	}
+
+	public Invited _this() {
+		Invited obj = super();
+		bubble.blow(obj);
+		return obj;
 	}
 }

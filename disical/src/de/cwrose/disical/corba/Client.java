@@ -79,9 +79,9 @@ public class Client {
 				User conny = 
 					server.createUser("conny", "Cornelius Keller", 
 									  "start", "ckeller@informatik.hu-berlin.de");
-				//System.out.println ("S-U:"+(Object)stepn+" "+stepn.getLogin());
+				System.out.println ("S-U:"+(Object)stepn+" "+stepn.getLogin());
 
-			//invitation.invite(stepn);
+			invitation.invite(stepn);
 			//invitation.invite(fabian);
 			//invitation.invite(conny);
 
