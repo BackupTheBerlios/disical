@@ -199,7 +199,9 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/User/setPasswd:1.0
     //
     public void
-    setPasswd(String _ob_a0)
+    setPasswd(String _ob_a0,
+              String _ob_a1)
+        throws wrongPwEx
     {
         while(true)
         {
@@ -211,6 +213,7 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     out = _request("setPasswd", true);
                     out.write_string(_ob_a0);
+                    out.write_string(_ob_a1);
                     in = _invoke(out);
                     return;
                 }
@@ -223,6 +226,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
+                    if(_ob_id.equals(wrongPwExHelper.id()))
+                        throw wrongPwExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -238,7 +243,7 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 UserOperations _ob_self = (UserOperations)_ob_so.servant;
                 try
                 {
-                    _ob_self.setPasswd(_ob_a0);
+                    _ob_self.setPasswd(_ob_a0, _ob_a1);
                     return;
                 }
                 finally
@@ -399,59 +404,6 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     return _ob_self.getEmail();
-                }
-                finally
-                {
-                    _servant_postinvoke(_ob_so);
-                }
-            }
-        }
-    }
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/User/getPasswd:1.0
-    //
-    public String
-    getPasswd()
-    {
-        while(true)
-        {
-            if(!this._is_local())
-            {
-                org.omg.CORBA.portable.OutputStream out = null;
-                org.omg.CORBA.portable.InputStream in = null;
-                try
-                {
-                    out = _request("getPasswd", true);
-                    in = _invoke(out);
-                    String _ob_r = in.read_string();
-                    return _ob_r;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
-                {
-                    final String _ob_id = _ob_aex.getId();
-                    in = _ob_aex.getInputStream();
-
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
-                }
-                finally
-                {
-                    _releaseReply(in);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getPasswd", _ob_opsClass);
-                if(_ob_so == null)
-                    continue;
-                UserOperations _ob_self = (UserOperations)_ob_so.servant;
-                try
-                {
-                    return _ob_self.getPasswd();
                 }
                 finally
                 {

@@ -20,7 +20,6 @@ public class DisicalCli {
 		cliSetup.setObjCount(1);
 		try {
 			disicalServerImpl = cliSetup.getNC("Server","",0);
-			System.out.println(disicalServerImpl);
 		}
 		catch (NoNameServer e) {}
 		catch (NoResolve e) {}			

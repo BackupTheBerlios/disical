@@ -39,5 +39,7 @@ public interface ServerOperations
 
     User
     login(String login,
-          String pwd);
+          String pwd)
+        throws wrongPwEx,
+               jdoPersistenceEx;
 }

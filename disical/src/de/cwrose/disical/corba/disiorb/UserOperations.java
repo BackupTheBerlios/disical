@@ -51,7 +51,9 @@ public interface UserOperations
     /***/
 
     void
-    setPasswd(String passwd);
+    setPasswd(String oldPW,
+              String newPW)
+        throws wrongPwEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/getLogin:1.0
@@ -76,14 +78,6 @@ public interface UserOperations
 
     String
     getEmail();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/User/getPasswd:1.0
-    //
-    /***/
-
-    String
-    getPasswd();
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/persist:1.0

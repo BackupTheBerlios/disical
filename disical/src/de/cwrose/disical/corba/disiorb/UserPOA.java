@@ -59,7 +59,6 @@ public abstract class UserPOA
             "getInvitations",
             "getLogin",
             "getName",
-            "getPasswd",
             "listDatesByLocation",
             "listDatesBySubject",
             "listDatesByTime",
@@ -113,34 +112,31 @@ public abstract class UserPOA
         case 6: // getName
             return _OB_op_getName(in, handler);
 
-        case 7: // getPasswd
-            return _OB_op_getPasswd(in, handler);
-
-        case 8: // listDatesByLocation
+        case 7: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 9: // listDatesBySubject
+        case 8: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 10: // listDatesByTime
+        case 9: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 11: // persist
+        case 10: // persist
             return _OB_op_persist(in, handler);
 
-        case 12: // selectDate
+        case 11: // selectDate
             return _OB_op_selectDate(in, handler);
 
-        case 13: // setEmail
+        case 12: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 14: // setLogin
+        case 13: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 15: // setName
+        case 14: // setName
             return _OB_op_setName(in, handler);
 
-        case 16: // setPasswd
+        case 15: // setPasswd
             return _OB_op_setPasswd(in, handler);
         }
 
@@ -221,17 +217,6 @@ public abstract class UserPOA
     {
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_r = getName();
-        out = handler.createReply();
-        out.write_string(_ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_getPasswd(org.omg.CORBA.portable.InputStream in,
-                     org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_r = getPasswd();
         out = handler.createReply();
         out.write_string(_ob_r);
         return out;
@@ -335,9 +320,18 @@ public abstract class UserPOA
                      org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        setPasswd(_ob_a0);
-        out = handler.createReply();
+        try
+        {
+            String _ob_a0 = in.read_string();
+            String _ob_a1 = in.read_string();
+            setPasswd(_ob_a0, _ob_a1);
+            out = handler.createReply();
+        }
+        catch(wrongPwEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            wrongPwExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 }

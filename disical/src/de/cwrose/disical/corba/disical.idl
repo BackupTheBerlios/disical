@@ -21,6 +21,9 @@ module de {
 	typedef sequence <Invitation> seqInvitation;
 	typedef sequence <User> seqUser;
 
+	exception wrongPwEx {};
+	exception jdoPersistenceEx {};
+
 /* ServerInterface */
 	interface Server {
 		User createUser(in string login, 
@@ -29,7 +32,8 @@ module de {
 				in string email);
 		
 		User login(in string login, 
-			in string pwd);
+			in string pwd)
+			raises (wrongPwEx, jdoPersistenceEx);
 	};
 
 /*	Userinterface */
@@ -38,12 +42,12 @@ module de {
 		void setLogin(in string login);
 		void setName(in string name);
 		void setEmail(in string email);
-		void setPasswd(in string passwd);
+		void setPasswd(in string oldPW, in string newPW)
+			raises (wrongPwEx);
 
 		string getLogin();
 		string getName();
 		string getEmail();
-		string getPasswd();
 
 		/* persist routine zum abgleich der db */
 		boolean persist();

@@ -11,7 +11,6 @@ public class Client {
 		DisicalCli client = new DisicalCli(args);
 
 		Server server = client.getServer();
-		System.out.println(server);
 		User myuser = server.createUser("carsten", "Carsten Rose", "hello", "carsten@cwrose.de");
 		
 		}

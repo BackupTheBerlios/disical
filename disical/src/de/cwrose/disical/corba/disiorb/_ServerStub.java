@@ -99,6 +99,8 @@ public class _ServerStub extends org.omg.CORBA.portable.ObjectImpl
     public User
     login(String _ob_a0,
           String _ob_a1)
+        throws wrongPwEx,
+               jdoPersistenceEx
     {
         while(true)
         {
@@ -124,6 +126,10 @@ public class _ServerStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
+                    if(_ob_id.equals(wrongPwExHelper.id()))
+                        throw wrongPwExHelper.read(in);
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally

@@ -11,23 +11,27 @@ public class DisicalServer extends ServerPOA {
 	public final static String Kind = "";
 
 	public User createUser(String login, String name, String pwd, String email) {
-/*		DisicalUser newUser = new DisicalUser();
-		newUser.setLogin(login);
-		newUser.setName(name);
-		newUser.setPasswd(pwd);
-		newUser.setEmail(email);
-*/
+		
 		DbUser dbUser = new DbUser();
 		
 		return dbUser.createUser(login, pwd, name, email);
 	}
 
-	public User login(String login, String pwd) {
+	public User login(String login, String pwd) 
+		throws wrongPwEx, jdoPersistenceEx {
 
-		DisicalUser newUserImpl = new DisicalUser();
-		newUserImpl = null; //dbLogin(login, pwd);
-		User newUser = newUserImpl._this(DisicalSrv.orb);
+		DbUser dbUser = new DbUser();
+		User newUser;
 
+		try {
+			newUser = dbUser.login(login,pwd);
+		} 
+		catch (IllegalArgumentException e) {
+			throw new wrongPwEx("You've entered an INVALID Password!");
+		}
+		catch (org.exolab.castor.jdo.PersistenceException e) {
+			throw new jdoPersistenceEx("jdo-Persistence Error");
+		}		
 		return newUser;
 	}
 }
