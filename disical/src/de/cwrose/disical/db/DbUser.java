@@ -47,9 +47,9 @@ public final class DbUser extends DbPersistable
 		/* OQL */
 		Database     db  = DbManager.getConnection ();
 		OQLQuery     oql = db.getOQLQuery 
-			("SELECT u FROM auth WHERE login='$';");
+			("SELECT u FROM de.cwrose.disical.db.DbUser u WHERE u.login=$1");
 		oql.bind (login);
-		
+		db.begin();
 		QueryResults res = oql.execute();
 		if (!res.hasMore ())
 			throw new IllegalArgumentException 
@@ -61,6 +61,7 @@ public final class DbUser extends DbPersistable
 			throw new IllegalStateException 
 				("You are already logged in. Don't do that!");
 		bubble.beLoginUser ();
+		db.commit();
 		return bubble.getUser ();
 	}
 
