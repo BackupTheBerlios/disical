@@ -13,9 +13,14 @@ package de.cwrose.disical.ui;
 
 import java.awt.*;
 import java.awt.event.*;
+import de.cwrose.disical.corba.*;
+import de.cwrose.disical.corba.disiorb.*;
+import de.cwrose.disical.corba.Exceptions.*;
 
 public class DisicalMainFrame extends javax.swing.JFrame implements ActionListener {
     boolean online = false; // true if user is logged in
+    Server server = null;
+    User user = null;
     
     /** Creates new form DisicalMainFrame */
     public DisicalMainFrame() {
@@ -126,10 +131,25 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
         while ( ! online &&  ! cancel) {
             dlg.show();
             cancel = dlg.cancel;
-            System.out.println(cancel);
-            dlg.setMessage(dlg.login + " " + dlg.password);
+            if (!cancel) {
+                DisicalCli client = null;
+                if (server == null) {
+                    client = new DisicalCli(null);
+                    
+                    try {
+                        server = client.getServer();
+                         user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
+                         System.out.println(cancel);
+                         dlg.setMessage(dlg.login + " " + dlg.password);
+                    }
+                    catch (jdoPersistenceEx e) {
+                        System.out.println(e.toString());
+                        e.printStackTrace(System.out);
+                    }
+                }
+               
+            }
         }
-
         
     }//GEN-LAST:event_registerMenuActionPerformed
     
