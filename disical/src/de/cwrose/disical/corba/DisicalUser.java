@@ -9,19 +9,34 @@ class DisicalUser extends UserPOA {
 	public final static String Id = "User";
 	public final static String Kind = "";
 
-	private static String Login = null;
-	private static String Name = null;
-	private static String Email = null;
-	private static String Passwd = null;
+	private String login = null;
+	private String name = null;
+	private String email = null;
+	private String passwd = null;
 
-	public String Login() { return Login; }
-	public String Name() { return Name; }
-	public String Email() { return Email; }
-	public String Passwd() { return Passwd; }
+	public String getLogin() { return login; }
+	public String getName() { return name; }
+	public String getEmail() { return email; }
+	public String getPasswd() { return passwd; }
 
-	public void changePW(String newPW) {
-		//dbSetPW(newPW);
-		Passwd = newPW;
+	public DisicalUser ()
+	{
+	}
+	
+	public void setPasswd(String newPW) {
+		passwd = newPW;
+	}
+	
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public sUser getUserInfo() {
@@ -46,16 +61,9 @@ class DisicalUser extends UserPOA {
 		Name = user.name;
 		Passwd = user.pwd;
 		Email = user.email;
-
-		//dbSetLogin(login);
-		//dbSetName(name);
-		//dbSetPWD(pwd);
-		//dbSetEmail(email);
 	}
 
 	public void deleteUser() {
-		//dbDeleteUser(this);
-		//delete(this);
 		System.out.println("comes next");
 	}
 

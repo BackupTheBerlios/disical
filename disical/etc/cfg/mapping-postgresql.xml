@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<!-- No verification -->
+<!-- <!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Object Mapping DTD Version 1.0//EN" -->
+<!--                          "http://Castor.exolab.org/mapping.dtd">               -->
+
+<mapping>
+  
+  <class name="de.cwrose.disical.corba.DisicalUser" identity="Login">
+  	<map-to table="auth" />
+  	
+  	<field name="login" type="string">
+  		<sql name="login" type="varchar" />
+  	</field>
+  	<field name="name" type="string">
+  		<sql name="name" type="varchar" />
+  	</field>
+  	<field name="email" type="string">
+  		<sql name="email" type="varchar" />
+  	</field>
+
+  	<field name="passwd" type="string">
+  		<sql name="password" type="varchar" />
+  	</field>
+  	
+  </class>
+
+  <class name="de.cwrose.disical.corba.DisicalDate" identity="id" key-generator="SEQUENCE">
+  	<map-to table="appointments" />
+
+  	<field name="login" type="string">
+  		<sql name="login" type="varchar"/>
+  	</field>
+  	
+  	<field name="startTime" type="time">
+  		<sql name="startTime" type="time" />
+  	</field>
+  	
+  	<field name="startDate" type="date">
+  		<sql name="startDate" type="date"/>
+  	</field>
+  	<field name="endTime" type="time">
+  		<sql name="endTime" type="time" />
+  	</field>
+
+  	<field name="endDate" type="date">
+  		<sql name="endDate" type="date"/>
+  	</field>
+
+  	<field name="location" type="string">
+  		<sql name="location" type="varchar"/>
+  	</field>
+
+  	<field name="subject" type="string">
+  		<sql name="subject" type="varchar"/>
+  	</field>
+
+  </class>
+  
+</mapping>

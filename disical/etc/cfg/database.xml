@@ -1,1 +1,16 @@
-${db-username}
+<?xml version="1.0"?>
+
+<!-- No verification -->
+<!-- <!DOCTYPE databases PUBLIC "-//EXOLAB/Castor JDO Configuration DTD Version 1.0//EN" -->
+<!--                            "http://castor.exolab.org/jdo-conf.dtd">                 -->
+
+<database name="${db-name}" engine="${db-engine}"> 
+
+  <driver class-name="${db-driver-class}" url="${db-url-connect}">
+    <param name="user" value="${db-username}" />
+    <param name="password" value="${db-password}" />
+  </driver>
+  
+  <mapping href="cfg://${db-mgr-mapping}-${db-engine}" />
+
+</database> 

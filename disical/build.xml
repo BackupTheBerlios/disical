@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.15 2002/01/13 22:22:36 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.16 2002/01/14 22:15:33 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -49,6 +49,7 @@
   <property name="mod.bsh" value="bsh-1.2b3.jar" />
   <property name="mod.OB" value="OB.jar" />
   <property name="mod.velocity" value="velocity-dep-1.2.jar" />
+  <property name="mod.xerces" value="xerces.jar" />
 
 
   <!-- Setting Project properties: Read User's *Local* properties -->
@@ -82,8 +83,9 @@
          debug="${build.debug}" optimize="${build.optimize}">
 	 <classpath>
 	   <pathelement path="${java.class.path}" />
-	   <path> <!-- name classpath for later reference -->
+	   <path> 
 	     <pathelement location="${dir.lib}/${mod.velocity}" />
+		 <pathelement location="${dir.lib}/${mod.xerces}" />
 	   </path>
     </classpath>
     <include name="${dir.ns}/util/**/*.java" />
@@ -108,7 +110,8 @@
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
-	    <pathelement location="${dir.lib}/${mod.castor}" />
+	    <pathelement location="${dir.lib}/${mod.castor}" />	    
+	    <pathelement location="${dir.lib}/${mod.velocity}" />
 	    <pathelement location="${dir.lib}/${mod.castor.xml}" />
 	  </path>
 	</classpath>
@@ -178,7 +181,7 @@
 	  </path>    
     </classpath>
     commit;
-    create database disical
+    create database ${db-name}
   </sql>
   <sql
     driver="${db-driver-class}"
@@ -225,7 +228,7 @@
 	  </path>    
     </classpath>
     commit;
-    drop database disical
+    drop database ${db-name}
   </sql> 
 </target>
 
@@ -250,7 +253,7 @@
 
 
 <!-- Make CORBA related Java-classes -->
-<target name="corba" depends="init,clean_jar,idl">
+<target name="corba" depends="init,clean_jar">
   <javac srcdir="${dir.src}" destdir="${dir.out}"
          debug="${build.debug}" optimize="${build.optimize}">
         <classpath id="corba.classpath">
@@ -277,7 +280,7 @@
 <!-- binary distribution (currently unfinished ant-task 'dist').      -->
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,db,corba,util">
+<target name="jar" depends="init,db,util">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
@@ -309,6 +312,7 @@
     <pathelement path="${java.class.path}" />
 	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
 	 <pathelement location="${dir.lib}/${mod.velocity}" />
+	 <pathelement location="${dir.lib}/${mod.xerces}" />
   </classpath>
   <arg value="server" />
   <arg value="client" />
@@ -317,12 +321,13 @@
   </java>
 </target>
 
-<target name="mapping" depends="init,jar">
+<target name="jodcfg" depends="init,jar">
   <java classname="de.cwrose.disical.util.VeloTester" fork="yes">
   <classpath>
     <pathelement path="${java.class.path}" />
 	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
 	 <pathelement location="${dir.lib}/${mod.velocity}" />
+	 <pathelement location="${dir.lib}/${mod.xerces}" />
   </classpath>
   <arg value="server" />
   <arg value="database" />
@@ -330,6 +335,24 @@
   </java>
 </target>
 
+<target name="hello" depends="init,jar">
+  <java classname="de.cwrose.disical.db.DbManager" fork="yes">
+  <classpath>
+    <pathelement path="${java.class.path}" />
+	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+	 <pathelement location="${dir.lib}/${mod.velocity}" />
+	 <pathelement location="${dir.lib}/${mod.castor}" />
+	 <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	 <pathelement location="${dir.lib}/${mod.jdbc}" />
+	 <pathelement location="${dir.lib}/${mod.transaction}" />
+	 <pathelement location="${dir.lib}/${mod.pgsql}" />
+	 <pathelement location="${dir.lib}/${mod.xerces}" />
+  </classpath>
+  <arg value="server" />
+  <arg value="database" />
+  <sysproperty key="disical.cfg" value="${disical.cfg}" />
+  </java>
+</target>
 
 
 <!-- *** bsh Class Browser ************************************************ -->
