@@ -17,7 +17,7 @@ import org.apache.velocity.app.VelocityEngine;
  * CfgProperties-Objects, this is invisible to CfgReader-users.
  *
  * @author stepn
- * @revision $Revision: 1.4 $
+ * @revision $Revision: 1.5 $
  */
 final class CfgProperties 
 extends Properties 
@@ -65,7 +65,7 @@ implements org.apache.velocity.context.Context
  * as the java vm.
  * 
  * @author Stefan Plantikow <stepn@users.berlios.de>
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see java.lang.System#getProperty
  * 
  */
@@ -136,11 +136,12 @@ public final class CfgReader
 	 private static CfgProperties _readCfg (String cfg)
 	 throws CfgMissingException
 	 {
-		  CfgProperties props = (CfgProperties) cfgs.get (cfg);
-		  if (props != null)
-				return props;
+		  Object o = cfgs.get (cfg);
+		  if (o != null)
+			  return (CfgProperties) o;
 
-		  props = readProps (localDir, cfg, readProps (mainDir, cfg, null));
+		  CfgProperties props 
+			  = readProps (localDir, cfg, readProps (mainDir, cfg, null));
 		  
 		  if (props == null)
 				throw new CfgMissingException (cfg);
@@ -193,8 +194,8 @@ public final class CfgReader
      * to writer.
      */
 	 public static boolean evaluateTemplate (String cfg, 
-														  java.io.Writer writer, 
-														  java.io.Reader reader) 
+											 java.io.Writer writer, 
+											 java.io.Reader reader) 
 		  throws 
 		  ResourceNotFoundException, MethodInvocationException, 
 		  ParseErrorException, CfgMissingException, Exception 

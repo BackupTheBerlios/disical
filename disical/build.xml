@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.25 2002/01/27 17:09:53 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.26 2002/01/27 18:08:19 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -33,7 +33,7 @@
   <!-- It defaults to ${dir.etc}/cfg.                                -->
   <!-- To understand how this scheme works in practice, see static   -->
   <!-- class util.CfgReader                                          -->
-  <property name="disical.cfg" value="${dir.etc}/cfg" />
+  <property name="disical.cfg" value="etc/cfg" />
 
   <!-- Setting Project properties: build process flags -->
   <property name="build.debug" value="on" />

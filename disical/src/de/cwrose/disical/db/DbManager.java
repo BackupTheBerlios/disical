@@ -12,7 +12,7 @@ import de.cwrose.disical.corba.disiorb.*;
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DbManager {
 	private static JDO jdo;
@@ -26,13 +26,24 @@ public class DbManager {
 			props = CfgReader.readCfg("server");
 			jdo = new JDO ();
 			dbname = props.getProperty("db-name");
+			if (dbname == null)
+				throw new IllegalArgumentException 
+					("Can't get server-property 'db-name'");
 			jdo.setDatabaseName (dbname);
 			{
 				Writer writer = new StringWriter ();
+				String m_props = props.getProperty ("db-mgr-props");
+				String m_jdocfg = props.getProperty ("db-mgr-jdocfg");
+
+				if (m_props == null)
+					throw new IllegalArgumentException 
+						("Can't get server-property 'db-mgr-props'");
+				if (m_jdocfg == null)
+					throw new IllegalArgumentException 
+						("Can't get server-property 'db-mgr-jdocfg'");
+
 				CfgReader.evaluateTemplate 
-					(props.getProperty ("db-mgr-props"), 
-					writer, CfgReader.getXmlFileReader
-					 (props.getProperty("db-mgr-jdocfg")));
+					(m_props, writer, CfgReader.getXmlFileReader (m_jdocfg));
 				writer.flush ();
 				Reader reader = new StringReader (writer.toString());
 				EntityResolver resolver = new CfgEntityResolver ();
