@@ -27,12 +27,13 @@ module de {
 
 /*	Userinterface */
 	interface User {
-		readonly attribute string login;
+		readonly attribute string Login;
 		readonly attribute string Name;
 		readonly attribute string Email;
 		readonly attribute string Passwd;
 
 		struct sUser {
+			string login;
 			string name;
 			string pwd;
 			string email;

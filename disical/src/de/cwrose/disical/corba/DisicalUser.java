@@ -9,12 +9,12 @@ class DisicalUser extends UserPOA {
 	public final static String Id = "User";
 	public final static String Kind = "";
 
-	private static String Login;
-	private static String Name;
-	private static String Email;
-	private static String Passwd;
+	private static String Login = null;
+	private static String Name = null;
+	private static String Email = null;
+	private static String Passwd = null;
 
-	public String login() { return Login; }
+	public String Login() { return Login; }
 	public String Name() { return Name; }
 	public String Email() { return Email; }
 	public String Passwd() { return Passwd; }
@@ -26,29 +26,31 @@ class DisicalUser extends UserPOA {
 
 	public sUser getUserInfo() {
 
-		//name = dbGetName();
-		//pwd = dbGetPWD();
-		//email = dbGetEmail();
-
 		sUser user = new sUser();
 
-		Name = user.name;
-		Passwd = user.pwd;
-		Email = user.email;
+		//Login = dbGetLogin();
+		//Name = dbGetName();
+		//Passwd = dbGetPWD();
+		//Email = dbGetEmail();
+
+		user.login = Login;
+		user.name = Name;
+		user.pwd = Passwd;
+		user.email = Email;
 
 		return user;
 	}
 
 	public void setUserInfo(sUser user) {
 
-		//name = dbSetName();
-		//pwd = dbSetPWD();
-		//email = dbSetEmail();
-
 		Name = user.name;
 		Passwd = user.pwd;
 		Email = user.email;
 
+		//dbSetLogin(login);
+		//dbSetName(name);
+		//dbSetPWD(pwd);
+		//dbSetEmail(email);
 	}
 
 	public void deleteUser() {
@@ -67,7 +69,7 @@ class DisicalUser extends UserPOA {
 		newDate.setLocation(location);
 		newDate.setSubject(subject);
 
-		//dbCreateDate(Date);
+		//dbCreateDate(newDate);
 
 		return newDate;
 

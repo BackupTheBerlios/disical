@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.14 2002/01/12 23:04:33 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.15 2002/01/13 22:22:36 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -236,7 +236,7 @@
 
 <!-- *** 'CORBA' ********************************************************** -->
 
-<!-- Make the basic CORBA-Stuff -->
+<!-- Make the basic CORBA-classes -->
 <target name="idl" depends="init,clean_jar">
   <exec dir="${dir.src}" executable="jidl">
       <arg line="${dir.ns}/corba/disical.idl" />
@@ -249,7 +249,7 @@
 
 
 
-<!-- Make CORBA related Java-Stuff -->
+<!-- Make CORBA related Java-classes -->
 <target name="corba" depends="init,clean_jar,idl">
   <javac srcdir="${dir.src}" destdir="${dir.out}"
          debug="${build.debug}" optimize="${build.optimize}">
@@ -277,7 +277,7 @@
 <!-- binary distribution (currently unfinished ant-task 'dist').      -->
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,db">
+<target name="jar" depends="init,db,corba,util">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
