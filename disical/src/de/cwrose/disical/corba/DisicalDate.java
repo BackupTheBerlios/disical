@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.22 2002/02/13 23:39:23 stepn Exp $
+// $Id: DisicalDate.java,v 1.23 2002/03/06 13:51:21 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -50,6 +50,7 @@ public class DisicalDate extends DatePOA {
 
 	private DbDate bubble = null;
 
+	/* the reference to the Db-Object */
 	public void setBubble (DbDate bubble) {
 		if (this.bubble != null)
 			throw new IllegalStateException ("DisicalDate: "
@@ -68,6 +69,7 @@ public class DisicalDate extends DatePOA {
 		bubble.persist (db);
 	}
 
+	/* write this object to the DB */
 	public boolean persist ()
 	{
 		try 
@@ -86,6 +88,7 @@ public class DisicalDate extends DatePOA {
 		return true;
 	}
 
+	/* delete the obj in the obj */
 	public void deleteDate()
 		throws jdoPersistenceEx {
 
@@ -103,6 +106,7 @@ public class DisicalDate extends DatePOA {
 
 	}
 
+	/* some dates need a change - directly on the DB */
 	public void changeDate(long start, long end, 
 						   String location, String subject) 
 		throws jdoPersistenceEx {
@@ -120,6 +124,7 @@ public class DisicalDate extends DatePOA {
 		}
 	}
 
+	/* get/set-routines for Castor - and of course for the client*/
 	public void setStartTime(long Time) {
 		startTime = Time;
 	}
@@ -193,7 +198,7 @@ public class DisicalDate extends DatePOA {
 		return	_index;
 	}
 
-
+	/* destroy the obj in the poa */                // check if ok !!!
 	public void destroy() {
 
 		POA poa = _default_POA();

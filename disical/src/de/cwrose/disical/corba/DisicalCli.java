@@ -1,4 +1,4 @@
-// $Id: DisicalCli.java,v 1.6 2002/01/29 14:16:42 deafman Exp $
+// $Id: DisicalCli.java,v 1.7 2002/03/06 13:51:21 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -9,7 +9,7 @@ package de.cwrose.disical.corba;
  * ORB getORB();
  *
  * @author deafman
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -28,6 +28,9 @@ public class DisicalCli {
 		cliSetup = new CSetup();
 		orb = cliSetup.getORB(args);
 
+		/* get the starting "server"-object from the nc 
+		 * it will be stored in this object
+		 */
 		cliSetup.setObjCount(1);
 		try {
 			disicalServerImpl = cliSetup.getNC("Server","",0);
@@ -38,10 +41,12 @@ public class DisicalCli {
 		disicalServer = ServerHelper.narrow(disicalServerImpl);
 	}
 
+	/* gert the initial server-obj */
 	public Server getServer() {
 		return disicalServer;
 	}
 
+	/* sometimes you need the ORB */
 	public ORB getORB() {
 		return orb;
 	}

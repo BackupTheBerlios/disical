@@ -1,4 +1,4 @@
-// $Id: CSetup.java,v 1.12 2002/01/29 14:16:42 deafman Exp $
+// $Id: CSetup.java,v 1.13 2002/03/06 13:51:21 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -16,7 +16,7 @@ package de.cwrose.disical.corba;
  * void setNC(String id, String key, int objNo);
  * 
  * @author deafman
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 import de.cwrose.disical.corba.Exceptions.*;
 import de.cwrose.disical.util.*;
@@ -46,6 +46,7 @@ public class CSetup {
 
 	private org.omg.CORBA.Object serverObj = null;
 
+	/* read in my local CORBA-config */
 	public CSetup() {
 		String o_cls = null;
 		String o_sgl = null;
@@ -75,10 +76,12 @@ public class CSetup {
 
 	}
 
+	/* associate a given object to tis orb */
 	public void setCORBAObj(org.omg.CORBA.Object obj) {
 		this.corbaObj = obj;
 	}
 
+	/* gives the local ORB */
 	public ORB getORB(String[] args) {
 		try {
 			orb = org.omg.CORBA.ORB.init(args, props);
@@ -92,10 +95,12 @@ public class CSetup {
 		return orb;
 	}
 
+	/* starts the ORB after init */
 	public void orbRun() {
 		orb.run();
 	}
     
+	/* initializes the root-POA */
 	public void initPOA()
 	throws NoPOA {
 		try {
@@ -112,10 +117,14 @@ public class CSetup {
 		}
 	}
 
+	/* how many objects do you want to put into the NameService */
 	public void setObjCount(int oc) {
 		this.objCount = oc;
 	}
 
+	/* inits the nameservice for a apropiriate no of Objects 
+	 * and anounces them
+	 */
 	public void setNC(String NCId, String NCKind, int objNo)
 	throws NoNameServer, NoBindNC {
 		try {
@@ -143,6 +152,7 @@ public class CSetup {
 		}
 	}
 
+	/* get a reference of a CORBA-Object from the NS */
 	public org.omg.CORBA.Object getNC(String NCId, 
 		String NCKind, int objNo)
 		throws NoNameServer, NoResolve {

@@ -1,5 +1,9 @@
 package de.cwrose.disical.corba;
 
+/**
+ * A litle sampleclient for testing the facilities of our nice
+ * server
+ */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.*;
@@ -42,6 +46,7 @@ public class Client {
 
 		try {
 
+			/* create new user at the db */
 			Server server = client.getServer();
 			User myuser = 
 				server.createUser("carsten", "Carsten Rose", 
@@ -49,17 +54,17 @@ public class Client {
 
 			User newUser = null;
 			
-			myuser.destroy();
+			myuser.destroy(); /* Logout :-) */
 
 			DisicalCli newClient = new DisicalCli(args);	
 			Server newServer = newClient.getServer();
-			newUser = server.login("carsten", "hello");
+			newUser = server.login("carsten", "hello"); /* relogin */
 			System.out.println(newUser.getLogin() + " " 
 							   + newUser.getName() + " " + newUser.getEmail());
 			
 			long fstTime = System.currentTimeMillis();
 			
-			Date[] myDate = new Date[5];
+			Date[] myDate = new Date[5]; /* my first date */
 			for (int j = 0; j < 5; j++) {
 				myDate[j] = 
 					newUser.createDate(fstTime+j*234, fstTime+1234+j*500, 
@@ -69,9 +74,10 @@ public class Client {
 
 			//			System.out.println (myDate.getLogin () == newUser);
 			
-			Invitation invitation 
+			Invitation invitation /* create a new invitation-date */
 				= newUser.createInvitation(fstTime, fstTime+1234, 
 										   "zuhause", "schlafen", "ich will...");
+			/* create the other users - normaly they are stil there */
 			try {
 				User stepn = 
 					server.createUser("stepn", "Stefan Plantikow", 
@@ -89,6 +95,8 @@ public class Client {
 								   + stepn.getName() + " " + stepn.getEmail());
 
 				stepn.persist();
+
+				/* invite my pals */
 				invitation.invite(stepn);
 				invitation.invite(fabian);
 				invitation.invite(conny);
@@ -98,22 +106,23 @@ public class Client {
 				HackHelper.printEx(e, System.out);
 			}
 			
-			for (int j=0; j<5; j++) {
+			for (int j=0; j<5; j++) { /* get all my dates */
 				
 				Date[] locdate = newUser.listDatesByLocation("Mensa1");
-				printDate(locdate[0]);		
+				printDate(locdate[0]);	 /* by selected location */
 				Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
-				printDate(subdate[0]);
+				printDate(subdate[0]);   /* by subject */
 				Date[] timedate = newUser.listDatesByTime(fstTime,
 														  fstTime+1234);
-				printDate(timedate[0]);
+				printDate(timedate[0]);  /* and by time */
 			}
 			
 						Invitation[] newInv = newUser.getInvitations();
 			printInvitation(newInv[0]);
 						
 			for (int k=0; k<newInv.length; k++) {
-				printInvited(newInv[k].getAllInvited());
+				printInvited(newInv[k].getAllInvited()); 
+				/* now all my invitations with status aso */
 				
 			}
 		}

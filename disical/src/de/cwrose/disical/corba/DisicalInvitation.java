@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.18 2002/02/13 23:39:23 stepn Exp $
+// $Id: DisicalInvitation.java,v 1.19 2002/03/06 13:51:21 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,12 +11,11 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbDate;
-
 import de.cwrose.disical.db.DbInvitation;
 import de.cwrose.disical.db.DbInvited;
 
@@ -78,6 +77,7 @@ public class DisicalInvitation extends InvitationPOA {
 		return true;
 	}
 
+	/* invite a collegue */
 	public void invite (User u)
 		throws jdoPersistenceEx
 	{
@@ -91,6 +91,7 @@ public class DisicalInvitation extends InvitationPOA {
 		}
 	}
 
+	/* get the invited buddies */
 	public Invited[] getAllInvited()
 		throws jdoPersistenceEx {
 
