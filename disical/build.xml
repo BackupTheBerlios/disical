@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.22 2002/01/27 14:24:29 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.23 2002/01/27 14:55:58 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -92,12 +92,25 @@
   </javac>
 </target>
 
-<target name="clean_util">
+<target name="clean_util" depends="init">
   <delete dir="${dir.out}/${dir.ns}/util" />
 </target>
 
 
+<!-- *** 'ui' ************************************************************* -->
+<target name="ui" depends="init,clean_jar">
+  <javac srcdir="${dir.src}" destdir="${dir.out}" 
+         debug="${build.debug}" optimize="${build.optimize}">
+	 <classpath>
+	   <pathelement path="${java.class.path}" />
+    </classpath>
+    <include name="${dir.ns}/ui/**/*.java" />
+  </javac>
+</target>
 
+<target name="clean_ui" depends="init">
+  <delete dir="${dir.out}/${dir.ns}/ui" />
+</target>
 
 <!-- *** 'db' ************************************************************* -->
 <target name="pg_init" depends="init">
