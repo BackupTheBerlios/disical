@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.33 2002/01/31 06:42:48 LuckyStarr Exp $ -->
+<!-- $Id: build.xml,v 1.34 2002/03/22 18:13:45 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -337,7 +337,7 @@
 <!-- binary distribution (currently unfinished ant-task 'dist').      -->
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,util,corba">
+<target name="jar" depends="init,util,corba,ui">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
@@ -357,7 +357,7 @@
 
 <!-- Clean all -->
 <target name="clean" 
-        depends="init,clean_corba,clean_util" />
+        depends="init,clean_corba,clean_util,clean_ui" />
 
 
 
@@ -429,7 +429,7 @@
   </java>
 </target>
 
-<target name="testgui" depends="init,jar">
+<target name="testgui" depends="init,ui,jar">
   <java classname="de.cwrose.disical.ui.DisicalMainFrame" fork="yes">
   <classpath>
     <pathelement path="${java.class.path}" />

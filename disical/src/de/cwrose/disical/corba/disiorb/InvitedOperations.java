@@ -74,6 +74,15 @@ public interface InvitedOperations
     persist();
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invited/delete:1.0
+    //
+    /***/
+
+    void
+    delete()
+        throws jdoPersistenceEx;
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invited/destroy:1.0
     //
     /***/

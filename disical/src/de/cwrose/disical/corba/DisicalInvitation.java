@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.23 2002/03/20 11:06:19 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.24 2002/03/22 18:13:45 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -19,7 +19,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -161,7 +161,26 @@ public class DisicalInvitation extends InvitationPOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//getBubble().delete(db);
+			
+			try
+				{
+					Invited[] inv =  getBubble().getAllInvited();
+					for (int i = 0; i < inv.length; i++)
+						try
+							{
+								inv[i].delete ();
+							}
+						catch (Exception e)
+							{
+								System.err.println 
+									("Error deleting invited person.");
+							}
+				}
+			catch (EmptySeqException e)
+				{
+					// Just go on
+				}
+			getBubble().delete(db);
 			db.commit();
 		}
 		catch (PersistenceException e) {
@@ -169,6 +188,8 @@ public class DisicalInvitation extends InvitationPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+
+		this.destroy ();
 	}
 
 	/* set/get the inviting user

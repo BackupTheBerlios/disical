@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.14 2002/03/20 11:06:19 deafman Exp $
+// $Id: DisicalInvited.java,v 1.15 2002/03/22 18:13:45 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void do_persist()
  *
  * @author deafman
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -181,6 +181,25 @@ public class DisicalInvited extends InvitedPOA {
 
 	public boolean getNotify() {
 		return (getBubble().getNotify() == 1);
+	}
+
+	/* delete this.object from the db
+	 */
+	public void delete()
+ 		throws jdoPersistenceEx {
+
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			getBubble().delete(db);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+		this.destroy ();
 	}
 
 	/* destroys this.pbject in the POA

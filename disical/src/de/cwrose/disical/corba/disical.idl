@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.28 2002/03/22 16:30:49 stepn Exp $
+// $Id: disical.idl,v 1.29 2002/03/22 18:13:45 stepn Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 module de {
   module cwrose {
@@ -190,6 +190,9 @@ module de {
 			short status();
 
 			boolean persist();
+
+			void delete()
+			  raises (jdoPersistenceEx);
 
 			void destroy();
 		  };

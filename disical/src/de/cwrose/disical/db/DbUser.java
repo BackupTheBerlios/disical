@@ -109,7 +109,8 @@ public final class DbUser extends DbPersistable
 		// OQL 
 		OQLQuery oql = db.getOQLQuery 
 			("SELECT d FROM de.cwrose.disical.db.DbDate d "+
-			 "WHERE d.login=$1 and d.location=$2");
+			 "WHERE d.login=$1 and d.location LIKE $2 "+
+			 "ORDER BY d.startTime ASC");
 		oql.bind (getLogin());
 		oql.bind (location);
 		System.out.println(getLogin() + "<> " +location);
@@ -147,7 +148,8 @@ public final class DbUser extends DbPersistable
 		// OQL 
 		OQLQuery oql = db.getOQLQuery 
 			("SELECT d FROM de.cwrose.disical.db.DbDate d "+
-			 "WHERE d.login=$1 and d.subject=$2");
+			 "WHERE d.login=$1 and d.subject LIKE $2 "+
+			 "ORDER BY d.startTime ASC");
 		oql.bind (getLogin());
 		oql.bind (subject);
 

@@ -53,6 +53,7 @@ public abstract class InvitedPOA
         final String[] _ob_names =
         {
             "accept",
+            "delete",
             "destroy",
             "getInvitation",
             "getUser",
@@ -85,22 +86,25 @@ public abstract class InvitedPOA
         case 0: // accept
             return _OB_op_accept(in, handler);
 
-        case 1: // destroy
+        case 1: // delete
+            return _OB_op_delete(in, handler);
+
+        case 2: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 2: // getInvitation
+        case 3: // getInvitation
             return _OB_op_getInvitation(in, handler);
 
-        case 3: // getUser
+        case 4: // getUser
             return _OB_op_getUser(in, handler);
 
-        case 4: // persist
+        case 5: // persist
             return _OB_op_persist(in, handler);
 
-        case 5: // reject
+        case 6: // reject
             return _OB_op_reject(in, handler);
 
-        case 6: // status
+        case 7: // status
             return _OB_op_status(in, handler);
         }
 
@@ -115,6 +119,24 @@ public abstract class InvitedPOA
         try
         {
             accept();
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_delete(org.omg.CORBA.portable.InputStream in,
+                  org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        try
+        {
+            delete();
             out = handler.createReply();
         }
         catch(jdoPersistenceEx _ob_ex)

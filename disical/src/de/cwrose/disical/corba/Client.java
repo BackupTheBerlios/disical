@@ -21,6 +21,13 @@ public class Client {
 		System.out.println("Discr: "+date.getDescription()+"\n");
 	}
 
+	private static void printDates(Date[] date)
+		throws jdoPersistenceEx
+	{
+		for (int i=0; i<date.length; i++)
+			printDate (date[i]);
+	}
+
 	private static void printInvited(Invited[] invited) 
 	throws jdoPersistenceEx {
 
@@ -106,39 +113,46 @@ public class Client {
 				HackHelper.printEx(e, System.out);
 			}
 
-			try {				
+			try 
+				{
 				
-				for (int j=0; j<5; j++) { /* get all my dates */
-					Date[] locdate = newUser.listDatesByLocation("Mensa1");
-					printDate(locdate[0]);	 /* by selected location */
-					Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
-					printDate(subdate[0]);   // by subject 
-					Date[] timedate = newUser.listDatesByTime(fstTime,
-														  fstTime+1234);
-					printDate(timedate[0]);  
-				}
+					System.out.println ("BY LOCATION:");
+					printDates (newUser.listDatesByLocation("Mensa1"));
+					System.out.println ("BY SUBJECT:");
+					printDates (newUser.listDatesBySubject("ESSEN!!!"));
+					System.out.println ("BY TIME:");
+					printDates (newUser.listDatesByTime(fstTime,fstTime+1234));
+					System.out.println ("BY ALL:");
+					printDates (newUser.listAllDatesByTime());
 				
-				Invitation[] newInv = newUser.getInvitations();
-				printInvitation(newInv[0]);
-				for (int k=0; k<newInv.length; k++) {
-					printInvited(newInv[k].getAllInvited()); 
-					/* now all my invitations with status aso */
+					Invitation[] newInv = newUser.getInvitations();
+					printInvitation(newInv[0]);
+					System.out.println ("BEFORE DELETION");
+					for (int k=0; k<newInv.length; k++) 
+						printInvited(newInv[k].getAllInvited()); 
+
+					newInv[0].getAllInvited()[0].delete();
+
+					System.out.println ("AFTER DELETION");
+
+					for (int k=0; k<newInv.length; k++) 
+							printInvited(newInv[k].getAllInvited()); 
+							
+				} catch (emptySeqEx e){
+					System.err.println(e.getMessage());
+					e.printStackTrace(System.err);
 				}
-			} catch (emptySeqEx e){
-				System.err.println(e.getMessage());
-				e.printStackTrace(System.err);
-			}
 			
 		}
 		catch (wrongPwEx e) {
-			System.out.println(e.toString());
+				System.out.println(e.toString());
 		}	
 		catch (jdoPersistenceEx e) {
 			System.out.println(e.toString());
 			e.printStackTrace(System.out);
-
+			
 		}
-
-
+		
+		
 	}
 }	
