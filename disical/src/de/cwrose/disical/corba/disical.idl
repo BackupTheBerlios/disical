@@ -1,153 +1,177 @@
-// $Id: disical.idl,v 1.14 2002/01/29 22:57:12 deafman Exp $
+// $Id: disical.idl,v 1.15 2002/01/30 17:11:44 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 module de {
-	module cwrose {
-		module disical {
-			module corba {
-				module disiorb {
+  module cwrose {
+	module disical {
+	  module corba {
+		module disiorb {
 
-//	typedef int dbkey;
+		  //	typedef int dbkey;
+		  
+		  /* Predefinitions */
+		  interface User;
+		  interface Date;
+		  interface Invitation;
+		  
+		  typedef sequence <Date> seqDate;
+		  typedef sequence <Invitation> seqInvitation;
+		  typedef sequence <User> seqUser;
+		  
+		  /* some exceptions has to pass the ORB */
+		  exception wrongPwEx {};
+		  exception jdoPersistenceEx {};
+		  
+		  /* ServerInterface */
+		  interface Server {
+			User createUser(in string login, 
+							in string name, 
+							in string pwd,
+							in string email)
+			  raises (jdoPersistenceEx);
+			
+			User login(in string login, 
+					   in string pwd)
+			  raises (wrongPwEx, jdoPersistenceEx);
+			
+			void destroy();
+		  };
+		  
+		  /*	Userinterface */
+		  interface User {
+			
+			void setLogin(in string login);
+			void setName(in string name);
+			void setEmail(in string email);
+			void setPasswd(in string oldPW, in string newPW)
+			  raises (wrongPwEx);
+			
+			string getLogin();
+			string getName();
+			string getEmail();
 
-/* Predefinitions */
- 	interface User;
-	interface Date;
-	interface Invitation;
+			/* persist the object */
+			boolean persist();
 
-	typedef sequence <Date> seqDate;
-	typedef sequence <Invitation> seqInvitation;
-	typedef sequence <User> seqUser;
-
-/* some exceptions has to pass the ORB */
-	exception wrongPwEx {};
-	exception jdoPersistenceEx {};
-
-/* ServerInterface */
-	interface Server {
-		User createUser(in string login, 
-				in string name, 
-				in string pwd,
-				in string email)
-			raises (jdoPersistenceEx);
-		
-		User login(in string login, 
-			in string pwd)
-			raises (wrongPwEx, jdoPersistenceEx);
-
-		void destroy();
-	};
-
-/*	Userinterface */
-	interface User {
-
-		void setLogin(in string login);
-		void setName(in string name);
-		void setEmail(in string email);
-		void setPasswd(in string oldPW, in string newPW)
-			raises (wrongPwEx);
-
-		string getLogin();
-		string getName();
-		string getEmail();
-
-		/* persist the object */
-		boolean persist();
-
-		void deleteUser()
-	  raises (jdoPersistenceEx);
- 		/* Date-fab for the User */
-		Date createDate(in long long start, 
-				in long long end, 
-				in string location, 
-				in string subject)
-				raises (jdoPersistenceEx);
-
-		/* get an known Date from the db */
-		Date selectDate(in long index)
-				raises (jdoPersistenceEx);
-
-		seqDate listDatesByTime(in long long start,
+			void deleteUser()
+			  raises (jdoPersistenceEx);
+			/* Date-fab for the User */
+			Date createDate(in long long start, 
+							in long long end, 
+							in string location, 
+							in string subject)
+			  raises (jdoPersistenceEx);
+			
+			/* get an known Date from the db */
+			Date selectDate(in long index)
+			  raises (jdoPersistenceEx);
+			
+			seqDate listDatesByTime(in long long start,
 									in long long end)
-				raises (jdoPersistenceEx);
+			  raises (jdoPersistenceEx);
+			
+			seqDate listDatesByLocation(in string location)
+			  raises (jdoPersistenceEx);
+			
+			seqDate listDatesBySubject(in string subject)
+			  raises (jdoPersistenceEx);
+			
+			seqInvitation getInvitations()
+			  raises (jdoPersistenceEx);
+			
+			/* destroy the corba-object in the poa */
+			void destroy();
+			
+		  };
 
-		seqDate listDatesByLocation(in string location)
-				raises (jdoPersistenceEx);
-
-		seqDate listDatesBySubject(in string subject)
-				raises (jdoPersistenceEx);
-
-		seqInvitation getInvitations()
-				raises (jdoPersistenceEx);
-
-		/* destroy the corba-object in the poa */
-		void destroy();
-
-	};
 
 
+		  /* alle ersteinmal als string, kann noch verändert werden */
+		  /* Dateinterface */
+		  interface Date {
+			
+			void setStartTime(in long long Time);
+			void setEndTime(in long long Time);
+			void setLocation(in string location);
+			void setSubject(in string subject);
+			void setDescription(in string description);
+			void setLogin(in User login);
+			
+			long long getStartTime();
+			long long getEndTime();
+			string getLocation();
+			string getSubject();
+			string getDescription();
+			User getLogin();
+			
+			void setIndex(in long _index);
+			long getIndex(); 
+			
+			boolean persist();
 
-/* alle ersteinmal als string, kann noch verändert werden */
-/* Dateinterface */
-	interface Date {
+			void deleteDate()
+			  raises (jdoPersistenceEx);
 
-		void setStartTime(in long long Time);
-		void setEndTime(in long long Time);
-		void setLocation(in string location);
-		void setSubject(in string subject);
-		void setLogin(in User login);
-		 
-		long long getStartTime();
-		long long getEndTime();
-		string getLocation();
-		string getSubject();
-		User getLogin();
-
-		void setIndex(in long _index);
-		long getIndex(); 
-
-		boolean persist();
-
-		void deleteDate()
-		  raises (jdoPersistenceEx);
-
-		void changeDate(in long long start,
-						in long long end,
-						in string location,
-						in string subject)
-		  raises (jdoPersistenceEx);
+			void changeDate(in long long start,
+							in long long end,
+							in string location,
+							in string subject)
+			  raises (jdoPersistenceEx);
 	      
-		void destroy();
-	};
+			void destroy();
+		  };
 
-/* Interface Invitation */
-	interface Invitation {
+		  /* Interface Invitation */
+		  interface Invitation {
+			
+			long getIndex();
+			User getFromUser();
+			seqUser getToUser();
+			Date getInvitationDate();
+			
+			void setIndex(in long index);
+			void setFromUser(in User fromUser);
+			void setToUser(in seqUser toUser);
+			void setInvitationDate(in Date newdate);
+					
+			void setInvitation(in seqUser toUser, 
+							   in Date invitationDate)
+			  raises (jdoPersistenceEx);
+			
+			void delete()
+			  raises (jdoPersistenceEx);
+			
+			boolean persist();
+			
+			void destroy();
+		  };
+		  
+		  
+		  /* Invited - Interface */
+		  interface Invited {
 
-		long getIndex();
-		User getFromUser();
-		seqUser getToUser();
-		Date getInvitationDate();
-		short getStatus();
+			Invitation getInvitation()
+			  raises (jdoPersistenceEx);
+			User getUser()
+			  raises (jdoPersistenceEx);			
+			Date getDate()
+			  raises (jdoPersistenceEx);
 
-		void setIndex(in long index);
-		void setFromUser(in User fromUser);
-		void setToUser(in seqUser toUser);
-		void setInvitationDate(in Date newdate);
-		void setStatus(in short newStatus);
+			void accept()
+			  raises (jdoPersistenceEx);
+			void reject()
+			  raises (jdoPersistenceEx);
+			short status()
+			  raises (jdoPersistenceEx);
 
-		void setInvitation(in seqUser toUser, in Date invitationDate);
-
-		void delete();
-		boolean persist();
-
-		void destroy();
-	};
-				};
-			};
+		  };
 		};
+	  };
 	};
+  };
 };
 

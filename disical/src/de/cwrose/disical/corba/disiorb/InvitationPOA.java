@@ -57,14 +57,12 @@ public abstract class InvitationPOA
             "getFromUser",
             "getIndex",
             "getInvitationDate",
-            "getStatus",
             "getToUser",
             "persist",
             "setFromUser",
             "setIndex",
             "setInvitation",
             "setInvitationDate",
-            "setStatus",
             "setToUser"
         };
 
@@ -104,31 +102,25 @@ public abstract class InvitationPOA
         case 4: // getInvitationDate
             return _OB_op_getInvitationDate(in, handler);
 
-        case 5: // getStatus
-            return _OB_op_getStatus(in, handler);
-
-        case 6: // getToUser
+        case 5: // getToUser
             return _OB_op_getToUser(in, handler);
 
-        case 7: // persist
+        case 6: // persist
             return _OB_op_persist(in, handler);
 
-        case 8: // setFromUser
+        case 7: // setFromUser
             return _OB_op_setFromUser(in, handler);
 
-        case 9: // setIndex
+        case 8: // setIndex
             return _OB_op_setIndex(in, handler);
 
-        case 10: // setInvitation
+        case 9: // setInvitation
             return _OB_op_setInvitation(in, handler);
 
-        case 11: // setInvitationDate
+        case 10: // setInvitationDate
             return _OB_op_setInvitationDate(in, handler);
 
-        case 12: // setStatus
-            return _OB_op_setStatus(in, handler);
-
-        case 13: // setToUser
+        case 11: // setToUser
             return _OB_op_setToUser(in, handler);
         }
 
@@ -140,8 +132,16 @@ public abstract class InvitationPOA
                   org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        delete();
-        out = handler.createReply();
+        try
+        {
+            delete();
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -185,17 +185,6 @@ public abstract class InvitationPOA
         Date _ob_r = getInvitationDate();
         out = handler.createReply();
         DateHelper.write(out, _ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_getStatus(org.omg.CORBA.portable.InputStream in,
-                     org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        short _ob_r = getStatus();
-        out = handler.createReply();
-        out.write_short(_ob_r);
         return out;
     }
 
@@ -248,10 +237,18 @@ public abstract class InvitationPOA
                          org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        User[] _ob_a0 = seqUserHelper.read(in);
-        Date _ob_a1 = DateHelper.read(in);
-        setInvitation(_ob_a0, _ob_a1);
-        out = handler.createReply();
+        try
+        {
+            User[] _ob_a0 = seqUserHelper.read(in);
+            Date _ob_a1 = DateHelper.read(in);
+            setInvitation(_ob_a0, _ob_a1);
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -262,17 +259,6 @@ public abstract class InvitationPOA
         org.omg.CORBA.portable.OutputStream out = null;
         Date _ob_a0 = DateHelper.read(in);
         setInvitationDate(_ob_a0);
-        out = handler.createReply();
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_setStatus(org.omg.CORBA.portable.InputStream in,
-                     org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        short _ob_a0 = in.read_short();
-        setStatus(_ob_a0);
         out = handler.createReply();
         return out;
     }

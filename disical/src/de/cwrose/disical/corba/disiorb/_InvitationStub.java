@@ -246,59 +246,6 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getStatus:1.0
-    //
-    public short
-    getStatus()
-    {
-        while(true)
-        {
-            if(!this._is_local())
-            {
-                org.omg.CORBA.portable.OutputStream out = null;
-                org.omg.CORBA.portable.InputStream in = null;
-                try
-                {
-                    out = _request("getStatus", true);
-                    in = _invoke(out);
-                    short _ob_r = in.read_short();
-                    return _ob_r;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
-                {
-                    final String _ob_id = _ob_aex.getId();
-                    in = _ob_aex.getInputStream();
-
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
-                }
-                finally
-                {
-                    _releaseReply(in);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getStatus", _ob_opsClass);
-                if(_ob_so == null)
-                    continue;
-                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
-                try
-                {
-                    return _ob_self.getStatus();
-                }
-                finally
-                {
-                    _servant_postinvoke(_ob_so);
-                }
-            }
-        }
-    }
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setIndex:1.0
     //
     public void
@@ -515,65 +462,12 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStatus:1.0
-    //
-    public void
-    setStatus(short _ob_a0)
-    {
-        while(true)
-        {
-            if(!this._is_local())
-            {
-                org.omg.CORBA.portable.OutputStream out = null;
-                org.omg.CORBA.portable.InputStream in = null;
-                try
-                {
-                    out = _request("setStatus", true);
-                    out.write_short(_ob_a0);
-                    in = _invoke(out);
-                    return;
-                }
-                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
-                {
-                    continue;
-                }
-                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
-                {
-                    final String _ob_id = _ob_aex.getId();
-                    in = _ob_aex.getInputStream();
-
-                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
-                }
-                finally
-                {
-                    _releaseReply(in);
-                }
-            }
-            else
-            {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setStatus", _ob_opsClass);
-                if(_ob_so == null)
-                    continue;
-                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
-                try
-                {
-                    _ob_self.setStatus(_ob_a0);
-                    return;
-                }
-                finally
-                {
-                    _servant_postinvoke(_ob_so);
-                }
-            }
-        }
-    }
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitation:1.0
     //
     public void
     setInvitation(User[] _ob_a0,
                   Date _ob_a1)
+        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -598,6 +492,8 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -629,6 +525,7 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public void
     delete()
+        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -651,6 +548,8 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally

@@ -55,6 +55,7 @@ public abstract class DatePOA
             "changeDate",
             "deleteDate",
             "destroy",
+            "getDescription",
             "getEndTime",
             "getIndex",
             "getLocation",
@@ -62,6 +63,7 @@ public abstract class DatePOA
             "getStartTime",
             "getSubject",
             "persist",
+            "setDescription",
             "setEndTime",
             "setIndex",
             "setLocation",
@@ -100,43 +102,49 @@ public abstract class DatePOA
         case 2: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 3: // getEndTime
+        case 3: // getDescription
+            return _OB_op_getDescription(in, handler);
+
+        case 4: // getEndTime
             return _OB_op_getEndTime(in, handler);
 
-        case 4: // getIndex
+        case 5: // getIndex
             return _OB_op_getIndex(in, handler);
 
-        case 5: // getLocation
+        case 6: // getLocation
             return _OB_op_getLocation(in, handler);
 
-        case 6: // getLogin
+        case 7: // getLogin
             return _OB_op_getLogin(in, handler);
 
-        case 7: // getStartTime
+        case 8: // getStartTime
             return _OB_op_getStartTime(in, handler);
 
-        case 8: // getSubject
+        case 9: // getSubject
             return _OB_op_getSubject(in, handler);
 
-        case 9: // persist
+        case 10: // persist
             return _OB_op_persist(in, handler);
 
-        case 10: // setEndTime
+        case 11: // setDescription
+            return _OB_op_setDescription(in, handler);
+
+        case 12: // setEndTime
             return _OB_op_setEndTime(in, handler);
 
-        case 11: // setIndex
+        case 13: // setIndex
             return _OB_op_setIndex(in, handler);
 
-        case 12: // setLocation
+        case 14: // setLocation
             return _OB_op_setLocation(in, handler);
 
-        case 13: // setLogin
+        case 15: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 14: // setStartTime
+        case 16: // setStartTime
             return _OB_op_setStartTime(in, handler);
 
-        case 15: // setSubject
+        case 17: // setSubject
             return _OB_op_setSubject(in, handler);
         }
 
@@ -190,6 +198,17 @@ public abstract class DatePOA
         org.omg.CORBA.portable.OutputStream out = null;
         destroy();
         out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getDescription(org.omg.CORBA.portable.InputStream in,
+                          org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_r = getDescription();
+        out = handler.createReply();
+        out.write_string(_ob_r);
         return out;
     }
 
@@ -267,6 +286,17 @@ public abstract class DatePOA
         boolean _ob_r = persist();
         out = handler.createReply();
         out.write_boolean(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setDescription(org.omg.CORBA.portable.InputStream in,
+                          org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_a0 = in.read_string();
+        setDescription(_ob_a0);
+        out = handler.createReply();
         return out;
     }
 

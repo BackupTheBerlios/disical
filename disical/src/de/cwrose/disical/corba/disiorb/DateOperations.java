@@ -54,6 +54,14 @@ public interface DateOperations
     setSubject(String subject);
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setDescription:1.0
+    //
+    /***/
+
+    void
+    setDescription(String description);
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
     //
     /***/
@@ -92,6 +100,14 @@ public interface DateOperations
 
     String
     getSubject();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/getDescription:1.0
+    //
+    /***/
+
+    String
+    getDescription();
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0

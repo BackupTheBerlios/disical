@@ -54,14 +54,6 @@ public interface InvitationOperations
     getInvitationDate();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getStatus:1.0
-    //
-    /***/
-
-    short
-    getStatus();
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setIndex:1.0
     //
     /***/
@@ -94,21 +86,14 @@ public interface InvitationOperations
     setInvitationDate(Date newdate);
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStatus:1.0
-    //
-    /***/
-
-    void
-    setStatus(short newStatus);
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitation:1.0
     //
     /***/
 
     void
     setInvitation(User[] toUser,
-                  Date invitationDate);
+                  Date invitationDate)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0
@@ -116,7 +101,8 @@ public interface InvitationOperations
     /***/
 
     void
-    delete();
+    delete()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/persist:1.0

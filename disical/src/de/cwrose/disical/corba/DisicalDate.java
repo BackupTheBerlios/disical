@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.14 2002/01/29 22:57:12 deafman Exp $
+// $Id: DisicalDate.java,v 1.15 2002/01/30 17:11:44 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -8,6 +8,7 @@ package de.cwrose.disical.corba;
  * (set|get)EndTime (long)
  * (set|get)Location (String)
  * (set|get)Subject (String)
+ * (set|get)Description (String)
  * (set|get)Login (String)
  * (set|get)Index (int)
  * boolean persist();
@@ -16,16 +17,20 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
+import de.cwrose.disical.db.DbDate;
+import de.cwrose.disical.db.DbManager;
+
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
-import de.cwrose.disical.db.DbDate;
+
 import org.exolab.castor.jdo.Database;
-import de.cwrose.disical.db.DbManager;
 import org.exolab.castor.jdo.PersistenceException;
+
+import java.sql.Timestamp;
 
 public class DisicalDate extends DatePOA {
 
@@ -36,6 +41,7 @@ public class DisicalDate extends DatePOA {
 	private long endTime;
 	private String location = null;
 	private String subject = null;
+	private String description = null;
 	private User login = null;
 	private int _index;
 
@@ -94,6 +100,10 @@ public class DisicalDate extends DatePOA {
 		this.subject = subject;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public void setLogin(User login) {
 		this.login = login;
 	}
@@ -118,6 +128,10 @@ public class DisicalDate extends DatePOA {
 		return subject;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
 	public void setIndex(int _index) {
 		this._index = _index;
 	}
@@ -132,7 +146,7 @@ public class DisicalDate extends DatePOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//selDate = getBubble().selectDate(index);
+			//getBubble().delete();
 			db.commit();
 		}
 		catch (PersistenceException e) {
@@ -150,7 +164,7 @@ public class DisicalDate extends DatePOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//selDate = getBubble().selectDate(index);
+			//getBubble().updateDate(new Timestamp(start), new Timestamp(stop), subject, location);
 			db.commit();
 		}
 		catch (PersistenceException e) {
