@@ -53,6 +53,7 @@ public abstract class ServerPOA
         final String[] _ob_names =
         {
             "createUser",
+            "destroy",
             "login"
         };
 
@@ -80,7 +81,10 @@ public abstract class ServerPOA
         case 0: // createUser
             return _OB_op_createUser(in, handler);
 
-        case 1: // login
+        case 1: // destroy
+            return _OB_op_destroy(in, handler);
+
+        case 2: // login
             return _OB_op_login(in, handler);
         }
 
@@ -99,6 +103,16 @@ public abstract class ServerPOA
         User _ob_r = createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
         out = handler.createReply();
         UserHelper.write(out, _ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_destroy(org.omg.CORBA.portable.InputStream in,
+                   org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        destroy();
+        out = handler.createReply();
         return out;
     }
 

@@ -42,4 +42,12 @@ public interface ServerOperations
           String pwd)
         throws wrongPwEx,
                jdoPersistenceEx;
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Server/destroy:1.0
+    //
+    /***/
+
+    void
+    destroy();
 }
