@@ -23,6 +23,12 @@ DiSiCal
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+	DiSiCal depens upon and includes parts of other open source software 
+    projects which are covered by different Licenses.  Read the corresponding 
+    LICENSE.package-File in the disical distribution.  If not stated otherwise
+    in the package's license, The GPL2 under which disical is distributed under     does not apply to these packages.
+
+
 
 Contact / Latest version
 ------------------------
