@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.19 2002/03/06 13:51:21 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.20 2002/03/06 15:45:05 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -93,7 +93,7 @@ public class DisicalInvitation extends InvitationPOA {
 
 	/* get the invited buddies */
 	public Invited[] getAllInvited()
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx, emptySeqEx {
 
 		Invited[] invitedList = null;
 
@@ -111,12 +111,17 @@ public class DisicalInvitation extends InvitationPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
 			
 		return invitedList;
 	}
 	
 	public Invited[] getAllNotifiedInv()
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx, emptySeqEx {
 		
 		
 		try {
@@ -126,6 +131,11 @@ public class DisicalInvitation extends InvitationPOA {
 			System.err.println(e.getMessage());
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
+		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
 		}
 			
 	}

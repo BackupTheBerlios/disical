@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.26 2002/02/14 01:57:45 deafman Exp $
+// $Id: DisicalUser.java,v 1.27 2002/03/06 15:45:05 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -182,12 +182,17 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
 	
 		return selDate;
 	}
 
 	public Date[] listDatesByTime(long start, long end)
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx, emptySeqEx {
 
 		Date[] dateList = null;
 
@@ -202,11 +207,17 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());			
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+
 		return dateList;
 	}
 
 	public User[] listAllUsers()
-		throws jdoPersistenceEx
+		throws jdoPersistenceEx, emptySeqEx
 	{
 		try {
 			return getBubble().listAllUsers ();
@@ -214,11 +225,16 @@ public class DisicalUser extends UserPOA {
 		catch (PersistenceException e) {
 			throw new jdoPersistenceEx(e.getMessage());
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
 			
 	}
 
 	public Date[] listDatesByLocation(String location)
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx , emptySeqEx {
 
 		Date[] dateList = null;
 		
@@ -231,12 +247,18 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());			
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+
 		return dateList;
 		
 	}
 
 	public Date[] listDatesBySubject(String subject)
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx , emptySeqEx {
 			
 			Date[] dateList = null;
 
@@ -251,11 +273,17 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());			
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+
 		return dateList;
 	}
 
 	public Invitation[] getInvitations()
-		throws jdoPersistenceEx {
+		throws jdoPersistenceEx , emptySeqEx {
 			
 		Invitation[] invitationList = null;
 		
@@ -270,6 +298,12 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());			
 		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+
 		return invitationList;
 	}
 
