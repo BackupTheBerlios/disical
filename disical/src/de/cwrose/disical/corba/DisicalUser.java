@@ -12,7 +12,14 @@ package de.cwrose.disical.corba;
  * disiorb.Date createDate 
  * 		(long start, long end, String location, String subject);
  * disiorb.Date selectDate(int index) ???
- * disiorb.Date selectDateByTime
+ * disiorb.Date[] selectDatesByTime(long start, long end);
+ * disiorb.Date[] selectDatesByLocation(String location);
+ * disiorb.Date[] selectDatesBySubject(String subject);
+ * disiorb.Invitation[] getInvitations();
+ * void destroy();
+ *
+ * @author deafman
+ * @version $Revision: 1.15 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -90,9 +97,11 @@ public class DisicalUser extends UserPOA {
 		return email;
 	}
 
-	public void do_persist(Database db) 
+	protected void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
+
+		System.out.println ("PERSIST: "+getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getUser ()))+"/"+(Object)bubble);
 		bubble.persist (db);
 	}
 
@@ -114,14 +123,23 @@ public class DisicalUser extends UserPOA {
 		return true;
 	}
 
-	public void deleteUser() {
-		DisicalUser newUserImpl = new DisicalUser();
-/*
-		newUserImpl.setLogin(login);
-		newUserImpl.setName(name);
-		newUserImpl.setEmail(email);
-		newUserImpl.setPasswd(this.getPasswd ());
-*/
+	public void deleteUser() 
+	throws jdoPersistenceEx {
+
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			User u = this.getBubble().getUser();
+			// DbUser.deleteUser(u);
+			db.commit();
+		}
+		catch (org.exolab.castor.jdo.PersistenceException e)
+		{
+			System.err.println (e.getMessage ());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+		
 		// dbDeleteUser(newUserImpl);
 	}
 
@@ -134,37 +152,48 @@ public class DisicalUser extends UserPOA {
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());
-			throw new jdoPersistenceEx("jdo-PersistenceEx: "+e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
 		}
 	}
 
-	public Date selectDate(int index) {
+	public Date selectDate(int index) 
+	throws jdoPersistenceEx {
 
-		DisicalDate selDateImpl = new DisicalDate();
-		selDateImpl.setIndex(index);
-		selDateImpl = null; //dbGetDate(setDateImpl);
+		Date selDate = null;
 
-		Date selDate = selDateImpl._this(DisicalSrv.orb);
-
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//selDate = getBubble().selectDate(index);
+			db.commit();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+	
 		return selDate;
 	}
 
 	public Date[] listDatesByTime(long start, long end) {
 
-		DisicalDate selDateImpl = new DisicalDate();
-		DisicalDate[] listDateImpl;
-
-		selDateImpl.setStartTime(start);
-		selDateImpl.setEndTime(end);
-		listDateImpl = null; //dbGetDatesByTime(selDateImpl);
-
-		dateLimit = listDateImpl.length;
 		Date[] dateList = new Date[dateLimit];
-
+/* will the db give me an array or the dates one by one ? */
+		try {
+			Database db = DbManager.getConnection();
+			db.begin();
+			//dateList = getBubble().selectDate(new Timestamp(start), new Timestamp(end));
+/*
 		for ( int i = 0; i < dateLimit; i++) {
 			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
 		}
-
+*/
+		}
+		catch (PersistenceException e) {
+			
+		}
 		return dateList;
 	}
 

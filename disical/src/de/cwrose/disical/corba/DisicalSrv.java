@@ -1,6 +1,13 @@
-// $Id: DisicalSrv.java,v 1.5 2002/01/28 11:53:55 deafman Exp $
+// $Id: DisicalSrv.java,v 1.6 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
+/**
+ * The main()-class for the server, initialises the ORB and gives the
+ * OR of the disiorb.Server-Obj to the NC
+ *
+ * @author deafman
+ * @version $Revision: 1.6 $
+ */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.Server;
 import de.cwrose.disical.corba.Exceptions.*;

@@ -1,5 +1,12 @@
+// $Id: DisicalInvitation.java,v 1.5 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
+/**
+ * This class manages the invitations (comes soon, hopefully)
+ * 
+ * @author deafman
+ * @version $Revision: 1.5 $
+ */
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;

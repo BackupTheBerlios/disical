@@ -1,6 +1,16 @@
-// $Id: DisicalCli.java,v 1.5 2002/01/28 11:53:55 deafman Exp $
+// $Id: DisicalCli.java,v 1.6 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
+/**
+ * Sets up the DisicalClient, that it can find the Objects 
+ * in the Nameserver. Gets the initial disiorb.Server-Object
+ *
+ * disiorb.Server getServer();
+ * ORB getORB();
+ *
+ * @author deafman
+ * @version $Revision: 1.6 $
+ */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.corba.Exceptions.*;

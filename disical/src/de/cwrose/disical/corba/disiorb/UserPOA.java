@@ -171,8 +171,16 @@ public abstract class UserPOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        deleteUser();
-        out = handler.createReply();
+        try
+        {
+            deleteUser();
+            out = handler.createReply();
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

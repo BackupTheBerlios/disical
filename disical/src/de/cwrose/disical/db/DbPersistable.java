@@ -2,6 +2,7 @@ package de.cwrose.disical.db;
 
 import org.exolab.castor.jdo.*;
 import java.util.Hashtable;
+import de.cwrose.disical.util.HackHelper;
 
 public class DbPersistable {
 	private boolean create_persistable = true;
@@ -13,10 +14,15 @@ public class DbPersistable {
 		reverseMapping = new Hashtable ();
 	}
 
+	public DbPersistable () {
+		HackHelper.printStackTrace (System.out, "Constructing Persistable");
+	}
+
 	protected static void putBubble(org.omg.CORBA.Object o, DbPersistable p)
 	throws PersistenceException
     {
-		if (reverseMapping.contains (o))
+		System.out.println ("DbPersistable.putBubble: "+o+"("+o.getClass().toString()+")"+"="+p);
+		if (reverseMapping.containsKey (o))
 			throw new PersistenceException 
 				("Attempt to overwrite bubble for CORBA object");
 		reverseMapping.put (o, p);
@@ -26,7 +32,8 @@ public class DbPersistable {
 	throws PersistenceException
 	{
 		DbPersistable p = null;
-		if (!reverseMapping.contains (o))
+		System.out.println ("DbPersistable.lookupBubble: "+o+"("+o.getClass().toString()+")");
+		if (!reverseMapping.containsKey (o))
 		{
 			Exception e = new PersistenceException 
 				("Bubble not found for exsiting	CORBA object");
@@ -35,6 +42,7 @@ public class DbPersistable {
 		try
 		{
 			p = (DbPersistable)reverseMapping.get(o);
+		    System.out.println ("DbPersistable.retBubble: "+p);
 			return p;
 		}
 		catch (ClassCastException e)

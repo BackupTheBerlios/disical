@@ -65,7 +65,7 @@ public final class DbUser extends DbPersistable
 				("You are already logged in. Don't do that!");
 		bubble.beLoginUser ();
 		db.commit();
-		putBubble (bubble.getUser (), bubble);
+
 		return bubble.getUser ();
 	}
 

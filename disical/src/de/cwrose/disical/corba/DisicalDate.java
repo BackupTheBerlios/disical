@@ -1,21 +1,22 @@
-// $Id: DisicalDate.java,v 1.12 2002/01/28 16:56:37 deafman Exp $
+// $Id: DisicalDate.java,v 1.13 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
  * CORBA Implementation for the Date-Object of the Calendar
+ *
  * (set|get)StartTime (long)
  * (set|get)EndTime (long)
  * (set|get)Location (String)
  * (set|get)Subject (String)
  * (set|get)Login (String)
  * (set|get)Index (int)
- * persist (boolean)
- * DeleteDate (this)
- * changeDate (long, long, String, String)
- * destroy (void)
+ * boolean persist();
+ * void DeleteDate ();
+ * void changeDate(long, long, String, String);
+ * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -54,6 +55,7 @@ public class DisicalDate extends DatePOA {
 	public void do_persist(Database db) 
 		throws org.exolab.castor.jdo.PersistenceException
 	{
+		System.out.println ("PERSIST: "+getLogin().getLogin ()+" "+((Object)this)+" via "+((Object)(bubble.getDate ()))+"/"+((Object)bubble));
 		bubble.persist (db);
 	}
 

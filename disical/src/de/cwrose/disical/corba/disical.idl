@@ -1,8 +1,9 @@
+// $Id: disical.idl,v 1.13 2002/01/29 14:16:42 deafman Exp $
 /*
  * Titel: disical.idl
- *
- * Betroffene Module: corba
- * Verzapft von: deafman (Carsten Rose)
+ * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
+ * @author deafman
+ * @version $Revision: 1.13 $
  */
 module de {
 	module cwrose {
@@ -21,6 +22,7 @@ module de {
 	typedef sequence <Invitation> seqInvitation;
 	typedef sequence <User> seqUser;
 
+/* some exceptions has to pass the ORB */
 	exception wrongPwEx {};
 	exception jdoPersistenceEx {};
 
@@ -52,21 +54,19 @@ module de {
 		string getName();
 		string getEmail();
 
-		/* persist routine zum abgleich der db */
+		/* persist the object */
 		boolean persist();
 
-		void deleteUser();
-
-		/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates
- 		 * in einer fabrik
- 		 */
+		void deleteUser()
+	  raises (jdoPersistenceEx);
+ 		/* Date-fab for the User */
 		Date createDate(in long long start, 
 				in long long end, 
 				in string location, 
 				in string subject)
 				raises (jdoPersistenceEx);
 
-		/* ok, the index might be of different type (typedef dbkey..) :-) */
+		/* get an known Date from the db */
 		Date selectDate(in long index)
 				raises (jdoPersistenceEx);
 
@@ -99,32 +99,25 @@ module de {
 		void setLocation(in string location);
 		void setSubject(in string subject);
 		void setLogin(in User login);
-		/* habe ich modifiziert, um ein logischeres layout zu erhalten 
-		 * (ergebnis ist der returnwert)
-		 */
+		 
 		long long getStartTime();
 		long long getEndTime();
 		string getLocation();
 		string getSubject();
 		User getLogin();
 
-		/* nun nötig, um den index eines Dates zu erhalten */
 		void setIndex(in long _index);
 		long getIndex(); 
 
-		/* persist routine zum abgleich der db */
 		boolean persist();
 
-		/* das delete bleibt hier :-) */
 		void deleteDate();
 
-		/* wir wollen ja schließlich die Dates auch modifizieren */
 		void changeDate(in long long start,
 				in long long end,
 				in string location,
 				in string subject);
 
-		/* destroy the obkect in the poa */
 		void destroy();
 	};
 

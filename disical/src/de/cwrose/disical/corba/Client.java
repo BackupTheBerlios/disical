@@ -26,6 +26,7 @@ public class Client {
 		long fstTime = System.currentTimeMillis();
 
 		Date myDate = newUser.createDate(fstTime, fstTime*10, "Mensa", "ESSEN!!!");
+		System.out.println (myDate.getLogin () == newUser);
 		//newDate = myDate.getDate
 		}
 		catch (wrongPwEx e) {

@@ -38,10 +38,14 @@ public final class DbDate extends DbPersistable
 		dd.setLocation (location);
 		dd.setStartTime (start);
 		dd.setEndTime (stop);
+
+		// Fill up external references
+		System.out.println (u.getLogin ());
 		dd.setLogin ((DbUser)lookupBubble(u));
 
 		Date d = dd.getDate ();
 		d.persist ();
+		dd.growOld();
 		return d;
 	}
 

@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.29 2002/01/28 16:56:37 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.30 2002/01/29 14:16:42 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -228,6 +228,24 @@
     commit;
     drop database ${db-name}
   </sql> 
+</target>
+
+<target name="db_clean" depends="init">
+  <sql
+    driver="${db-driver-class}"
+    url="${db-url-connect}" 
+    userid="${db-username}" password="${db-password}">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> 
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+	delete from appointments;
+	delete from auth;
+  </sql>
 </target>
 
 <target name="db_recreate" depends="db_drop,db_create" />

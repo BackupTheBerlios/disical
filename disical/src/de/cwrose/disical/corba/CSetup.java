@@ -1,4 +1,4 @@
-// $Id: CSetup.java,v 1.11 2002/01/28 11:53:55 deafman Exp $
+// $Id: CSetup.java,v 1.12 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,8 +7,16 @@ package de.cwrose.disical.corba;
  * * starts ORB and POA
  * * handles NameService
  * 
+ * void setORB(ORB orb);
+ * ORB getORB();
+ * void orbRun();
+ * void initPOA();
+ * void setObjCount(int no);
+ * CORBA.Object getNC(String id, String key, int objNo);
+ * void setNC(String id, String key, int objNo);
+ * 
  * @author deafman
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 import de.cwrose.disical.corba.Exceptions.*;
 import de.cwrose.disical.util.*;
@@ -65,11 +73,6 @@ public class CSetup {
 		System.out.println ("config        >"+o_cfg+"<");
 		System.setProperties (props);
 
-/*
-            props.put ("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
-            props.put ("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
-            props.put ("ooc.config", "/etc/OB.conf");
-*/		
 	}
 
 	public void setCORBAObj(org.omg.CORBA.Object obj) {
@@ -78,11 +81,6 @@ public class CSetup {
 
 	public ORB getORB(String[] args) {
 		try {
-		/*	Properties cfg = CfgReader.readCfg ("corba");
-            Properties props = System.getProperties ();
-            props.put ("org.omg.CORBA.ORBClass", cfg.get("org.omg.CORBA.ORBClass"));
-            props.put ("org.omg.CORBA.ORBSingletonClass", cfg.get("org.omg.CORBA.ORBSingletonClass"));
-            props.put ("ooc.config", cfg.get("ooc.config"));*/
 			orb = org.omg.CORBA.ORB.init(args, props);
 		}
 		catch (Exception e)

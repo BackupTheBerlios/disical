@@ -93,7 +93,8 @@ public interface UserOperations
     /***/
 
     void
-    deleteUser();
+    deleteUser()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/createDate:1.0

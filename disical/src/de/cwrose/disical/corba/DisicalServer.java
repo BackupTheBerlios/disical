@@ -1,4 +1,4 @@
-// $Id: DisicalServer.java,v 1.10 2002/01/28 16:56:37 deafman Exp $
+// $Id: DisicalServer.java,v 1.11 2002/01/29 14:16:42 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.disiorb.*;
@@ -31,9 +31,7 @@ public class DisicalServer extends ServerPOA {
     {
 	 	try
 		{	
-			DbUser dbUser = new DbUser();
-		
-			return dbUser.createUser(login, pwd, name, email);
+			return DbUser.createUser(login, pwd, name, email);
 		}
 		catch (PersistenceException e)
 		{
@@ -50,8 +48,7 @@ public class DisicalServer extends ServerPOA {
 		User newUser = null;
 
 		try {
-			DbUser dbUser = new DbUser();
-			newUser= dbUser.login(login,pwd);
+			newUser= DbUser.login(login,pwd);
 		} 
 		catch (IllegalArgumentException e) {
 			throw new wrongPwEx("You've entered an INVALID Password!");
