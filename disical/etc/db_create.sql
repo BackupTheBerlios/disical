@@ -55,23 +55,23 @@ create table invited (
 create index invited_login_idx
 	on invited ( login );
 
-create function trigger_create_invited()
-returns opaque
-as 'begin if new.state != 0 then raise exception ''State of invited must be 0 on create.'';	end if;	if new.date != null raise exception ''Date not allowed for unaccepted invitation.''; end if; return new;	end;'
-language 'plpgsql'; 
+-- create function trigger_create_invited()
+-- returns opaque
+--as 'begin if new.state != 0 then raise exception ''State of invited must be 0 on create.'';	end if;	if new.date != null raise exception ''Date not allowed for unaccepted invitation.''; end if; return new;	end;'
+-- language 'plpgsql'; 
 
-create trigger trigger_invited_create
-before insert on invited
-for each row execute procedure trigger_create_invited();
+-- create trigger trigger_invited_create
+-- before insert on invited
+-- for each row execute procedure trigger_create_invited();
 
-create function trigger_update_invited()
-returns opaque
-as 'begin if new.state == 2 and new.date == null then raise exception ''Date required for accepted invitation.''; end if; if new.state != 2 and new.date != null then raise exception ''Date not allowed for unaccepted invitation.''; end if; return new; end;'
-language 'plpgsql'; 
+-- create function trigger_update_invited()
+-- returns opaque
+-- as 'begin if new.state == 2 and new.date == null then raise exception ''Date required for accepted invitation.''; end if; if new.state != 2 and new.date != null then raise exception ''Date not allowed for unaccepted invitation.''; end if; return new; end;'
+-- language 'plpgsql'; 
 
-create trigger trigger_invited_update
-before update ON invited
-for each row execute procedure trigger_update_invited();
+-- create trigger trigger_invited_update
+-- before update ON invited
+-- for each row execute procedure trigger_update_invited();
 
 
 
