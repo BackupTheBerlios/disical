@@ -6,6 +6,8 @@
 
 package de.cwrose.disical.ui;
 
+import javax.swing.*;
+
 /**
  *
  * @author  user1
@@ -23,6 +25,7 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
     DisicalCli client = null;
     User user = null;
     String[] args = null;
+    JInternalFrame session;
     
     /** Creates new form DisicalMainFrame */
     public DisicalMainFrame() {
@@ -144,10 +147,11 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                         System.out.println(cancel);
                         
                         try {
-                            new SessionFrame(user.listAllDatesByTime()).show();
+                            session = new SessionFrame(user.listAllDatesByTime());
+                            this.add(session);
                         } catch ( Exception e)  {
-                            new SessionFrame(new Date[0]).show();
-                            e.printStackTrace(System.out);
+                            session = new SessionFrame( new Date[0] );
+                            this.add(session);
                         }
                     }
                     catch (jdoPersistenceEx e) {
@@ -181,7 +185,7 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
             dlg.show();
             cancel = dlg.cancel;
             System.out.println(cancel);
-             client = new DisicalCli( new String[0]);
+            client = new DisicalCli( new String[0]);
             server = client.getServer();
             try {
                 user = server.login(dlg.login, dlg.password); /* relogin */
@@ -192,17 +196,18 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
             if (user != null)
                 online = true;
             try {
-                new SessionFrame(user.listAllDatesByTime()).show();
+                session = new SessionFrame(user.listAllDatesByTime());
+                this.add(session);
             } catch ( Exception e)  {
-                new SessionFrame(new Date[0]).show();
+                session = new SessionFrame( new Date[0] );
+                this.add(session);
                 e.printStackTrace(System.out);
             }
-            
-            
-            
         }
         
-        // Add your handling code here:
+        
+        
+
     }//GEN-LAST:event_loginMenuActionPerformed
     
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
