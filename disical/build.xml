@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.8 2002/01/05 20:04:26 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.9 2002/01/06 13:15:58 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -16,7 +16,7 @@
 
   <!-- Normally these variables should never change, but it's good -->
   <!-- common Makefile practice to have variables for one's -->
-  <!-- directories -- just in case things change. -->
+  <!-- directories - just in case things change. -->
   <property name="dir.src" value="src" />
   <property name="dir.lib" value="lib" />
   <property name="dir.bin" value="bin" />
