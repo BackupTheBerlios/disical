@@ -105,26 +105,30 @@ public class Client {
 			catch (jdoPersistenceEx e) {
 				HackHelper.printEx(e, System.out);
 			}
-			
-			for (int j=0; j<5; j++) { /* get all my dates */
+
+			try {				
 				
-				Date[] locdate = newUser.listDatesByLocation("Mensa1");
-				printDate(locdate[0]);	 /* by selected location */
-				Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
-				printDate(subdate[0]);   /* by subject */
-				Date[] timedate = newUser.listDatesByTime(fstTime,
+				for (int j=0; j<5; j++) { /* get all my dates */
+					Date[] locdate = newUser.listDatesByLocation("Mensa1");
+					printDate(locdate[0]);	 /* by selected location */
+					Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
+					printDate(subdate[0]);   /* by subject */
+					Date[] timedate = newUser.listDatesByTime(fstTime,
 														  fstTime+1234);
-				printDate(timedate[0]);  /* and by time */
+					printDate(timedate[0]);  /* and by time */
+				}
+				
+				Invitation[] newInv = newUser.getInvitations();
+				printInvitation(newInv[0]);
+				for (int k=0; k<newInv.length; k++) {
+					printInvited(newInv[k].getAllInvited()); 
+					/* now all my invitations with status aso */
+				}
+			} catch (emptySeqEx e){
+				System.err.println(e.getMessage());
+				e.printStackTrace(System.err);
 			}
 			
-						Invitation[] newInv = newUser.getInvitations();
-			printInvitation(newInv[0]);
-						
-			for (int k=0; k<newInv.length; k++) {
-				printInvited(newInv[k].getAllInvited()); 
-				/* now all my invitations with status aso */
-				
-			}
 		}
 		catch (wrongPwEx e) {
 			System.out.println(e.toString());
@@ -132,6 +136,7 @@ public class Client {
 		catch (jdoPersistenceEx e) {
 			System.out.println(e.toString());
 			e.printStackTrace(System.out);
+
 		}
 
 
