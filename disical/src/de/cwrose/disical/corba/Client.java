@@ -112,10 +112,10 @@ public class Client {
 					Date[] locdate = newUser.listDatesByLocation("Mensa1");
 					printDate(locdate[0]);	 /* by selected location */
 					Date[] subdate = newUser.listDatesBySubject("ESSEN!!!");
-					printDate(subdate[0]);   /* by subject */
+					printDate(subdate[0]);   // by subject 
 					Date[] timedate = newUser.listDatesByTime(fstTime,
 														  fstTime+1234);
-					printDate(timedate[0]);  /* and by time */
+					printDate(timedate[0]);  
 				}
 				
 				Invitation[] newInv = newUser.getInvitations();

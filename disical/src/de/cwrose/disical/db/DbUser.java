@@ -170,6 +170,12 @@ public final class DbUser extends DbPersistable
 			 "and $2<=d.startTime  and d.endTime<=$3 "+
 			 "ORDER BY d.startTime ASC");
 		oql.bind (getLogin());
+		System.out.println ("CORBA-START: "+startTime);
+		System.out.println ("CORBA-STOP: "+stopTime);
+		startTime = DbManager.changeTime(startTime);
+		stopTime = DbManager.changeTime(stopTime);
+		System.out.println ("CHANGE-START: "+startTime);
+		System.out.println ("CHANGE-STOP: "+stopTime);
 		oql.bind (startTime);
 		oql.bind (stopTime);
 
@@ -188,7 +194,7 @@ public final class DbUser extends DbPersistable
 
 		// OQL 
 		OQLQuery oql = db.getOQLQuery 
-("SELECT i FROM de.cwrose.disical.db.DbInvitaions i WHERE i.login=$1; ");
+("SELECT i FROM de.cwrose.disical.db.DbInvitation i WHERE i.login=$1");
 		oql.bind (getLogin());
 		// Get Results
 		db.begin();

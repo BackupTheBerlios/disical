@@ -8,17 +8,19 @@ import java.io.*;
 import org.xml.sax.EntityResolver;
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
+import java.sql.Timestamp;
 
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DbManager {
 	private static JDO jdo;
 	private static String dbname;
 	private static java.util.Properties props;
-	
+	private static long timeDiff;
+
 	static 
 	{
 		try
@@ -53,6 +55,17 @@ public class DbManager {
 			jdo.setClassLoader (jdo.getClass ().getClassLoader ());
 			jdo.setDatabasePooling 
 				(props.getProperty("db-mgr-pooling") == "enabled");
+
+			try {
+				timeDiff = Long.parseLong (props.getProperty("db-time-diff"));
+			}
+			catch (NumberFormatException e)
+				{
+					timeDiff = 0;
+					System.err.println 
+						("db-time-diff not specified. Set to 0.");
+				}
+			System.err.println ("TIME-DIFF:"+timeDiff);
 		}
 		catch (Exception e)
 		{
@@ -63,6 +76,11 @@ public class DbManager {
 		}			
 	}
 	
+	public static Timestamp changeTime (Timestamp org)
+	{
+		return new Timestamp (org.getTime()+timeDiff);
+	}
+
 	public static Database getConnection() 
 		throws DatabaseNotFoundException, PersistenceException
 	{

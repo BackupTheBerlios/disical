@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.21 2002/03/06 15:49:00 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.22 2002/03/07 20:43:20 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -100,7 +100,6 @@ public class DisicalInvitation extends InvitationPOA {
 
 		try {
 			invitedList = getBubble().getAllInvited();
-			
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());
