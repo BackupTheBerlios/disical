@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.28 2002/03/06 15:49:00 deafman Exp $
+// $Id: DisicalUser.java,v 1.29 2002/03/06 16:00:33 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -183,11 +183,6 @@ public class DisicalUser extends UserPOA {
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
-		catch (EmptySeqException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace(System.err);
-			throw new emptySeqEx(e.getMessage());
-		}
 	
 		return selDate;
 	}
@@ -200,7 +195,7 @@ public class DisicalUser extends UserPOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//dateList = getBubble().selectDateByTime(new Timestamp(start), new Timestamp(end));
+			dateList = getBubble().listDatesByTime(new Timestamp(start), new Timestamp(end));
 			db.commit();
 		}
 		catch (PersistenceException e) {
@@ -266,7 +261,7 @@ public class DisicalUser extends UserPOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//dateList = getBubble().selectDateBySubject(subject);
+			dateList = getBubble().listDatesBySubject(subject);
 			db.commit();
 		}
 		catch (PersistenceException e) {
@@ -291,7 +286,7 @@ public class DisicalUser extends UserPOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//invitationList = getBubble().selectInvitations();
+			invitationList = getBubble().listAllInvitations();
 			db.commit();
 		}
 		catch (PersistenceException e) {
