@@ -11,6 +11,9 @@ package de.cwrose.disical.ui;
  * @author  user1
  */
 public class LoginDialog extends javax.swing.JDialog {
+   public boolean cancel = false;
+   public String login = "";
+   public String password = "";
 
     /** Creates new form LoginDialog */
     public LoginDialog(java.awt.Frame parent, boolean modal) {
@@ -31,6 +34,7 @@ public class LoginDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
+        message = new javax.swing.JLabel();
         
         setTitle("Disical Login");
         setName("loginDialog");
@@ -70,16 +74,38 @@ public class LoginDialog extends javax.swing.JDialog {
         jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, -1, -1));
         
         okButton.setText("ok");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+        
         jPanel1.add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
         
         jPanel1.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 90, -1));
+        
+        message.setForeground(java.awt.Color.red);
+        jPanel1.add(message, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 10, 180, -1));
         
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
         
         pack();
     }//GEN-END:initComponents
 
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // Add your handling code here:
+        System.out.println("Hallo");
+        this.login = loginTextField.getText();
+        this.password = passwordField.getText();
+        cancel = false;
+        setVisible(false);
+        dispose();
+       
+        
+    }//GEN-LAST:event_okButtonActionPerformed
+
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        cancel = true;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
@@ -90,6 +116,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
     /** Closes the dialog */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
+        cancel = true;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
@@ -99,6 +126,10 @@ public class LoginDialog extends javax.swing.JDialog {
     */
     public static void main(String args[]) {
         new LoginDialog(new javax.swing.JFrame(), true).show();
+    }
+    
+    public void setMessage(String msg) {
+        this.message.setText(msg);
     }
 
 
@@ -110,6 +141,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton okButton;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel message;
     // End of variables declaration//GEN-END:variables
 
 }

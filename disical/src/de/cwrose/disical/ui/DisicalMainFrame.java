@@ -10,17 +10,21 @@ package de.cwrose.disical.ui;
  *
  * @author  user1
  */
-public class DisicalMainFrame extends javax.swing.JFrame {
-    boolean online = false; // true if user is logged in
 
+import java.awt.*;
+import java.awt.event.*;
+
+public class DisicalMainFrame extends javax.swing.JFrame implements ActionListener {
+    boolean online = false; // true if user is logged in
+    
     /** Creates new form DisicalMainFrame */
     public DisicalMainFrame() {
-        
+        System.out.println("Huraa ich bin da");
         initComponents();
         setSize(640,480);
         
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -114,57 +118,79 @@ public class DisicalMainFrame extends javax.swing.JFrame {
         setJMenuBar(menuBar);
         pack();
     }//GEN-END:initComponents
-
+    
     private void registerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerMenuActionPerformed
-         new RegisterDialog(new javax.swing.JFrame(), true).show();
-    }//GEN-LAST:event_registerMenuActionPerformed
+        
+        boolean cancel = false;
+        RegisterDialog dlg =   new RegisterDialog(new javax.swing.JFrame(), true);
+        while ( ! online &&  ! cancel) {
+            dlg.show();
+            cancel = dlg.cancel;
+            System.out.println(cancel);
+            dlg.setMessage(dlg.login + " " + dlg.password);
+        }
 
+        
+    }//GEN-LAST:event_registerMenuActionPerformed
+    
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // Add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
+    
     private void logoutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuActionPerformed
         // Add your handling code here:
     }//GEN-LAST:event_logoutMenuActionPerformed
-
+    
     private void loginMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginMenuActionPerformed
-       if (! online) {
-         new LoginDialog(new javax.swing.JFrame(), true).show();
-       }
-           
+        boolean cancel = false;
+        LoginDialog dlg = new LoginDialog(new javax.swing.JFrame(), true);
+        while ( ! online &&  ! cancel) {
+            dlg.show();
+            cancel = dlg.cancel;
+            System.out.println(cancel);
+            dlg.setMessage(dlg.login + " " + dlg.password);
+            
+            
+            
+        }
+        
         // Add your handling code here:
     }//GEN-LAST:event_loginMenuActionPerformed
-
+    
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
         // Add your handling code here:
     }//GEN-LAST:event_copyMenuItemActionPerformed
-
+    
     private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
         // Add your handling code here:
     }//GEN-LAST:event_contentMenuItemActionPerformed
-
+    
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         
         // Add your handling code here:
-        new AboutDialog (new javax.swing.JFrame (), true).show ();
+        new AboutDialog(new javax.swing.JFrame(), true).show();
     }//GEN-LAST:event_aboutMenuItemActionPerformed
-
+    
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
-
+    
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         System.exit(0);
     }//GEN-LAST:event_exitForm
-
+    
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         new DisicalMainFrame().show();
     }
-
+    
+    public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu fileMenu;
@@ -179,5 +205,5 @@ public class DisicalMainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     // End of variables declaration//GEN-END:variables
-
+    
 }
