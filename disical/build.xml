@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.24 2002/01/27 15:37:05 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.25 2002/01/27 17:09:53 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -65,6 +65,8 @@
   <property file="${disical.cfg}/server.properties" />
   <property file="${disical.cfg}/local/velocity.properties" />
   <property file="${disical.cfg}/velocity.properties" />
+  <property file="${disical.cfg}/local/corba.properties" />
+  <property file="${disical.cfg}/corba.properties" />
 
   <!-- Initial build activities: Tstamp + Create pk output dirs -->
   <tstamp />
@@ -271,6 +273,7 @@
 <target name="ns_start" depends="init">
   <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <env key="ORBACUS_CONFIG" value="${ooc.config}" />
     <arg line="${shell-exec}" />
     <arg line="${shell-quote}${ob-dir}${ob-bin-ns}${shell-quote}" />
   </exec>
