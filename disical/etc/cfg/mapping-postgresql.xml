@@ -146,7 +146,7 @@
   	</field>
 
   	<field name="notify" type="boolean">
-  		<sql name="notify" type="boolean"/>
+  		<sql name="notify" type="bit"/>
   	</field>
 
   </class>
