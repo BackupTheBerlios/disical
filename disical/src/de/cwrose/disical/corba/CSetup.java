@@ -30,13 +30,12 @@ public class CSetup {
 
 	public CSetup() {
 		try {
-			Properties cfg = Cfg.Reader.readCfg ("corba");
-            Properties props = System.getProperties ();
+			Properties cfg = CfgReader.readCfg ("corba");
             props.put ("org.omg.CORBA.ORBClass", cfg.get("org.omg.CORBA.ORBClass"));
             props.put ("org.omg.CORBA.ORBSingletonClass", cfg.get("org.omg.CORBA.ORBSingletonClass"));
             props.put ("ooc.config", cfg.get("ooc.config"));
 		} 
-		catch (CfgMissing Exception e)
+		catch (CfgMissingException e)
 		{
 			System.err.println ("Can't access corab cfg ! I die !");
 			System.err.println (e.toString ());
