@@ -78,4 +78,12 @@ public interface InvitedOperations
 
     boolean
     persist();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invited/destroy:1.0
+    //
+    /***/
+
+    void
+    destroy();
 }

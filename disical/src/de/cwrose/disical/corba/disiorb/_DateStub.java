@@ -304,10 +304,10 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setUser:1.0
     //
     public void
-    setLogin(User _ob_a0)
+    setUser(User _ob_a0)
     {
         while(true)
         {
@@ -317,7 +317,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream in = null;
                 try
                 {
-                    out = _request("setLogin", true);
+                    out = _request("setUser", true);
                     UserHelper.write(out, _ob_a0);
                     in = _invoke(out);
                     return;
@@ -340,13 +340,13 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setLogin", _ob_opsClass);
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setUser", _ob_opsClass);
                 if(_ob_so == null)
                     continue;
                 DateOperations _ob_self = (DateOperations)_ob_so.servant;
                 try
                 {
-                    _ob_self.setLogin(_ob_a0);
+                    _ob_self.setUser(_ob_a0);
                     return;
                 }
                 finally
@@ -623,10 +623,10 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Date/getUser:1.0
     //
     public User
-    getLogin()
+    getUser()
     {
         while(true)
         {
@@ -636,7 +636,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 org.omg.CORBA.portable.InputStream in = null;
                 try
                 {
-                    out = _request("getLogin", true);
+                    out = _request("getUser", true);
                     in = _invoke(out);
                     User _ob_r = UserHelper.read(in);
                     return _ob_r;
@@ -659,13 +659,13 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
             }
             else
             {
-                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getLogin", _ob_opsClass);
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getUser", _ob_opsClass);
                 if(_ob_so == null)
                     continue;
                 DateOperations _ob_self = (DateOperations)_ob_so.servant;
                 try
                 {
-                    return _ob_self.getLogin();
+                    return _ob_self.getUser();
                 }
                 finally
                 {

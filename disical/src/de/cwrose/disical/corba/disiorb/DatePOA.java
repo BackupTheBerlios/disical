@@ -59,17 +59,17 @@ public abstract class DatePOA
             "getEndTime",
             "getIndex",
             "getLocation",
-            "getLogin",
             "getStartTime",
             "getSubject",
+            "getUser",
             "persist",
             "setDescription",
             "setEndTime",
             "setIndex",
             "setLocation",
-            "setLogin",
             "setStartTime",
-            "setSubject"
+            "setSubject",
+            "setUser"
         };
 
         int _ob_left = 0;
@@ -114,14 +114,14 @@ public abstract class DatePOA
         case 6: // getLocation
             return _OB_op_getLocation(in, handler);
 
-        case 7: // getLogin
-            return _OB_op_getLogin(in, handler);
-
-        case 8: // getStartTime
+        case 7: // getStartTime
             return _OB_op_getStartTime(in, handler);
 
-        case 9: // getSubject
+        case 8: // getSubject
             return _OB_op_getSubject(in, handler);
+
+        case 9: // getUser
+            return _OB_op_getUser(in, handler);
 
         case 10: // persist
             return _OB_op_persist(in, handler);
@@ -138,14 +138,14 @@ public abstract class DatePOA
         case 14: // setLocation
             return _OB_op_setLocation(in, handler);
 
-        case 15: // setLogin
-            return _OB_op_setLogin(in, handler);
-
-        case 16: // setStartTime
+        case 15: // setStartTime
             return _OB_op_setStartTime(in, handler);
 
-        case 17: // setSubject
+        case 16: // setSubject
             return _OB_op_setSubject(in, handler);
+
+        case 17: // setUser
+            return _OB_op_setUser(in, handler);
         }
 
         throw new org.omg.CORBA.BAD_OPERATION();
@@ -246,17 +246,6 @@ public abstract class DatePOA
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_getLogin(org.omg.CORBA.portable.InputStream in,
-                    org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_r = getLogin();
-        out = handler.createReply();
-        UserHelper.write(out, _ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
     _OB_op_getStartTime(org.omg.CORBA.portable.InputStream in,
                         org.omg.CORBA.portable.ResponseHandler handler)
     {
@@ -275,6 +264,17 @@ public abstract class DatePOA
         String _ob_r = getSubject();
         out = handler.createReply();
         out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getUser(org.omg.CORBA.portable.InputStream in,
+                   org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        User _ob_r = getUser();
+        out = handler.createReply();
+        UserHelper.write(out, _ob_r);
         return out;
     }
 
@@ -334,17 +334,6 @@ public abstract class DatePOA
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_setLogin(org.omg.CORBA.portable.InputStream in,
-                    org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_a0 = UserHelper.read(in);
-        setLogin(_ob_a0);
-        out = handler.createReply();
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
     _OB_op_setStartTime(org.omg.CORBA.portable.InputStream in,
                         org.omg.CORBA.portable.ResponseHandler handler)
     {
@@ -362,6 +351,17 @@ public abstract class DatePOA
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_a0 = in.read_string();
         setSubject(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setUser(org.omg.CORBA.portable.InputStream in,
+                   org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        User _ob_a0 = UserHelper.read(in);
+        setUser(_ob_a0);
         out = handler.createReply();
         return out;
     }

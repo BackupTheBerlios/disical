@@ -62,12 +62,12 @@ public interface DateOperations
     setDescription(String description);
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setUser:1.0
     //
     /***/
 
     void
-    setLogin(User login);
+    setUser(User login);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getStartTime:1.0
@@ -110,12 +110,12 @@ public interface DateOperations
     getDescription();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Date/getUser:1.0
     //
     /***/
 
     User
-    getLogin();
+    getUser();
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0
