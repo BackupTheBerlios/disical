@@ -55,24 +55,16 @@ module disiorb {
  */
 		Date selectDate(in short index);
 
-/* wir wollen ja schließlich die Dates auch modifizieren */
-		void changeDate(in string start,
-				in string end,
-				in string location,
-				in string subject);
+		Date findDate(in string start,
+					in string end,
+					in string location,
+					in string subject,
+					in short index);
 	};
 
 /* alle ersteinmal als string, kann noch verändert werden */
 /* Dateinterface */
 	interface Date {
-		readonly attribute string StartTime;
-		readonly attribute string EndTime;
-		readonly attribute string Location;
-		readonly attribute string Subject;
-		readonly attribute short index;
-
-/* das delete bleibt hier :-) */
-		void deleteDate();
 
 		void setStartTime(in string Time);
 		void setEndTime(in string Time);
@@ -88,6 +80,15 @@ module disiorb {
 		string getSubject();
 /* nun nötig, um den index eines Dates zu erhalten */
 		short getIndex(); 
+
+/* das delete bleibt hier :-) */
+		void deleteDate();
+
+/* wir wollen ja schließlich die Dates auch modifizieren */
+		void changeDate(in string start,
+				in string end,
+				in string location,
+				in string subject);
 	};
 };
 

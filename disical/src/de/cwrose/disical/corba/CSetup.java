@@ -7,11 +7,11 @@ import org.omg.PortableServer.*;
 import org.omg.CosNaming.*;
 import org.omg.PortableServer.POA;
 
-class CSetup {
+public class CSetup {
 
     private static Properties props = System.getProperties();
 
-    private static ORB orb;
+    public static ORB orb;
 
     private static org.omg.CORBA.Object poaObj = null;
     private static POA rootPOA = null;
@@ -20,84 +20,69 @@ class CSetup {
     private static org.omg.CORBA.Object corbaObj = null;
 
     private static org.omg.CORBA.Object nsObj = null;
-    private static NamingContext nc = null;
-    private static NameComponent[] ncName;
+    public static NamingContext nc = null;
+    public static NameComponent[] ncName;
+    private static int objCount;
     
-    CSetup(String Id, String Kind) {
+    CSetup(String[] args) {
 
     	props.put("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
     	props.put("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
     	props.put("ooc.config", "OB.conf");
 
-	initPOA();
-	//initORB();
-	//initNS(Id, Kind);
-	
-	try {
-	    manager.activate();
-	}
-	catch(org.omg.PortableServer.POAManagerPackage.AdapterInactive ex) {
-	    
-	    throw new RuntimeException();
-	    
-	}
-	
-	orb.run();
+		orb = ORB.init(args, props);
+    }
 
-	try {
-		nc.unbind(ncName);
-	}
-	catch (Exception e) {
-	    e.printStackTrace();
-	    System.exit(1);
-	}
+    public void orbRun() {
 
-	System.out.println("Server is exiting... \n");
+		orb.run();
+
     }
     
     public void initPOA() {
 
-	try {
-	    poaObj = orb.resolve_initial_references("RootPOA");
-	}
-	catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
-	    throw new RuntimeException();
-	}
-	
-	rootPOA = POAHelper.narrow(poaObj);
-	manager = rootPOA.the_POAManager();
+		try {
+	    	poaObj = orb.resolve_initial_references("RootPOA");
+			rootPOA = POAHelper.narrow(poaObj);
+			manager = rootPOA.the_POAManager();
+	    	manager.activate();
+		}
+		catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
+			throw new RuntimeException();
+		}
+		catch (org.omg.PortableServer.POAManagerPackage.AdapterInactive ex) {
+			throw new RuntimeException();
+		}
+    }
+
+    public void setObjCount(int oc) {
+
+		this.objCount = oc;
 
     }
-    
-/*    public void initORB() {
- 
-	ORBContainer OC = new ORBContainer();
-	OC.setORB(orb);   
-	corbaObj = OC._this(orb);
-	
-    }
-*/    
-    public void initNS(String NCId, String NCKind) {
+
+    public void setNC(String NCId, String NCKind, int objNo) {
 
     	try {
-		nsObj = orb.resolve_initial_references("NamingService");
+			nsObj = orb.resolve_initial_references("NamingService");
     	}
     	catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
-		throw new RuntimeException();
+			throw new RuntimeException();
     	}
+
     	nc = NamingContextHelper.narrow(nsObj);
 	
-	ncName = new NameComponent[1];
-	ncName[0] = new NameComponent();
-	ncName[0].id = NCId;
-	ncName[0].kind = NCKind;
+		ncName = new NameComponent[objCount];
+		ncName[objNo] = new NameComponent();
+		ncName[objNo].id = NCId;
+		ncName[objNo].kind = NCKind;
 
-	try {	
-		nc.rebind(ncName, corbaObj);
-	}
-	catch (Exception e) {
-	    e.printStackTrace();
-	    System.exit(1);
-	}
+		try {	
+			nc.rebind(ncName, corbaObj);
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		    System.exit(1);
+		}
     }
 }
