@@ -18,8 +18,8 @@ public class CSetup {
 	private POA rootPOA = null;
 	private POAManager manager = null;
 
-	private Properties props = System.getProperties ();
 	private org.omg.CORBA.Object corbaObj = null;
+    private Properties props = System.getProperties ();
 
 	private org.omg.CORBA.Object nsObj = null;
 	public NamingContext nc = null;
@@ -29,19 +29,32 @@ public class CSetup {
 	private org.omg.CORBA.Object serverObj = null;
 
 	public CSetup() {
+		String o_cls = null;
+		String o_sgl = null;
+		String o_cfg = null;
+
 		try {
 			Properties cfg = CfgReader.readCfg ("corba");
-            props.put ("org.omg.CORBA.ORBClass", cfg.get("org.omg.CORBA.ORBClass"));
-            props.put ("org.omg.CORBA.ORBSingletonClass", cfg.get("org.omg.CORBA.ORBSingletonClass"));
-            props.put ("ooc.config", cfg.get("ooc.config"));
+			o_cls = cfg.getProperty ("org.omg.CORBA.ORBClass");
+			o_sgl = cfg.getProperty ("org.omg.CORBA.ORBSingletonClass");
+			o_cfg = cfg.getProperty ("ooc.config");
 		} 
 		catch (CfgMissingException e)
 		{
-			System.err.println ("Can't access corab cfg ! I die !");
+			System.err.println ("Can't access corba cfg ! I die !");
 			System.err.println (e.toString ());
 			e.printStackTrace (System.err);
 			System.exit (1);
 		}
+        props.put ("org.omg.CORBA.ORBClass", o_cls);
+        props.put ("org.omg.CORBA.ORBSingletonClass", o_sgl);
+        props.put ("ooc.config", o_cfg);
+		System.out.println ("Running orb with:");
+		System.out.println ("ORBClass      >"+o_cls+"<");
+		System.out.println ("ORBSingleton  >"+o_sgl+"<");
+		System.out.println ("config        >"+o_cfg+"<");
+		System.setProperties (props);
+
 /*
             props.put ("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
             props.put ("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
@@ -62,9 +75,8 @@ public class CSetup {
             props.put ("ooc.config", cfg.get("ooc.config"));*/
 			orb = org.omg.CORBA.ORB.init(args, props);
 		}
-		catch (/*CfgMissing*/Exception e)
+		catch (Exception e)
 		{
-			System.err.println ("Can't access corab cfg ! I die !");
 			System.err.println (e.toString ());
 			e.printStackTrace (System.err);
 			System.exit (1);

@@ -17,7 +17,7 @@ import org.apache.velocity.app.VelocityEngine;
  * CfgProperties-Objects, this is invisible to CfgReader-users.
  *
  * @author stepn
- * @revision $Revision: 1.3 $
+ * @revision $Revision: 1.4 $
  */
 final class CfgProperties 
 extends Properties 
@@ -41,6 +41,9 @@ implements org.apache.velocity.context.Context
 		  return super.get (key);
 	 }
 
+	 public String lookup (java.lang.String key) {
+		  return (String)super.get (key);
+	 }
 	 public Object remove (java.lang.String key) {
 		  return super.remove (key);
 	 }
@@ -62,7 +65,7 @@ implements org.apache.velocity.context.Context
  * as the java vm.
  * 
  * @author Stefan Plantikow <stepn@users.berlios.de>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see java.lang.System#getProperty
  * 
  */
