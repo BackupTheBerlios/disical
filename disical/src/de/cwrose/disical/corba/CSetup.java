@@ -28,7 +28,7 @@ public class CSetup {
 
     	props.put("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
     	props.put("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
-    	props.put("ooc.config", "OB.conf");
+    	props.put("ooc.config", "/etc/OB.conf");
 
 		orb = ORB.init(args, props);
     }
@@ -67,10 +67,10 @@ public class CSetup {
     public void setNC(String NCId, String NCKind, int objNo) {
 
     	try {
-			nsObj = orb.resolve_initial_references("NamingService");
+		nsObj = orb.resolve_initial_references("NameService");
     	}
     	catch (org.omg.CORBA.ORBPackage.InvalidName ex) {
-			throw new RuntimeException();
+		System.out.println("Cannot find NameService");
     	}
 
     	nc = NamingContextHelper.narrow(nsObj);
