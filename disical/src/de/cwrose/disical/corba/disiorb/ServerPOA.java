@@ -96,8 +96,9 @@ public abstract class ServerPOA
         String _ob_a1 = in.read_string();
         String _ob_a2 = in.read_string();
         String _ob_a3 = in.read_string();
-        createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+        User _ob_r = createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
         out = handler.createReply();
+        UserHelper.write(out, _ob_r);
         return out;
     }
 

@@ -1,6 +1,7 @@
 package de.cwrose.disical.corba;
 
 import de.cwrose.disical.corba.Exceptions.*;
+import de.cwrose.disical.util.*;
 
 import java.util.Properties;
 
@@ -11,15 +12,13 @@ import org.omg.CosNaming.*;
 import org.omg.CosNaming.NamingContextPackage.*;
 
 public class CSetup {
-
-	private static Properties props = System.getProperties();
-
-	public static ORB orb;
+	public static org.omg.CORBA.ORB orb;
 
 	private org.omg.CORBA.Object poaObj = null;
 	private POA rootPOA = null;
 	private POAManager manager = null;
 
+	private Properties props = System.getProperties ();
 	private org.omg.CORBA.Object corbaObj = null;
 
 	private org.omg.CORBA.Object nsObj = null;
@@ -30,15 +29,33 @@ public class CSetup {
 	private org.omg.CORBA.Object serverObj = null;
 
 	public CSetup() {
+            props.put ("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
+            props.put ("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
+            props.put ("ooc.config", "/etc/OB.conf");
+		
+	}
 
-		props.put("org.omg.CORBA.ORBClass", "com.ooc.CORBA.ORB");
-		props.put("org.omg.CORBA.ORBSingletonClass", "com.ooc.CORBA.ORBSingleton");
-		props.put("ooc.config", "/etc/OB.conf");
+	public void setCORBAObj(org.omg.CORBA.Object obj) {
+		this.corbaObj = obj;
 	}
 
 	public ORB getORB(String[] args) {
-		orb = ORB.init(args, props);
-		return this.orb;
+		try {
+		/*	Properties cfg = CfgReader.readCfg ("corba");
+            Properties props = System.getProperties ();
+            props.put ("org.omg.CORBA.ORBClass", cfg.get("org.omg.CORBA.ORBClass"));
+            props.put ("org.omg.CORBA.ORBSingletonClass", cfg.get("org.omg.CORBA.ORBSingletonClass"));
+            props.put ("ooc.config", cfg.get("ooc.config"));*/
+			orb = org.omg.CORBA.ORB.init(args, props);
+		}
+		catch (/*CfgMissing*/Exception e)
+		{
+			System.err.println ("Can't access corab cfg ! I die !");
+			System.err.println (e.toString ());
+			e.printStackTrace (System.err);
+			System.exit (1);
+		}
+		return orb;
 	}
 
 	public void orbRun() {

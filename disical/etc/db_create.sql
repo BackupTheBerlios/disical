@@ -12,10 +12,6 @@ create index auth_email_idx on auth ( email );
 create table appointments (
 	id          serial,
 	login       varchar ( 16 ) not null references auth ( login ),
-	startDate   date not null,
-	startTime   varchar ( 32 ),
-	endDate     date not null,
-	endTime     varchar ( 32 ),
 	subject     varchar ( 32 ),
 	location    varchar ( 16 ),
 	
@@ -23,8 +19,8 @@ create table appointments (
 );
 create index appointments_login_idx 
 	on appointments ( login );
-create index appointments_start_idx 
-	on appointments ( startDate, startTime );
+-- create index appointments_start_idx 
+--	on appointments ( startDate, startTime );
 create index appointments_subject_idx 
 	on appointments ( subject );
 	

@@ -23,7 +23,7 @@ module de {
 
 /* ServerInterface */
 	interface Server {
-		void createUser(in string login, 
+		User createUser(in string login, 
 				in string name, 
 				in string pwd,
 				in string email);
@@ -53,16 +53,16 @@ module de {
 		/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates
  		 * in einer fabrik
  		 */
-		Date createDate(in string start, 
-				in string end, 
+		Date createDate(in long long start, 
+				in long long end, 
 				in string location, 
 				in string subject);
 
 		/* ok, the index might be of different type (typedef dbkey..) :-) */
 		Date selectDate(in long index);
 
-		seqDate listDatesByTime(in string start,
-									in string end);
+		seqDate listDatesByTime(in long long start,
+									in long long end);
 
 		seqDate listDatesByLocation(in string location);
 
@@ -81,16 +81,16 @@ module de {
 /* Dateinterface */
 	interface Date {
 
-		void setStartTime(in string Time);
-		void setEndTime(in string Time);
+		void setStartTime(in long long Time);
+		void setEndTime(in long long Time);
 		void setLocation(in string location);
 		void setSubject(in string subject);
 		void setLogin(in string login);
 		/* habe ich modifiziert, um ein logischeres layout zu erhalten 
 		 * (ergebnis ist der returnwert)
 		 */
-		string getStartTime();
-		string getEndTime();
+		long long getStartTime();
+		long long getEndTime();
 		string getLocation();
 		string getSubject();
 		string getLogin();
@@ -106,8 +106,8 @@ module de {
 		void deleteDate();
 
 		/* wir wollen ja schlieﬂlich die Dates auch modifizieren */
-		void changeDate(in string start,
-				in string end,
+		void changeDate(in long long start,
+				in long long end,
 				in string location,
 				in string subject);
 

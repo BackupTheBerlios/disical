@@ -7,11 +7,12 @@ import org.exolab.castor.jdo.*;
 import java.io.*;
 import org.xml.sax.EntityResolver;
 import de.cwrose.disical.corba.*;
+import de.cwrose.disical.corba.disiorb.*;
 
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DbManager {
 	private static JDO jdo;
@@ -61,14 +62,12 @@ public class DbManager {
 		System.out.println ("Hello Database !");
 		Database db = DbManager.getConnection ();
 		System.out.println ("Hello Castor !");
-		db.begin ();
-		DisicalUser u = new DisicalUser ();
+		User u = new DbUser ().getUser ();
 		u.setLogin ("carsten");
 		u.setName ("Carsten Rose");
 		u.setPasswd ("foobar");
 		u.setEmail ("carsten@localhost");
-		db.create (u);
-		db.commit();
+		u.persist ();
 		System.out.println ("Ciao !");
 	}
 }

@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.21 2002/01/17 18:26:34 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.22 2002/01/27 14:24:29 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -100,30 +100,6 @@
 
 
 <!-- *** 'db' ************************************************************* -->
-<!-- Build db related java sources -->
-<target name="db" depends="init,util,clean_jar">
-  <javac srcdir="${dir.src}" destdir="${dir.out}" 
-         debug="${build.debug}" optimize="${build.optimize}">
-	<classpath>
-	  <pathelement path="${java.class.path}" />
-	  <path> <!-- name classpath for later reference -->
-	    <pathelement location="${dir.lib}/${mod.transaction}" />
-	    <pathelement location="${dir.lib}/${mod.jdbc}" />
-	    <pathelement location="${dir.lib}/${mod.pgsql}" />
-	    <pathelement location="${dir.lib}/${mod.castor}" />	    
-	    <pathelement location="${dir.lib}/${mod.velocity}" />
-	    <pathelement location="${dir.lib}/${mod.castor.xml}" />
-	    <pathelement location="${dir.lib}/${mod.OB}" />
-	  </path>
-	</classpath>
-    <include name="${dir.ns}/db/**/*.java" />
-  </javac>
-</target>
-
-<target name="clean_db" depends="init,clean_util">
-  <delete dir="${dir.out}/${dir.ns}/db" />
-</target>
-
 <target name="pg_init" depends="init">
   <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
@@ -144,7 +120,7 @@
   <exec executable="${shell-file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
     <arg line="${shell-exec}" />
-    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -D ${pg-root} stop${shell-quote}" />
+    <arg line="${shell-quote}${pg-bindir}${pg-pgctl} -D ${pg-root} stop -m fast${shell-quote}" />
   </exec>
 </target>
 
@@ -254,14 +230,21 @@
 
 
 <!-- Make CORBA related Java-classes -->
-<target name="corba" depends="init,clean_jar">
+<target name="corba" depends="init,clean_jar,util">
   <javac srcdir="${dir.src}" destdir="${dir.out}"
          debug="${build.debug}" optimize="${build.optimize}">
         <classpath id="corba.classpath">
 		  <pathelement path="${dir.out}" />
           <pathelement path="${java.class.path}" />
           <pathelement location="${dir.lib}/${mod.OB}" />
+	      <pathelement location="${dir.lib}/${mod.transaction}" />
+	      <pathelement location="${dir.lib}/${mod.jdbc}" />
+	      <pathelement location="${dir.lib}/${mod.pgsql}" />
+	      <pathelement location="${dir.lib}/${mod.castor}" />	    
+	      <pathelement location="${dir.lib}/${mod.velocity}" />
+	      <pathelement location="${dir.lib}/${mod.castor.xml}" />
         </classpath>
+     <include name="${dir.ns}/db/**/*.java" />
      <include name="${dir.ns}/corba/**/*.java" />
   </javac>
 </target>
@@ -281,7 +264,7 @@
 <!-- binary distribution (currently unfinished ant-task 'dist').      -->
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,util,db,corba">
+<target name="jar" depends="init,util,corba">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
@@ -301,7 +284,7 @@
 
 <!-- Clean all -->
 <target name="clean" 
-        depends="init,clean_corba,clean_db,clean_util" />
+        depends="init,clean_corba,clean_util" />
 
 
 
@@ -318,6 +301,7 @@
   <arg value="server" />
   <arg value="client" />
   <arg value="velocity" />
+  <arg value="corba" />
   <sysproperty key="disical.cfg" value="${disical.cfg}" />
   </java>
 </target>
@@ -336,8 +320,8 @@
   </java>
 </target>
 
-<target name="hello" depends="init,jar">
-  <java classname="de.cwrose.disical.db.DbManager" fork="yes">
+<target name="server" depends="init,jar">
+  <java classname="de.cwrose.disical.corba.DisicalSrv" fork="yes">
   <classpath>
     <pathelement path="${java.class.path}" />
 	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
@@ -350,12 +334,27 @@
 	 <pathelement location="${dir.lib}/${mod.xerces}" />
 	 <pathelement location="${dir.lib}/${mod.OB}" />
   </classpath>
-  <arg value="server" />
-  <arg value="database" />
   <sysproperty key="disical.cfg" value="${disical.cfg}" />
   </java>
 </target>
 
+<target name="client" depends="init,jar">
+  <java classname="de.cwrose.disical.corba.Client" fork="yes">
+  <classpath>
+    <pathelement path="${java.class.path}" />
+	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+	 <pathelement location="${dir.lib}/${mod.velocity}" />
+	 <pathelement location="${dir.lib}/${mod.castor}" />
+	 <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	 <pathelement location="${dir.lib}/${mod.jdbc}" />
+	 <pathelement location="${dir.lib}/${mod.transaction}" />
+	 <pathelement location="${dir.lib}/${mod.pgsql}" />
+	 <pathelement location="${dir.lib}/${mod.xerces}" />
+	 <pathelement location="${dir.lib}/${mod.OB}" />
+  </classpath>
+  <sysproperty key="disical.cfg" value="${disical.cfg}" />
+  </java>
+</target>
 
 <!-- *** bsh Class Browser ************************************************ -->
 

@@ -27,7 +27,7 @@ public interface DateOperations
     /***/
 
     void
-    setStartTime(String Time);
+    setStartTime(long Time);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setEndTime:1.0
@@ -35,7 +35,7 @@ public interface DateOperations
     /***/
 
     void
-    setEndTime(String Time);
+    setEndTime(long Time);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setLocation:1.0
@@ -66,7 +66,7 @@ public interface DateOperations
     //
     /***/
 
-    String
+    long
     getStartTime();
 
     //
@@ -74,7 +74,7 @@ public interface DateOperations
     //
     /***/
 
-    String
+    long
     getEndTime();
 
     //
@@ -139,8 +139,8 @@ public interface DateOperations
     /***/
 
     void
-    changeDate(String start,
-               String end,
+    changeDate(long start,
+               long end,
                String location,
                String subject);
 

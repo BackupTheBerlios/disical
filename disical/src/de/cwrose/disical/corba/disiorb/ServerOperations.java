@@ -26,7 +26,7 @@ public interface ServerOperations
     //
     /***/
 
-    void
+    User
     createUser(String login,
                String name,
                String pwd,

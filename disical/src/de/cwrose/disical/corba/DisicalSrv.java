@@ -17,7 +17,7 @@ public class DisicalSrv {
 		
 		DisicalServer serverImpl = new DisicalServer();
 		Server server = serverImpl._this(orb);
-		
+		disisetup.setCORBAObj(server);
 		disisetup.setObjCount(1);
 		try {
 			disisetup.setNC(serverImpl.Id, serverImpl.Kind, 0);

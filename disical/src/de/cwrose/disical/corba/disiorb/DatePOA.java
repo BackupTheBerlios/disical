@@ -148,8 +148,8 @@ public abstract class DatePOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        String _ob_a1 = in.read_string();
+        long _ob_a0 = in.read_longlong();
+        long _ob_a1 = in.read_longlong();
         String _ob_a2 = in.read_string();
         String _ob_a3 = in.read_string();
         changeDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
@@ -182,9 +182,9 @@ public abstract class DatePOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_r = getEndTime();
+        long _ob_r = getEndTime();
         out = handler.createReply();
-        out.write_string(_ob_r);
+        out.write_longlong(_ob_r);
         return out;
     }
 
@@ -226,9 +226,9 @@ public abstract class DatePOA
                         org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_r = getStartTime();
+        long _ob_r = getStartTime();
         out = handler.createReply();
-        out.write_string(_ob_r);
+        out.write_longlong(_ob_r);
         return out;
     }
 
@@ -259,7 +259,7 @@ public abstract class DatePOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
+        long _ob_a0 = in.read_longlong();
         setEndTime(_ob_a0);
         out = handler.createReply();
         return out;
@@ -303,7 +303,7 @@ public abstract class DatePOA
                         org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
+        long _ob_a0 = in.read_longlong();
         setStartTime(_ob_a0);
         out = handler.createReply();
         return out;

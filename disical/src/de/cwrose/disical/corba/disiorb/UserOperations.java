@@ -107,8 +107,8 @@ public interface UserOperations
     /***/
 
     Date
-    createDate(String start,
-               String end,
+    createDate(long start,
+               long end,
                String location,
                String subject);
 
@@ -126,8 +126,8 @@ public interface UserOperations
     /***/
 
     Date[]
-    listDatesByTime(String start,
-                    String end);
+    listDatesByTime(long start,
+                    long end);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByLocation:1.0

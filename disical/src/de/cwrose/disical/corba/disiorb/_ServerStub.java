@@ -36,7 +36,7 @@ public class _ServerStub extends org.omg.CORBA.portable.ObjectImpl
     //
     // IDL:de/cwrose/disical/corba/disiorb/Server/createUser:1.0
     //
-    public void
+    public User
     createUser(String _ob_a0,
                String _ob_a1,
                String _ob_a2,
@@ -56,7 +56,8 @@ public class _ServerStub extends org.omg.CORBA.portable.ObjectImpl
                     out.write_string(_ob_a2);
                     out.write_string(_ob_a3);
                     in = _invoke(out);
-                    return;
+                    User _ob_r = UserHelper.read(in);
+                    return _ob_r;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
                 {
@@ -82,8 +83,7 @@ public class _ServerStub extends org.omg.CORBA.portable.ObjectImpl
                 ServerOperations _ob_self = (ServerOperations)_ob_so.servant;
                 try
                 {
-                    _ob_self.createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
-                    return;
+                    return _ob_self.createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
                 }
                 finally
                 {

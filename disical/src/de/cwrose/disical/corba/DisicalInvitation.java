@@ -15,6 +15,8 @@ public class DisicalInvitation extends InvitationPOA {
 	private Date date;
 	private short status;
 
+	private int MAXUSER = 100;
+
 	public int getIndex() {
 		return _index;
 	}
@@ -70,19 +72,34 @@ public class DisicalInvitation extends InvitationPOA {
 		invitationImpl.setInvitationDate(date);
 		invitationImpl.setStatus(status);
 
-		//dbDeleteInvitation(invitationImpl);
+		//dbDeleteInvitation(_index);
 		System.out.println("comes later");
 	}
 
 	public boolean persist() {
 	
-		DisicalInvitation invitationImpl = new DisicalInvitation();
+		DisicalUser invFromUserImpl = new DisicalUser();
+		invFromUserImpl.setLogin(fromuser.getLogin());
 
-		invitationImpl.setFromUser(fromuser);
-		invitationImpl.setToUser(touser);
-		invitationImpl.setInvitationDate(date);
-		invitationImpl.setStatus(status);
+		DisicalUser[] invToUserImpl = new DisicalUser[MAXUSER];
+		for (int i = 0; i < MAXUSER; i++) {
+			invToUserImpl[i].setLogin(touser[i].getLogin());
+		}
 
+		DisicalDate invitationDateImpl = new DisicalDate();
+		invitationDateImpl.setStartTime(date.getStartTime());
+		invitationDateImpl.setEndTime(date.getEndTime());
+		invitationDateImpl.setLocation(date.getLocation());
+		invitationDateImpl.setSubject(date.getSubject());
+
+		DisicalInvStatus invitationStateImpl = new DisicalInvStatus();
+		invitationStateImpl.setStatus(status);
+/*
+		dbPersistInvFromUser(invFromUserImpl);
+		dbPersistInvToUser(invToUserImpl);
+		dbPersistInvDateImpl(invitationDateImpl);
+		dbPersistInvStatusImpl(invitationStateImpl);
+*/
 		boolean success = true; //dbPersistInvitation(invitationImpl);
 		
 		return success;

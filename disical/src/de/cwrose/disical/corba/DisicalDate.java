@@ -9,18 +9,18 @@ public class DisicalDate extends DatePOA {
 	public final static String Id = "Date";
 	public final static String Kind = "";
 
-  	private String startTime = null;
-	private String endTime = null;
+  	private long startTime;
+	private long endTime;
 	private String location = null;
 	private String subject = null;
 	private String login = null;
 	private int _index;
   
-	public void setStartTime(String Time) {
+	public void setStartTime(long Time) {
 		startTime = Time;
 	}
 
-	public void setEndTime(String Time) {
+	public void setEndTime(long Time) {
 		endTime = Time;
 	}
 
@@ -32,10 +32,6 @@ public class DisicalDate extends DatePOA {
 		this.subject = subject;
 	}
 
-	public String getStartTime() {
-		return startTime;
-	}
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
@@ -44,7 +40,11 @@ public class DisicalDate extends DatePOA {
 		return login;
 	}
 
-	public String getEndTime() {
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public long getEndTime() {
 		return endTime;
 	}
 
@@ -91,7 +91,7 @@ public class DisicalDate extends DatePOA {
 
 	}
 
-	public void changeDate(String start, String end, 
+	public void changeDate(long start, long end, 
 					String location, String subject) {
 		startTime = start;
 		endTime = end;

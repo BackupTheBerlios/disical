@@ -152,8 +152,8 @@ public abstract class UserPOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        String _ob_a1 = in.read_string();
+        long _ob_a0 = in.read_longlong();
+        long _ob_a1 = in.read_longlong();
         String _ob_a2 = in.read_string();
         String _ob_a3 = in.read_string();
         Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
@@ -266,8 +266,8 @@ public abstract class UserPOA
                            org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        String _ob_a1 = in.read_string();
+        long _ob_a0 = in.read_longlong();
+        long _ob_a1 = in.read_longlong();
         Date[] _ob_r = listDatesByTime(_ob_a0, _ob_a1);
         out = handler.createReply();
         seqDateHelper.write(out, _ob_r);

@@ -571,8 +571,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/User/createDate:1.0
     //
     public Date
-    createDate(String _ob_a0,
-               String _ob_a1,
+    createDate(long _ob_a0,
+               long _ob_a1,
                String _ob_a2,
                String _ob_a3)
     {
@@ -585,8 +585,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("createDate", true);
-                    out.write_string(_ob_a0);
-                    out.write_string(_ob_a1);
+                    out.write_longlong(_ob_a0);
+                    out.write_longlong(_ob_a1);
                     out.write_string(_ob_a2);
                     out.write_string(_ob_a3);
                     in = _invoke(out);
@@ -685,8 +685,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByTime:1.0
     //
     public Date[]
-    listDatesByTime(String _ob_a0,
-                    String _ob_a1)
+    listDatesByTime(long _ob_a0,
+                    long _ob_a1)
     {
         while(true)
         {
@@ -697,8 +697,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("listDatesByTime", true);
-                    out.write_string(_ob_a0);
-                    out.write_string(_ob_a1);
+                    out.write_longlong(_ob_a0);
+                    out.write_longlong(_ob_a1);
                     in = _invoke(out);
                     Date[] _ob_r = seqDateHelper.read(in);
                     return _ob_r;

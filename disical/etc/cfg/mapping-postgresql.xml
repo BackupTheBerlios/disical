@@ -6,7 +6,7 @@
 
 <mapping>
   
-  <class name="de.cwrose.disical.corba.DisicalUser" identity="login">
+  <class name="de.cwrose.disical.db.DbUser" identity="login">
   	<map-to table="auth" />
   	
   	<field name="login" type="string">
@@ -19,7 +19,7 @@
   		<sql name="email" type="varchar" />
   	</field>
 
-  	<field name="passwd" type="string">
+  	<field name="password" type="string">
   		<sql name="password" type="varchar" />
   	</field>
   	
@@ -36,14 +36,6 @@
   		<sql name="login" type="varchar"/>
   	</field>
   	
-  	<field name="startTime" type="string">
-  		<sql name="startTime" type="varchar" />
-  	</field>
-
-  	<field name="endTime" type="string">
-  		<sql name="endTime" type="varchar" />
-  	</field>
-
   	<field name="location" type="string">
   		<sql name="location" type="varchar"/>
   	</field>

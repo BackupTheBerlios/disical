@@ -37,7 +37,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/Date/setStartTime:1.0
     //
     public void
-    setStartTime(String _ob_a0)
+    setStartTime(long _ob_a0)
     {
         while(true)
         {
@@ -48,7 +48,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("setStartTime", true);
-                    out.write_string(_ob_a0);
+                    out.write_longlong(_ob_a0);
                     in = _invoke(out);
                     return;
                 }
@@ -91,7 +91,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/Date/setEndTime:1.0
     //
     public void
-    setEndTime(String _ob_a0)
+    setEndTime(long _ob_a0)
     {
         while(true)
         {
@@ -102,7 +102,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("setEndTime", true);
-                    out.write_string(_ob_a0);
+                    out.write_longlong(_ob_a0);
                     in = _invoke(out);
                     return;
                 }
@@ -306,7 +306,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getStartTime:1.0
     //
-    public String
+    public long
     getStartTime()
     {
         while(true)
@@ -319,7 +319,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     out = _request("getStartTime", true);
                     in = _invoke(out);
-                    String _ob_r = in.read_string();
+                    long _ob_r = in.read_longlong();
                     return _ob_r;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
@@ -359,7 +359,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getEndTime:1.0
     //
-    public String
+    public long
     getEndTime()
     {
         while(true)
@@ -372,7 +372,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     out = _request("getEndTime", true);
                     in = _invoke(out);
-                    String _ob_r = in.read_string();
+                    long _ob_r = in.read_longlong();
                     return _ob_r;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
@@ -785,8 +785,8 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/Date/changeDate:1.0
     //
     public void
-    changeDate(String _ob_a0,
-               String _ob_a1,
+    changeDate(long _ob_a0,
+               long _ob_a1,
                String _ob_a2,
                String _ob_a3)
     {
@@ -799,8 +799,8 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("changeDate", true);
-                    out.write_string(_ob_a0);
-                    out.write_string(_ob_a1);
+                    out.write_longlong(_ob_a0);
+                    out.write_longlong(_ob_a1);
                     out.write_string(_ob_a2);
                     out.write_string(_ob_a3);
                     in = _invoke(out);
