@@ -817,6 +817,71 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/User/createInvitation:1.0
+    //
+    public Invitation
+    createInvitation(long _ob_a0,
+                     long _ob_a1,
+                     String _ob_a2,
+                     String _ob_a3,
+                     String _ob_a4)
+        throws jdoPersistenceEx
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("createInvitation", true);
+                    out.write_longlong(_ob_a0);
+                    out.write_longlong(_ob_a1);
+                    out.write_string(_ob_a2);
+                    out.write_string(_ob_a3);
+                    out.write_string(_ob_a4);
+                    in = _invoke(out);
+                    Invitation _ob_r = InvitationHelper.read(in);
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("createInvitation", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                UserOperations _ob_self = (UserOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.createInvitation(_ob_a0, _ob_a1, _ob_a2, _ob_a3, _ob_a4);
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/User/destroy:1.0
     //
     public void

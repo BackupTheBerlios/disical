@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.20 2002/01/30 22:39:50 stepn Exp $
+// $Id: disical.idl,v 1.21 2002/01/31 03:08:04 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 module de {
   module cwrose {
@@ -80,6 +80,13 @@ module de {
 			  raises (jdoPersistenceEx);
 			
 			seqInvitation getInvitations()
+			  raises (jdoPersistenceEx);
+
+			Invitation createInvitation(in long long start, 
+										in long long end, 
+										in string subject, 
+										in string location, 
+										in string description)
 			  raises (jdoPersistenceEx);
 			
 			/* destroy the corba-object in the poa */

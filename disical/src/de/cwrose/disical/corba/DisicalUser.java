@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.18 2002/01/30 22:06:31 deafman Exp $
+// $Id: DisicalUser.java,v 1.19 2002/01/31 03:08:04 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,18 +17,24 @@ package de.cwrose.disical.corba;
  * disiorb.Date[] selectDatesByLocation(String location);
  * disiorb.Date[] selectDatesBySubject(String subject);
  * disiorb.Invitation[] getInvitations();
+ * Invitation createInvitation(User user, long start, long end, 
+ *         String subject, String location, String description);
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
+
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
+
 import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.db.DbDate;
 import de.cwrose.disical.db.DbManager;
+import de.cwrose.disical.db.DbInvitation;
+
 import org.exolab.castor.jdo.Database;
 import org.exolab.castor.jdo.PersistenceException;
 import java.sql.Timestamp;
@@ -251,6 +257,28 @@ public class DisicalUser extends UserPOA {
 			throw new jdoPersistenceEx(e.getMessage());			
 		}
 		return invitationList;
+	}
+
+	public Invitation createInvitation(long start, long end, 
+								String subject, String location, 
+								String description) 
+		throws jdoPersistenceEx {
+
+		Invitation invitation = null;
+
+		try {
+			invitation = 
+				DbInvitation.createInvitation(getBubble().getUser(),
+											  new Timestamp(start),
+											  new Timestamp(end),
+											  subject, location, description);
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
+		}
+		return invitation;
 	}
 
 	public void destroy() {

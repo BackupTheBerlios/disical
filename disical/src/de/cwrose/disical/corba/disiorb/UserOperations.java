@@ -147,6 +147,19 @@ public interface UserOperations
         throws jdoPersistenceEx;
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/User/createInvitation:1.0
+    //
+    /***/
+
+    Invitation
+    createInvitation(long start,
+                     long end,
+                     String subject,
+                     String location,
+                     String description)
+        throws jdoPersistenceEx;
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/User/destroy:1.0
     //
     /***/

@@ -53,6 +53,7 @@ public abstract class UserPOA
         final String[] _ob_names =
         {
             "createDate",
+            "createInvitation",
             "deleteUser",
             "destroy",
             "getEmail",
@@ -93,46 +94,49 @@ public abstract class UserPOA
         case 0: // createDate
             return _OB_op_createDate(in, handler);
 
-        case 1: // deleteUser
+        case 1: // createInvitation
+            return _OB_op_createInvitation(in, handler);
+
+        case 2: // deleteUser
             return _OB_op_deleteUser(in, handler);
 
-        case 2: // destroy
+        case 3: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 3: // getEmail
+        case 4: // getEmail
             return _OB_op_getEmail(in, handler);
 
-        case 4: // getInvitations
+        case 5: // getInvitations
             return _OB_op_getInvitations(in, handler);
 
-        case 5: // getLogin
+        case 6: // getLogin
             return _OB_op_getLogin(in, handler);
 
-        case 6: // getName
+        case 7: // getName
             return _OB_op_getName(in, handler);
 
-        case 7: // listDatesByLocation
+        case 8: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 8: // listDatesBySubject
+        case 9: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 9: // listDatesByTime
+        case 10: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 10: // persist
+        case 11: // persist
             return _OB_op_persist(in, handler);
 
-        case 11: // setEmail
+        case 12: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 12: // setLogin
+        case 13: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 13: // setName
+        case 14: // setName
             return _OB_op_setName(in, handler);
 
-        case 14: // setPasswd
+        case 15: // setPasswd
             return _OB_op_setPasswd(in, handler);
         }
 
@@ -154,6 +158,30 @@ public abstract class UserPOA
             Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3, _ob_a4);
             out = handler.createReply();
             DateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_createInvitation(org.omg.CORBA.portable.InputStream in,
+                            org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        try
+        {
+            long _ob_a0 = in.read_longlong();
+            long _ob_a1 = in.read_longlong();
+            String _ob_a2 = in.read_string();
+            String _ob_a3 = in.read_string();
+            String _ob_a4 = in.read_string();
+            Invitation _ob_r = createInvitation(_ob_a0, _ob_a1, _ob_a2, _ob_a3, _ob_a4);
+            out = handler.createReply();
+            InvitationHelper.write(out, _ob_r);
         }
         catch(jdoPersistenceEx _ob_ex)
         {

@@ -25,9 +25,11 @@ public class Client {
 
 		long fstTime = System.currentTimeMillis();
 
-		Date myDate = newUser.createDate(fstTime, fstTime*10, "Mensa", "ESSEN!!!", "Isch haaaabe Hungor");
+		Date myDate = newUser.createDate(fstTime, fstTime+1234, "Mensa", "ESSEN!!!", "Isch haaaabe Hungor");
 		System.out.println (myDate.getLogin () == newUser);
 		//newDate = myDate.getDate
+
+		Invitation invitation = newUser.createInvitation(fstTime+1000, fstTime+61000, "zuhause", "schlafen", "ich will...");
 		}
 		catch (wrongPwEx e) {
 			System.out.println(e.toString());

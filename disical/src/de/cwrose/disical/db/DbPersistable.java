@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Enumeration;
 import de.cwrose.disical.util.HackHelper;
+import java.lang.reflect.InvocationTargetException;
+import org.exolab.castor.jdo.DataObjectAccessException;
 
 public class DbPersistable {
 	private boolean create_persistable = true;
@@ -17,7 +19,7 @@ public class DbPersistable {
 	}
 
 	public DbPersistable () {
-		HackHelper.printStackTrace (System.out, "Constructing Persistable");
+		//		HackHelper.printStackTrace (System.out, "Constructing Persistable");
 	}
 
 	protected static void putBubble(org.omg.CORBA.Object o, DbPersistable p)
@@ -67,14 +69,28 @@ public class DbPersistable {
 	public final void create (Database db)
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		db.create (this);
+		try {
+			db.create (this);
+		}
+		catch (Exception e) {
+			Throwable f = filterEx (e);
+			HackHelper.printEx (f, System.out);
+			throw new PersistenceException (f.getMessage());
+		}
 		this.growOld ();
 	}
 
 	public final void update (Database db)
 		throws org.exolab.castor.jdo.PersistenceException
 	{
-		db.update (this);
+		try {
+			db.update (this);
+		}
+		catch (Exception e) {
+			Throwable f = filterEx (e);
+			HackHelper.printEx (f, System.out);
+			throw new PersistenceException (f.getMessage());
+		}
 	}
 
 	public final void persist (Database db)
@@ -90,10 +106,36 @@ public class DbPersistable {
 		throws org.exolab.castor.jdo.PersistenceException
 	{
 		if (!isNew ())
-			db.remove (this);
+			try {
+				db.remove (this);
+			}
+			catch (Exception e) {
+				Throwable f = filterEx (e);
+				HackHelper.printEx (f, System.out);
+				throw new PersistenceException (f.getMessage());
+			}
 		else
 			throw new org.exolab.castor.jdo.PersistenceException
 				("Can't delete object that is not persistent !");
 	}
+
+
+	public static Throwable filterEx(Throwable t)
+	{
+		if (t instanceof DataObjectAccessException)
+			{
+				return 
+					filterEx (((DataObjectAccessException)t).getException());
+			}
+
+		if (t instanceof InvocationTargetException)
+			{
+				return
+					filterEx (((InvocationTargetException)t)
+							  .getTargetException());
+			}
+		return t;
+	}
+
 
 }

@@ -51,8 +51,11 @@ public final class DbInvitation extends DbPersistable
 		di.setStartTime (start);
 		di.setEndTime (stop);
 		di.setDescription (descr);
+		di.setUser ((DbUser)lookupBubble(u));
 
 		Invitation i = di.getInvitation ();
+		System.out.println ("STARTTIME:"+start);
+		System.out.println ("STOPTTIME:"+stop);
 		i.persist ();
 		di.growOld();
 		return i;

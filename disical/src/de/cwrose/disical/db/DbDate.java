@@ -123,7 +123,7 @@ public final class DbDate extends DbPersistable
 
 	public void setStartTime (java.sql.Timestamp t)
 	{
-		skel.setStartTime (t.getNanos ());
+		skel.setStartTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getStartTime ()
@@ -137,7 +137,7 @@ public final class DbDate extends DbPersistable
 
 	public void setEndTime (java.sql.Timestamp t)
 	{
-		skel.setEndTime (t.getNanos ());
+		skel.setEndTime (t.getTime ());
 	}
 
 	public java.sql.Timestamp getEndTime ()

@@ -83,7 +83,7 @@
 	   <sql name="id" type="integer" />
     </field>
 
-  	<field name="user" type="de.cwrose.disical.db.DbUser" >
+  	<field name="user" type="de.cwrose.disical.db.DbUser">
   		<sql name="login" />
   	</field>
 

@@ -11,4 +11,10 @@ public final class HackHelper
 		e.printStackTrace (out);
 		out.println ("TRACED STACK. CAUSE: "+msg);
 	}
+
+   	public final static void printEx (Throwable e, PrintStream out)
+	{
+		out.println(e.getMessage());
+		e.printStackTrace (out);
+	}
 }
