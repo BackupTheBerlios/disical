@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.11 2002/01/12 01:52:15 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.12 2002/01/12 04:18:10 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -38,7 +38,7 @@
   <!-- Setting Project properties: build process flags -->
   <property name="build.debug" value="on" />
   <property name="build.optimize" value="off" />
-
+  <property name="db.log" value="${dir.etc}/db.log" />	
   
   <!-- Setting Project properties: Classpath components -->
   <property name="mod.castor" value="castor-0.9.3.9.jar" />
@@ -120,11 +120,35 @@
   </exec>
 </target>
 
-<target name="pg_run" depends="init">
+<target name="pg_start" depends="init">
   <exec executable="${shell.file}" 
         os="${os.name}" dir="${user.dir}" vmlauncher="false">
     <arg line="${shell.exec}" />
-    <arg line="${shell.quote}${pg.bindir}${pg.postmaster} -i -D ${pg.root}${shell.quote}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -l ${db.log} -W -D ${pg.root} start -o -i${shell.quote}" />
+  </exec>
+</target>
+
+<target name="pg_stop" depends="init">
+  <exec executable="${shell.file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell.exec}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -W -D ${pg.root} stop${shell.quote}" />
+  </exec>
+</target>
+
+<target name="pg_status" depends="init">
+  <exec executable="${shell.file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell.exec}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -D ${pg.root} status${shell.quote}" />
+  </exec>
+</target>
+
+<target name="pg_restart" depends="init">
+  <exec executable="${shell.file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell.exec}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.pgctl} -l ${db.log} -W -D ${pg.root} restart -o -i${shell.quote}" />
   </exec>
 </target>
 
@@ -150,7 +174,7 @@
   </sql>
   <sql
     driver="${db.driver.class}"
-    url="${db.url.boot}" 
+    url="${db.url.connect}" 
     userid="${db.username}" password="${db.password}"
     src="${dir.etc}/db_create.sql">
     <classpath>
@@ -165,6 +189,21 @@
 </target>
 
 <target name="db_drop" depends="init">
+ <sql
+    driver="${db.driver.class}"
+    url="${db.url.connect}"
+    userid="${db.username}" password="${db.password}"
+    src="${dir.etc}/db_drop.sql"
+    onerror="continue">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> <!-- name classpath for later reference -->
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+  </sql>
   <sql
     driver="${db.driver.class}"
     url="${db.url.boot}"
@@ -179,8 +218,13 @@
     </classpath>
     commit;
     drop database disical
-  </sql>
+  </sql> 
 </target>
+
+<target name="db_recreate" depends="db_drop,db_create" />
+
+
+
 
 <!-- *** 'CORBA' ********************************************************** -->
 
