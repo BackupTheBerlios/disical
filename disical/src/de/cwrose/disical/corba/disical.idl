@@ -91,7 +91,7 @@ module de {
 		void setEndTime(in long long Time);
 		void setLocation(in string location);
 		void setSubject(in string subject);
-		void setLogin(in string login);
+		void setLogin(in User login);
 		/* habe ich modifiziert, um ein logischeres layout zu erhalten 
 		 * (ergebnis ist der returnwert)
 		 */
@@ -99,7 +99,7 @@ module de {
 		long long getEndTime();
 		string getLocation();
 		string getSubject();
-		string getLogin();
+		User getLogin();
 
 		/* nun nötig, um den index eines Dates zu erhalten */
 		void setIndex(in long _index);

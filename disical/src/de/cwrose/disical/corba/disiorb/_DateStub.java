@@ -253,7 +253,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
     //
     public void
-    setLogin(String _ob_a0)
+    setLogin(User _ob_a0)
     {
         while(true)
         {
@@ -264,7 +264,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("setLogin", true);
-                    out.write_string(_ob_a0);
+                    UserHelper.write(out, _ob_a0);
                     in = _invoke(out);
                     return;
                 }
@@ -518,7 +518,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0
     //
-    public String
+    public User
     getLogin()
     {
         while(true)
@@ -531,7 +531,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     out = _request("getLogin", true);
                     in = _invoke(out);
-                    String _ob_r = in.read_string();
+                    User _ob_r = UserHelper.read(in);
                     return _ob_r;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _ob_ex)

@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.27 2002/01/27 21:22:30 LuckyStarr Exp $ -->
+<!-- $Id: build.xml,v 1.28 2002/01/28 01:33:07 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -239,7 +239,7 @@
 
 <!-- Make the basic CORBA-classes -->
 <target name="idl" depends="init,clean_jar">
-  <exec dir="${dir.src}" executable="jidl">
+  <exec dir="${dir.src}" executable="${ob-dir}${ob-bin-jidl}">
       <arg line="${dir.ns}/corba/disical.idl" />
   </exec>
 </target>
@@ -387,6 +387,27 @@
   <sysproperty key="disical.cfg" value="${disical.cfg}" />
   </java>
 </target>
+
+<target name="testgui" depends="init,jar">
+  <java classname="de.cwrose.disical.ui.DisicalMainFrame" fork="yes">
+  <classpath>
+    <pathelement path="${java.class.path}" />
+	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+	 <pathelement location="${dir.lib}/${mod.velocity}" />
+	 <pathelement location="${dir.lib}/${mod.castor}" />
+	 <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	 <pathelement location="${dir.lib}/${mod.jdbc}" />
+	 <pathelement location="${dir.lib}/${mod.transaction}" />
+	 <pathelement location="${dir.lib}/${mod.pgsql}" />
+	 <pathelement location="${dir.lib}/${mod.xerces}" />
+	 <pathelement location="${dir.lib}/${mod.OB}" />
+  </classpath>
+  <sysproperty key="disical.cfg" value="${disical.cfg}" />
+  </java>
+</target>
+
+
+
 
 <!-- *** bsh Class Browser ************************************************ -->
 

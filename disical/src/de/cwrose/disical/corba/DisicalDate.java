@@ -3,6 +3,7 @@ package de.cwrose.disical.corba;
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
+import de.cwrose.disical.db.DbDate;
 
 public class DisicalDate extends DatePOA {
 
@@ -13,8 +14,20 @@ public class DisicalDate extends DatePOA {
 	private long endTime;
 	private String location = null;
 	private String subject = null;
-	private String login = null;
+	private User login = null;
 	private int _index;
+
+	/* Client doesnt see the bubble.. ooh */
+
+	private DbDate bubble = null;
+
+	public void setBubble (DbDate bubble) {
+		this.bubble = bubble;
+	}
+
+	public DbDate getBubble () {
+		return this.bubble;
+	}
 
 	public void setStartTime(long Time) {
 		startTime = Time;
@@ -32,11 +45,11 @@ public class DisicalDate extends DatePOA {
 		this.subject = subject;
 	}
 
-	public void setLogin(String login) {
+	public void setLogin(User login) {
 		this.login = login;
 	}
 
-	public String getLogin() {
+	public User getLogin() {
 		return login;
 	}
 

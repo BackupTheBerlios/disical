@@ -190,7 +190,7 @@ public class DisicalUser extends UserPOA {
 	public Invitation[] getInvitations() {
 
 		DisicalDate selDateImpl = new DisicalDate();
-		selDateImpl.setLogin(login);
+		// selDateImpl.setLogin(login);
 
 		DisicalInvitation[] listInvitationImpl = 
 				new DisicalInvitation[inviteLimit];

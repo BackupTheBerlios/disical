@@ -27,21 +27,29 @@
 
   <key-generator name="SEQUENCE" alias="appointments_keygen">
       <param name="sequence" value="appointments_id_seq" />
-      <param name="tigger" value="true" />
   </key-generator>
 
-  <class name="de.cwrose.disical.corba.DisicalDate"
+  <class name="de.cwrose.disical.db.DbDate"
          identity="index" key-generator="appointments_keygen">
 
   	<map-to table="appointments" />
-	<field name="index" type="integer">
-	        <sql name="id" type="integer" />
-        </field>
+	
+    <field name="index" type="integer">
+	   <sql name="id" type="integer" />
+    </field>
 
-  	<field name="login" type="string" >
-  		<sql name="login" type="varchar" />
+  	<field name="login" type="de.cwrose.disical.db.DbUser" >
+  		<sql name="login" />
   	</field>
-  	
+
+	<field name="startTime" type="java.sql.Timestamp" >
+	    <sql name="startTime" type="timestamp" />
+    </field>
+
+	<field name="endTime" type="java.sql.Timestamp" >
+	    <sql name="stopTime" type="timestamp" />
+    </field>
+
   	<field name="location" type="string">
   		<sql name="location" type="varchar"/>
   	</field>

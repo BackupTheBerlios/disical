@@ -59,7 +59,7 @@ public interface DateOperations
     /***/
 
     void
-    setLogin(String login);
+    setLogin(User login);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getStartTime:1.0
@@ -98,7 +98,7 @@ public interface DateOperations
     //
     /***/
 
-    String
+    User
     getLogin();
 
     //

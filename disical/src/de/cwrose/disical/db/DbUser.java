@@ -15,6 +15,7 @@ public final class DbUser extends DbPersistable
 
 	public DbUser ()
 	{
+		super ();
 		DisicalUser stub = new DisicalUser ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);

@@ -215,9 +215,9 @@ public abstract class DatePOA
                     org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_r = getLogin();
+        User _ob_r = getLogin();
         out = handler.createReply();
-        out.write_string(_ob_r);
+        UserHelper.write(out, _ob_r);
         return out;
     }
 
@@ -292,7 +292,7 @@ public abstract class DatePOA
                     org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
+        User _ob_a0 = UserHelper.read(in);
         setLogin(_ob_a0);
         out = handler.createReply();
         return out;
