@@ -47,7 +47,7 @@ public final class DbUser extends DbPersistable
 		/* OQL */
 		Database     db  = DbManager.getConnection ();
 		OQLQuery     oql = db.getOQLQuery 
-			("SELECT u FROM auth WHERE login=$");
+			("SELECT u FROM auth WHERE login='$';");
 		oql.bind (login);
 		
 		QueryResults res = oql.execute();
