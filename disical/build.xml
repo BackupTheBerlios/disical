@@ -1,5 +1,5 @@
 <!-- DiSiCal Main Build Script -->
-<!-- Currently maintaned by $Id: build.xml,v 1.1 2001/12/21 22:42:31 stepn Exp $ -->
+<!-- Currently maintaned by $Id: build.xml,v 1.2 2001/12/29 16:27:04 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -19,6 +19,8 @@
   <property name="dir.etc" value="etc" />
   <property name="dir.ns" value="de/cwrose"/>
 
+  <!-- Runtime .properties-file locations, adjust via java -D --> 
+  <property name="disical.cfg" value="${dir.etc}/cfg" />
 
   <!-- Setting Project properties: build process flags -->
   <property name="build.debug" value="on" />
@@ -98,7 +100,7 @@
 <!-- Make zip containing bindist of all necessary files -->
 <target name="dist" depends="init,all">
   <zip zipfile="${dir.dist}/disical-${disical.version}.zip">
-    <fileset dir="${dir.etc}" file="./**" />
+    <fileset dir="${disical.cfg}" file="./**" />
     <fileset dir="${dir.lib}" file="./**" />
     <fileset dir="${dir.bin}" file="./**" />
     <fileset dir="${dir.docs}" file="./**" />    
