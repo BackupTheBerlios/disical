@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by -->
-<!-- $Id: build.xml,v 1.3 2001/12/29 22:51:05 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.4 2002/01/02 11:49:05 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -34,6 +34,7 @@
   <property name="mod.jdbc" value="jdbc-se2.0.jar" />
   <property name="mod.pgsql" value="postgresql.jar" />
   <property name="mod.transaction" value="jta1.0.1.jar" />
+  <property name="mod.OB" value="OB.jar" />
 
 
   <!-- Setting Project properties: Read User's *Local* properties file -->
@@ -88,8 +89,41 @@
 
 
 
+<!-- Make the basic CORBA-Stuff -->
+<target name="idl" depends="init,clean_jar">
+  <exec dir="${dir.src}/${dir.ns}/corba" executable="jidl">
+      <arg line="disical.idl" />
+  </exec>
+</target>
+
+<target name="clean_idl">
+  <delete dir="${dir.src}/${dir.ns}/corba/corba" />
+</target>
+
+
+
+
+<!-- Make CORBA related Java-Stuff -->
+<target name="corba" depends="init,clean_jar,idl">
+  <javac srcdir="${dir.src}" destdir="${dir.out}/${dir.ns}/corba"
+         debug="${build.debug}" optimize="${build.optimize}">
+        <classpath id="classpath.corba">
+          <pathelement path="${java.class.path}" />
+          <pathelement location="${dir.lib}/${mod.OB}" />
+        </classpath>
+     <include name="${dir.ns}/corba/**/*.java" />
+  </javac>
+</target>
+
+<target name="clean_corba">
+  <delete dir="{dir.out}/${dir.ns}/corba" />
+</target>
+
+
+
+
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,db">
+<target name="jar" depends="init,idl,corba,db">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
@@ -107,7 +141,7 @@
 <target name="all" depends="init,jar"/>
 
 <!-- Clean all -->
-<target name="clean" depends="init,clean_db,clean_util" />
+<target name="clean" depends="init,clean_idl,clean_corba,clean_db,clean_util" />
 
 
 

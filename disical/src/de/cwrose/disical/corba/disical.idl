@@ -1,0 +1,93 @@
+/*
+ * Titel: disical.idl
+ *
+ * Betroffene Module: corba
+ * Verzapft von: deafman (Carsten Rose)
+ */
+
+module disiorb {
+
+/* Predefinitions */
+	interface User;
+	interface Date;
+
+/* ServerInterface */
+	interface Server {
+		void createUser(in string login, 
+				in string name, 
+				in string pwd,
+				in string email);
+
+		User login(in string login, 
+			in string pwd);
+	};
+
+/*	Userinterface */
+	interface User {
+		readonly attribute string login;
+		readonly attribute string Name;
+		readonly attribute string Email;
+		readonly attribute string Passwd;
+
+		void changePW( in string newPW );
+
+		void getUserInfo(out string name, 
+				out string pwd, 
+				out string email);
+		void setUserInfo(in string name, 
+				in string pwd, 
+				in string email);
+		void deleteUser();
+
+/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates...
+ * ... in einer fabrik
+ */
+		Date createDate(in string start, 
+				in string end, 
+				in string location, 
+				in string subject);
+
+/* außerdem kam diese select-Methode dazu, um queries zu tätigen,
+ * dazu ist inzwische allerding ein index nötig, ich schlage den primär-
+ * key in der Datenbank vor -  sie muß dann aber der GUI bekannt sein, 
+ * wird aber, denke ich nicht mit angezeigt, das kannst du conny dir
+ * überlegen
+ */
+		Date selectDate(in short index);
+
+/* wir wollen ja schließlich die Dates auch modifizieren */
+		void changeDate(in string start,
+				in string end,
+				in string location,
+				in string subject);
+	};
+
+/* alle ersteinmal als string, kann noch verändert werden */
+/* Dateinterface */
+	interface Date {
+		readonly attribute string StartTime;
+		readonly attribute string EndTime;
+		readonly attribute string Location;
+		readonly attribute string Subject;
+		readonly attribute short index;
+
+/* das delete bleibt hier :-) */
+		void deleteDate();
+
+		void setStartTime(in string Time);
+		void setEndTime(in string Time);
+		void setLocation(in string location);
+		void setSubject(in string subject);
+
+/* habe ich modifiziert, um ein logischeres layout zu erhalten 
+ * (ergebnis ist der returnwert)
+ */
+		string getStartTime();
+		string getEndTime();
+		string getLocation();
+		string getSubject();
+/* nun nötig, um den index eines Dates zu erhalten */
+		short getIndex(); 
+	};
+};
+
