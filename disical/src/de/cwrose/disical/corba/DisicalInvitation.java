@@ -5,15 +5,20 @@ import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.POA;
 
-class DisicalInvitation extends InvitationPOA {
+public class DisicalInvitation extends InvitationPOA {
 
 	public final static String Id = "Invitation";
 	public final static String Kind = "";
 
+	private int _index;
 	private User fromuser;
 	private User[] touser;
 	private Date date;
 	private short status;
+
+	public int getIndex() {
+		return _index;
+	}
 
 	public User getFromUser() {
 		return fromuser;
@@ -29,6 +34,10 @@ class DisicalInvitation extends InvitationPOA {
 
 	public short getStatus() {
 		return status;
+	}
+
+	public void setIndex(int index) {
+		_index = index;
 	}
 
 	public void setFromUser(User fromUser) {
@@ -67,9 +76,7 @@ class DisicalInvitation extends InvitationPOA {
 		invitationImpl.setInvitationDate(date);
 		invitationImpl.setStatus(status);
 
-		Invitation invitation = invitationImpl._this(DisicalSrv.orb);
-
-		boolean success = true; //dbPersistinvitation(invitation);
+		boolean success = true; //dbPersistinvitation(invitationImpl);
 		
 		return success;
 	}
@@ -80,6 +87,6 @@ class DisicalInvitation extends InvitationPOA {
             byte[] id = poa.servant_to_id(this);
             poa.deactivate_object(id);
         }
-            catch (org.omg.CORBA.UserException ex) {}
+        catch (org.omg.CORBA.UserException ex) {}
     }
 }

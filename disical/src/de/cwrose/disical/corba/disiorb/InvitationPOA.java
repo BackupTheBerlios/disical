@@ -55,11 +55,13 @@ public abstract class InvitationPOA
             "delete",
             "destroy",
             "getFromUser",
+            "getIndex",
             "getInvitationDate",
             "getStatus",
             "getToUser",
             "persist",
             "setFromUser",
+            "setIndex",
             "setInvitation",
             "setInvitationDate",
             "setStatus",
@@ -96,31 +98,37 @@ public abstract class InvitationPOA
         case 2: // getFromUser
             return _OB_op_getFromUser(in, handler);
 
-        case 3: // getInvitationDate
+        case 3: // getIndex
+            return _OB_op_getIndex(in, handler);
+
+        case 4: // getInvitationDate
             return _OB_op_getInvitationDate(in, handler);
 
-        case 4: // getStatus
+        case 5: // getStatus
             return _OB_op_getStatus(in, handler);
 
-        case 5: // getToUser
+        case 6: // getToUser
             return _OB_op_getToUser(in, handler);
 
-        case 6: // persist
+        case 7: // persist
             return _OB_op_persist(in, handler);
 
-        case 7: // setFromUser
+        case 8: // setFromUser
             return _OB_op_setFromUser(in, handler);
 
-        case 8: // setInvitation
+        case 9: // setIndex
+            return _OB_op_setIndex(in, handler);
+
+        case 10: // setInvitation
             return _OB_op_setInvitation(in, handler);
 
-        case 9: // setInvitationDate
+        case 11: // setInvitationDate
             return _OB_op_setInvitationDate(in, handler);
 
-        case 10: // setStatus
+        case 12: // setStatus
             return _OB_op_setStatus(in, handler);
 
-        case 11: // setToUser
+        case 13: // setToUser
             return _OB_op_setToUser(in, handler);
         }
 
@@ -155,6 +163,17 @@ public abstract class InvitationPOA
         User _ob_r = getFromUser();
         out = handler.createReply();
         UserHelper.write(out, _ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getIndex(org.omg.CORBA.portable.InputStream in,
+                    org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        int _ob_r = getIndex();
+        out = handler.createReply();
+        out.write_long(_ob_r);
         return out;
     }
 
@@ -209,6 +228,17 @@ public abstract class InvitationPOA
         org.omg.CORBA.portable.OutputStream out = null;
         User _ob_a0 = UserHelper.read(in);
         setFromUser(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setIndex(org.omg.CORBA.portable.InputStream in,
+                    org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        int _ob_a0 = in.read_long();
+        setIndex(_ob_a0);
         out = handler.createReply();
         return out;
     }

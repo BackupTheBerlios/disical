@@ -6,11 +6,12 @@ import de.cwrose.disical.util.CfgEntityResolver;
 import org.exolab.castor.jdo.*;
 import java.io.*;
 import org.xml.sax.EntityResolver;
+import de.cwrose.disical.corba.*;
 
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DbManager {
 	private static JDO jdo;
@@ -59,8 +60,15 @@ public class DbManager {
 	{
 		System.out.println ("Hello Database !");
 		Database db = DbManager.getConnection ();
-		System.out.println ("Hello Castor !");		
-		db.rollback();
+		System.out.println ("Hello Castor !");
+		db.begin ();
+		DisicalUser u = new DisicalUser ();
+		u.setLogin ("carsten");
+		u.setName ("Carsten Rose");
+		u.setPasswd ("foobar");
+		u.setEmail ("carsten@localhost");
+		db.create (u);
+		db.commit();
 		System.out.println ("Ciao !");
 	}
 }

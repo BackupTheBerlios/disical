@@ -13,9 +13,9 @@ create table appointments (
 	id          serial,
 	login       varchar ( 16 ) not null references auth ( login ),
 	startDate   date not null,
-	startTime   time not null,
+	startTime   varchar ( 32 ),
 	endDate     date not null,
-	endTime     time not null,
+	endTime     varchar ( 32 ),
 	subject     varchar ( 32 ),
 	location    varchar ( 16 ),
 	

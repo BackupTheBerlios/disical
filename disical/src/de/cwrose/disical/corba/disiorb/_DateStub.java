@@ -250,6 +250,60 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
+    //
+    public void
+    setLogin(String _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setLogin", true);
+                    out.write_string(_ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setLogin", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                DateOperations _ob_self = (DateOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setLogin(_ob_a0);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getStartTime:1.0
     //
     public String
@@ -462,10 +516,63 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0
+    //
+    public String
+    getLogin()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("getLogin", true);
+                    in = _invoke(out);
+                    String _ob_r = in.read_string();
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getLogin", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                DateOperations _ob_self = (DateOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.getLogin();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0
     //
     public void
-    setIndex(short _ob_a0)
+    setIndex(int _ob_a0)
     {
         while(true)
         {
@@ -476,7 +583,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     out = _request("setIndex", true);
-                    out.write_short(_ob_a0);
+                    out.write_long(_ob_a0);
                     in = _invoke(out);
                     return;
                 }
@@ -518,7 +625,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getIndex:1.0
     //
-    public short
+    public int
     getIndex()
     {
         while(true)
@@ -531,7 +638,7 @@ public class _DateStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     out = _request("getIndex", true);
                     in = _invoke(out);
-                    short _ob_r = in.read_short();
+                    int _ob_r = in.read_long();
                     return _ob_r;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _ob_ex)

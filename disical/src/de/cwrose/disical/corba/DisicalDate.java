@@ -4,18 +4,18 @@ import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.POA;
 
-class DisicalDate extends DatePOA {
+public class DisicalDate extends DatePOA {
 
 	public final static String Id = "Date";
 	public final static String Kind = "";
 
-	private String startTime = null;
+  	private String startTime = null;
 	private String endTime = null;
 	private String location = null;
 	private String subject = null;
-	private short _index;
-
-
+	private String login = null;
+	private int _index;
+  
 	public void setStartTime(String Time) {
 		startTime = Time;
 	}
@@ -36,6 +36,14 @@ class DisicalDate extends DatePOA {
 		return startTime;
 	}
 
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
 	public String getEndTime() {
 		return endTime;
 	}
@@ -48,11 +56,11 @@ class DisicalDate extends DatePOA {
 		return subject;
 	}
 
-	public void setIndex(short _index) {
+	public void setIndex(int _index) {
 		this._index = _index;
 	}
 
-	public short getIndex() {
+	public int getIndex() {
 		return	_index;
 	}
 
@@ -65,16 +73,26 @@ class DisicalDate extends DatePOA {
 		dateImpl.setSubject(subject);
 
 		Date date = dateImpl._this(DisicalSrv.orb);
-
 		boolean success = true; //dbPersistDate(date);
+
 		return success;
 	}
 	
 	public void deleteDate() {
-		System.out.println("Delete Date on DB");
+		DisicalDate dateImpl = new DisicalDate();
+
+		dateImpl.setStartTime(startTime);
+		dateImpl.setEndTime(endTime);
+		dateImpl.setLocation(location);
+		dateImpl.setSubject(subject);
+
+		Date date = dateImpl._this(DisicalSrv.orb);
+		//dbDeleteDate(date);
+
 	}
 
-	public void changeDate(String start, String end, String location, String subject) {
+	public void changeDate(String start, String end, 
+					String location, String subject) {
 		startTime = start;
 		endTime = end;
 		this.location = location;

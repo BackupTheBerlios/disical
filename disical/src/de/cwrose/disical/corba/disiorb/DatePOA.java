@@ -58,12 +58,14 @@ public abstract class DatePOA
             "getEndTime",
             "getIndex",
             "getLocation",
+            "getLogin",
             "getStartTime",
             "getSubject",
             "persist",
             "setEndTime",
             "setIndex",
             "setLocation",
+            "setLogin",
             "setStartTime",
             "setSubject"
         };
@@ -107,28 +109,34 @@ public abstract class DatePOA
         case 5: // getLocation
             return _OB_op_getLocation(in, handler);
 
-        case 6: // getStartTime
+        case 6: // getLogin
+            return _OB_op_getLogin(in, handler);
+
+        case 7: // getStartTime
             return _OB_op_getStartTime(in, handler);
 
-        case 7: // getSubject
+        case 8: // getSubject
             return _OB_op_getSubject(in, handler);
 
-        case 8: // persist
+        case 9: // persist
             return _OB_op_persist(in, handler);
 
-        case 9: // setEndTime
+        case 10: // setEndTime
             return _OB_op_setEndTime(in, handler);
 
-        case 10: // setIndex
+        case 11: // setIndex
             return _OB_op_setIndex(in, handler);
 
-        case 11: // setLocation
+        case 12: // setLocation
             return _OB_op_setLocation(in, handler);
 
-        case 12: // setStartTime
+        case 13: // setLogin
+            return _OB_op_setLogin(in, handler);
+
+        case 14: // setStartTime
             return _OB_op_setStartTime(in, handler);
 
-        case 13: // setSubject
+        case 15: // setSubject
             return _OB_op_setSubject(in, handler);
         }
 
@@ -185,9 +193,9 @@ public abstract class DatePOA
                     org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        short _ob_r = getIndex();
+        int _ob_r = getIndex();
         out = handler.createReply();
-        out.write_short(_ob_r);
+        out.write_long(_ob_r);
         return out;
     }
 
@@ -197,6 +205,17 @@ public abstract class DatePOA
     {
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_r = getLocation();
+        out = handler.createReply();
+        out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getLogin(org.omg.CORBA.portable.InputStream in,
+                    org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_r = getLogin();
         out = handler.createReply();
         out.write_string(_ob_r);
         return out;
@@ -251,7 +270,7 @@ public abstract class DatePOA
                     org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        short _ob_a0 = in.read_short();
+        int _ob_a0 = in.read_long();
         setIndex(_ob_a0);
         out = handler.createReply();
         return out;
@@ -264,6 +283,17 @@ public abstract class DatePOA
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_a0 = in.read_string();
         setLocation(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setLogin(org.omg.CORBA.portable.InputStream in,
+                    org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_a0 = in.read_string();
+        setLogin(_ob_a0);
         out = handler.createReply();
         return out;
     }

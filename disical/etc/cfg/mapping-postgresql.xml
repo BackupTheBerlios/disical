@@ -6,7 +6,7 @@
 
 <mapping>
   
-  <class name="de.cwrose.disical.corba.DisicalUser" identity="Login">
+  <class name="de.cwrose.disical.corba.DisicalUser" identity="login">
   	<map-to table="auth" />
   	
   	<field name="login" type="string">
@@ -25,26 +25,23 @@
   	
   </class>
 
-  <class name="de.cwrose.disical.corba.DisicalDate" identity="id" key-generator="SEQUENCE">
+  <class name="de.cwrose.disical.corba.DisicalDate" identity="index" key-generator="SEQUENCE">
   	<map-to table="appointments" />
+
+	<field name="index" type="integer">
+	        <sql name="id" type="integer" />
+        </field>
 
   	<field name="login" type="string">
   		<sql name="login" type="varchar"/>
   	</field>
   	
-  	<field name="startTime" type="time">
-  		<sql name="startTime" type="time" />
-  	</field>
-  	
-  	<field name="startDate" type="date">
-  		<sql name="startDate" type="date"/>
-  	</field>
-  	<field name="endTime" type="time">
-  		<sql name="endTime" type="time" />
+  	<field name="startTime" type="string">
+  		<sql name="startTime" type="varchar" />
   	</field>
 
-  	<field name="endDate" type="date">
-  		<sql name="endDate" type="date"/>
+  	<field name="endTime" type="string">
+  		<sql name="endTime" type="varchar" />
   	</field>
 
   	<field name="location" type="string">
@@ -58,3 +55,15 @@
   </class>
   
 </mapping>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -54,6 +54,14 @@ public interface DateOperations
     setSubject(String subject);
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/setLogin:1.0
+    //
+    /***/
+
+    void
+    setLogin(String login);
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getStartTime:1.0
     //
     /***/
@@ -86,19 +94,27 @@ public interface DateOperations
     getSubject();
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Date/getLogin:1.0
+    //
+    /***/
+
+    String
+    getLogin();
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Date/setIndex:1.0
     //
     /***/
 
     void
-    setIndex(short index);
+    setIndex(int index);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Date/getIndex:1.0
     //
     /***/
 
-    short
+    int
     getIndex();
 
     //

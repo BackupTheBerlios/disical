@@ -22,6 +22,14 @@ package de.cwrose.disical.corba.disiorb;
 public interface InvitationOperations
 {
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getIndex:1.0
+    //
+    /***/
+
+    int
+    getIndex();
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
     //
     /***/
@@ -52,6 +60,14 @@ public interface InvitationOperations
 
     short
     getStatus();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setIndex:1.0
+    //
+    /***/
+
+    void
+    setIndex(int index);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setFromUser:1.0

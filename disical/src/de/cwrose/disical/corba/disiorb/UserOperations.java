@@ -94,30 +94,6 @@ public interface UserOperations
     persist();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/User/changePW:1.0
-    //
-    /***/
-
-    void
-    changePW(String newPW);
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/User/getUserInfo:1.0
-    //
-    /***/
-
-    User
-    getUserInfo();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/User/setUserInfo:1.0
-    //
-    /***/
-
-    void
-    setUserInfo(User userInfo);
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/User/deleteUser:1.0
     //
     /***/

@@ -34,6 +34,59 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
     final public static java.lang.Class _ob_opsClass = InvitationOperations.class;
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getIndex:1.0
+    //
+    public int
+    getIndex()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("getIndex", true);
+                    in = _invoke(out);
+                    int _ob_r = in.read_long();
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("getIndex", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.getIndex();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
     //
     public User
@@ -236,6 +289,60 @@ public class _InvitationStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     return _ob_self.getStatus();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setIndex:1.0
+    //
+    public void
+    setIndex(int _ob_a0)
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("setIndex", true);
+                    out.write_long(_ob_a0);
+                    in = _invoke(out);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("setIndex", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitationOperations _ob_self = (InvitationOperations)_ob_so.servant;
+                try
+                {
+                    _ob_self.setIndex(_ob_a0);
+                    return;
                 }
                 finally
                 {

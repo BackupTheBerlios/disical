@@ -5,7 +5,7 @@ import de.cwrose.disical.corba.*;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.POA;
 
-class DisicalUser extends UserPOA {
+public class DisicalUser extends UserPOA {
 
 	public final static String Id = "User";
 	public final static String Kind = "";
@@ -14,6 +14,9 @@ class DisicalUser extends UserPOA {
 	private String name = null;
 	private String email = null;
 	private String passwd = null;
+
+	private static final int dateLimit = 1000;
+	private static final int inviteLimit = 100;
 
 	public void setLogin(String login) {
 		this.login = login;
@@ -55,50 +58,34 @@ class DisicalUser extends UserPOA {
 		newUserImpl.setEmail(email);
 		newUserImpl.setPasswd(passwd);
 
-		User newUser = newUserImpl._this(DisicalSrv.orb);
-		boolean success = true; //dbPersistUser(newUser);
+		//User newUser = newUserImpl._this(DisicalSrv.orb);
+		boolean success = true; //dbPersistUser(newUserImpl);
 
 		return success;
 	}
 
-	public void changePW(String newPW) {
-		passwd = newPW;
-	}
-
-	public User getUserInfo() {
-
-		DisicalUser userImpl = new DisicalUser();
-		userImpl.setLogin(login);
-		userImpl.setName(name);
-		userImpl.setEmail(email);
-		userImpl.setPasswd(passwd);
-
-		User user = userImpl._this(DisicalSrv.orb);
-
-		return user;
-	}
-
-	public void setUserInfo(User user) {
-		//dbSetUser(user);
-		System.out.println("comes next");
-	}
-
 	public void deleteUser() {
-		// dbDeleteUser();
-		System.out.println("comes next");
+		DisicalUser newUserImpl = new DisicalUser();
+
+		newUserImpl.setLogin(login);
+		newUserImpl.setName(name);
+		newUserImpl.setEmail(email);
+		newUserImpl.setPasswd(passwd);
+
+		// dbDeleteUser(newUserImpl);
 	}
 
 	public Date createDate(String start, String end, String location, String subject) {
 
 		DisicalDate newDateImpl = new DisicalDate();
-		Date newDate = newDateImpl._this(DisicalSrv.orb);
 		
-		newDate.setStartTime(start);
-		newDate.setEndTime(end);
-		newDate.setLocation(location);
-		newDate.setSubject(subject);
+		newDateImpl.setStartTime(start);
+		newDateImpl.setEndTime(end);
+		newDateImpl.setLocation(location);
+		newDateImpl.setSubject(subject);
 
-		//dbCreateDate(newDate);
+		//dbCreateDate(newDateImpl);
+		Date newDate = newDateImpl._this(DisicalSrv.orb);
 
 		return newDate;
 
@@ -107,43 +94,83 @@ class DisicalUser extends UserPOA {
 	public Date selectDate(int index) {
 
 		DisicalDate selDateImpl = new DisicalDate();
+		selDateImpl.setIndex(index);
+		selDateImpl = null; //dbGetDate(setDateImpl);
+
 		Date selDate = selDateImpl._this(DisicalSrv.orb);
-		selDate = null; //dbGetDate(index);
 
 		return selDate;
-
 	}
 
 	public Date[] listDatesByTime(String start, String end) {
 
-		Date[] dateList = new Date[1000];
-		dateList = null; //dbGetDatesByTime(String start, String end);
-		return dateList;
+		DisicalDate selDateImpl = new DisicalDate();
+		DisicalDate[] listDateImpl = new DisicalDate[dateLimit];
 
+		selDateImpl.setStartTime(start);
+		selDateImpl.setEndTime(end);
+		listDateImpl = null; //dbGetDatesByTime(selDateImpl);
+
+		Date[] dateList = new Date[dateLimit];
+
+		for ( int i = 0; i < dateLimit; i++) {
+			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
+		}
+
+		return dateList;
 	}
 
 	public Date[] listDatesByLocation(String location) {
 
-		Date[] dateList = new Date[1000];
-		dateList = null; //dbGetDatesByLocation(String location);
-		return dateList;
+		DisicalDate selDateImpl = new DisicalDate();
+		DisicalDate[] listDateImpl = new DisicalDate[dateLimit];
 
+		selDateImpl.setLocation(location);
+		listDateImpl = null; //dbGetDatesByLocation(selDateImpl);
+
+		Date[] dateList = new Date[dateLimit];
+
+		for ( int i = 0; i < dateLimit; i++) {
+			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
+		}
+
+		return dateList;
 	}
 
 	public Date[] listDatesBySubject(String subject) {
 
-		Date[] dateList = new Date[1000];
-		dateList = null; //dbGetDatesBySubject(String subject);
-		return dateList;
+		DisicalDate selDateImpl = new DisicalDate();
+		DisicalDate[] listDateImpl = new DisicalDate[dateLimit];
 
+		selDateImpl.setSubject(subject);
+		listDateImpl = null; //dbGetDatesBySubject(selDateImpl);
+
+		Date[] dateList = new Date[dateLimit];
+
+		for ( int i = 0; i < dateLimit; i++) {
+			dateList[i] = listDateImpl[i]._this(DisicalSrv.orb);
+		}
+
+		return dateList;
 	}
 
 	public Invitation[] getInvitations() {
 
-		Invitation[] invitationList = new Invitation[100];
-		invitationList = null; //dbGetInvitations(this.login);
-		return invitationList;
+		DisicalDate selDateImpl = new DisicalDate();
+		selDateImpl.setLogin(login);
 
+		DisicalInvitation[] listInvitationImpl = 
+				new DisicalInvitation[inviteLimit];
+
+		listInvitationImpl = null; //dbGetInvitations(this.login);
+
+		Invitation[] listInvitation = new Invitation[inviteLimit];
+
+		for (int i = 0; i < inviteLimit; i++) {
+			listInvitation[i] = listInvitationImpl[i]._this(DisicalSrv.orb);
+		}
+
+		return listInvitation;
 	}
 
 	public void destroy() {

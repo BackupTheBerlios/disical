@@ -48,13 +48,6 @@ module de {
 		/* persist routine zum abgleich der db */
 		boolean persist();
 
-		void changePW( in string newPW );
-
-		User getUserInfo();
-
-		/* User userInfo */
-		void setUserInfo(in User userInfo);
- 
 		void deleteUser();
 
 		/* habe ich jetzt mal beim User hineingetan, denn der erzeugt die Dates
@@ -92,7 +85,7 @@ module de {
 		void setEndTime(in string Time);
 		void setLocation(in string location);
 		void setSubject(in string subject);
-
+		void setLogin(in string login);
 		/* habe ich modifiziert, um ein logischeres layout zu erhalten 
 		 * (ergebnis ist der returnwert)
 		 */
@@ -100,10 +93,11 @@ module de {
 		string getEndTime();
 		string getLocation();
 		string getSubject();
+		string getLogin();
 
 		/* nun nötig, um den index eines Dates zu erhalten */
-		void setIndex(in short _index);
-		short getIndex(); 
+		void setIndex(in long _index);
+		long getIndex(); 
 
 		/* persist routine zum abgleich der db */
 		boolean persist();
@@ -124,11 +118,13 @@ module de {
 /* Interface Invitation */
 	interface Invitation {
 
+		long getIndex();
 		User getFromUser();
 		seqUser getToUser();
 		Date getInvitationDate();
 		short getStatus();
 
+		void setIndex(in long index);
 		void setFromUser(in User fromUser);
 		void setToUser(in seqUser toUser);
 		void setInvitationDate(in Date newdate);

@@ -52,7 +52,6 @@ public abstract class UserPOA
     {
         final String[] _ob_names =
         {
-            "changePW",
             "createDate",
             "deleteUser",
             "destroy",
@@ -61,7 +60,6 @@ public abstract class UserPOA
             "getLogin",
             "getName",
             "getPasswd",
-            "getUserInfo",
             "listDatesByLocation",
             "listDatesBySubject",
             "listDatesByTime",
@@ -70,8 +68,7 @@ public abstract class UserPOA
             "setEmail",
             "setLogin",
             "setName",
-            "setPasswd",
-            "setUserInfo"
+            "setPasswd"
         };
 
         int _ob_left = 0;
@@ -95,79 +92,59 @@ public abstract class UserPOA
 
         switch(_ob_index)
         {
-        case 0: // changePW
-            return _OB_op_changePW(in, handler);
-
-        case 1: // createDate
+        case 0: // createDate
             return _OB_op_createDate(in, handler);
 
-        case 2: // deleteUser
+        case 1: // deleteUser
             return _OB_op_deleteUser(in, handler);
 
-        case 3: // destroy
+        case 2: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 4: // getEmail
+        case 3: // getEmail
             return _OB_op_getEmail(in, handler);
 
-        case 5: // getInvitations
+        case 4: // getInvitations
             return _OB_op_getInvitations(in, handler);
 
-        case 6: // getLogin
+        case 5: // getLogin
             return _OB_op_getLogin(in, handler);
 
-        case 7: // getName
+        case 6: // getName
             return _OB_op_getName(in, handler);
 
-        case 8: // getPasswd
+        case 7: // getPasswd
             return _OB_op_getPasswd(in, handler);
 
-        case 9: // getUserInfo
-            return _OB_op_getUserInfo(in, handler);
-
-        case 10: // listDatesByLocation
+        case 8: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 11: // listDatesBySubject
+        case 9: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 12: // listDatesByTime
+        case 10: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 13: // persist
+        case 11: // persist
             return _OB_op_persist(in, handler);
 
-        case 14: // selectDate
+        case 12: // selectDate
             return _OB_op_selectDate(in, handler);
 
-        case 15: // setEmail
+        case 13: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 16: // setLogin
+        case 14: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 17: // setName
+        case 15: // setName
             return _OB_op_setName(in, handler);
 
-        case 18: // setPasswd
+        case 16: // setPasswd
             return _OB_op_setPasswd(in, handler);
-
-        case 19: // setUserInfo
-            return _OB_op_setUserInfo(in, handler);
         }
 
         throw new org.omg.CORBA.BAD_OPERATION();
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_changePW(org.omg.CORBA.portable.InputStream in,
-                    org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        changePW(_ob_a0);
-        out = handler.createReply();
-        return out;
     }
 
     private org.omg.CORBA.portable.OutputStream
@@ -257,17 +234,6 @@ public abstract class UserPOA
         String _ob_r = getPasswd();
         out = handler.createReply();
         out.write_string(_ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_getUserInfo(org.omg.CORBA.portable.InputStream in,
-                       org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_r = getUserInfo();
-        out = handler.createReply();
-        UserHelper.write(out, _ob_r);
         return out;
     }
 
@@ -371,17 +337,6 @@ public abstract class UserPOA
         org.omg.CORBA.portable.OutputStream out = null;
         String _ob_a0 = in.read_string();
         setPasswd(_ob_a0);
-        out = handler.createReply();
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_setUserInfo(org.omg.CORBA.portable.InputStream in,
-                       org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        User _ob_a0 = UserHelper.read(in);
-        setUserInfo(_ob_a0);
         out = handler.createReply();
         return out;
     }
