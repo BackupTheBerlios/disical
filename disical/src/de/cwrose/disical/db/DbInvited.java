@@ -17,6 +17,7 @@ public final class DbInvited extends DbPersistable
 	private Invited skel;
 	private DisicalInvited stub;
 	private int index = 0;
+	private boolean notify = false;
 
 	public DbInvited ()
 	throws PersistenceException

@@ -186,10 +186,12 @@ public final class DbInvitation extends DbPersistable
 		Database  db = DbManager.getConnection ();
 
 		// OQL 
+		short s = 1;
 		OQLQuery oql = db.getOQLQuery 
 			("SELECT i FROM de.cwrose.disical.db.DbInvited i "+
-			 "WHERE i.login=$1 and i.notify=true and i.invitation=$2");
+			 "WHERE i.login=$1 and i.notify=$2 and i.invitation=$3");
 		oql.bind (this.getUser().getLogin());
+		oql.bind (s);
 		oql.bind (this.getIndex ());
 
 		// Get Results

@@ -91,6 +91,22 @@ public final class DbUser extends DbPersistable
 		db.commit();
 		return (Date [])DbDate.enum2array(res);
 	}
+	
+	public  User[] listAllUsers ()
+		throws org.exolab.castor.jdo.PersistenceException
+	{
+		Database  db = DbManager.getConnection ();
+
+		// OQL 
+		OQLQuery oql = db.getOQLQuery 
+			("SELECT u FROM de.cwrose.disical.db.DbUser u; ");
+
+		// Get Results
+		db.begin();
+		QueryResults res = oql.execute();
+		db.commit();
+		return (User [])DbUser.enum2array(res);
+	}
 
 	public  Date[] listDatesBySubject (String subject)
 		throws org.exolab.castor.jdo.PersistenceException
