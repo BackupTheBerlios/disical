@@ -148,10 +148,10 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                         
                         try {
                             session = new SessionFrame(user.listAllDatesByTime());
-                            this.add(session);
+                            this.getContentPane().add(session);
                         } catch ( Exception e)  {
                             session = new SessionFrame( new Date[0] );
-                            this.add(session);
+                            this.getContentPane().add(session);
                         }
                     }
                     catch (jdoPersistenceEx e) {
@@ -197,10 +197,10 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                 online = true;
             try {
                 session = new SessionFrame(user.listAllDatesByTime());
-                this.add(session);
+                this.getContentPane().add(session);
             } catch ( Exception e)  {
                 session = new SessionFrame( new Date[0] );
-                this.add(session);
+                this.getContentPane().add(session);
                 e.printStackTrace(System.out);
             }
         }
