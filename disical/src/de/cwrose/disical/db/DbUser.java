@@ -170,14 +170,29 @@ public final class DbUser extends DbPersistable
 			 "and $2<=d.startTime  and d.endTime<=$3 "+
 			 "ORDER BY d.startTime ASC");
 		oql.bind (getLogin());
-		System.out.println ("CORBA-START: "+startTime);
-		System.out.println ("CORBA-STOP: "+stopTime);
 		startTime = DbManager.changeTime(startTime);
 		stopTime = DbManager.changeTime(stopTime);
-		System.out.println ("CHANGE-START: "+startTime);
-		System.out.println ("CHANGE-STOP: "+stopTime);
 		oql.bind (startTime);
 		oql.bind (stopTime);
+
+		// Get Results
+		db.begin();
+		QueryResults res = oql.execute();
+		Date [] ret = (Date []) DbDate.qres2array(res);
+		db.commit();
+		return ret;
+	}
+
+	public  Date[] listAllDatesByTime ()
+		throws org.exolab.castor.jdo.PersistenceException, EmptySeqException
+	{
+		Database  db = DbManager.getConnection ();
+
+		// OQL 
+		OQLQuery oql = db.getOQLQuery 
+			("SELECT d FROM de.cwrose.disical.db.DbDate d WHERE d.login=$1 "+
+			 "ORDER BY d.startTime ASC");
+		oql.bind (getLogin());
 
 		// Get Results
 		db.begin();

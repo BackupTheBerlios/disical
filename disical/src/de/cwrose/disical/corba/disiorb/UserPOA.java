@@ -60,6 +60,7 @@ public abstract class UserPOA
             "getInvitations",
             "getLogin",
             "getName",
+            "listAllDatesByTime",
             "listAllUsers",
             "listDatesByLocation",
             "listDatesBySubject",
@@ -116,31 +117,34 @@ public abstract class UserPOA
         case 7: // getName
             return _OB_op_getName(in, handler);
 
-        case 8: // listAllUsers
+        case 8: // listAllDatesByTime
+            return _OB_op_listAllDatesByTime(in, handler);
+
+        case 9: // listAllUsers
             return _OB_op_listAllUsers(in, handler);
 
-        case 9: // listDatesByLocation
+        case 10: // listDatesByLocation
             return _OB_op_listDatesByLocation(in, handler);
 
-        case 10: // listDatesBySubject
+        case 11: // listDatesBySubject
             return _OB_op_listDatesBySubject(in, handler);
 
-        case 11: // listDatesByTime
+        case 12: // listDatesByTime
             return _OB_op_listDatesByTime(in, handler);
 
-        case 12: // persist
+        case 13: // persist
             return _OB_op_persist(in, handler);
 
-        case 13: // setEmail
+        case 14: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 14: // setLogin
+        case 15: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 15: // setName
+        case 16: // setName
             return _OB_op_setName(in, handler);
 
-        case 16: // setPasswd
+        case 17: // setPasswd
             return _OB_op_setPasswd(in, handler);
         }
 
@@ -277,6 +281,30 @@ public abstract class UserPOA
         String _ob_r = getName();
         out = handler.createReply();
         out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_listAllDatesByTime(org.omg.CORBA.portable.InputStream in,
+                              org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        try
+        {
+            Date[] _ob_r = listAllDatesByTime();
+            out = handler.createReply();
+            seqDateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
+        catch(emptySeqEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            emptySeqExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.31 2002/03/20 11:06:19 deafman Exp $
+// $Id: DisicalUser.java,v 1.32 2002/03/22 16:30:49 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -23,7 +23,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 import de.cwrose.disical.corba.disiorb.UserPOA;
 import de.cwrose.disical.corba.disiorb.User;
@@ -259,6 +259,33 @@ public class DisicalUser extends UserPOA {
 
 		return dateList;
 	}
+
+	/* returns all Dates of the login-user, that matches 
+	 * in the given period of time
+	*/
+	public Date[] listAllDatesByTime()
+		throws jdoPersistenceEx, emptySeqEx {
+
+		Date[] dateList = null;
+
+		try {
+			dateList = getBubble().listAllDatesByTime();
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new jdoPersistenceEx(e.getMessage());			
+		}
+		catch (EmptySeqException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
+			throw new emptySeqEx(e.getMessage());
+		}
+
+		return dateList;
+	}
+
+
 
 	/* returns all dates of the login-user
 	 * that matches to the given location

@@ -770,6 +770,65 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     }
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/User/listAllDatesByTime:1.0
+    //
+    public Date[]
+    listAllDatesByTime()
+        throws jdoPersistenceEx,
+               emptySeqEx
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("listAllDatesByTime", true);
+                    in = _invoke(out);
+                    Date[] _ob_r = seqDateHelper.read(in);
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
+                        throw jdoPersistenceExHelper.read(in);
+                    if(_ob_id.equals(emptySeqExHelper.id()))
+                        throw emptySeqExHelper.read(in);
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("listAllDatesByTime", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                UserOperations _ob_self = (UserOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.listAllDatesByTime();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/User/listAllUsers:1.0
     //
     public User[]

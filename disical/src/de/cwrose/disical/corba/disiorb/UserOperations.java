@@ -141,6 +141,16 @@ public interface UserOperations
                emptySeqEx;
 
     //
+    // IDL:de/cwrose/disical/corba/disiorb/User/listAllDatesByTime:1.0
+    //
+    /***/
+
+    Date[]
+    listAllDatesByTime()
+        throws jdoPersistenceEx,
+               emptySeqEx;
+
+    //
     // IDL:de/cwrose/disical/corba/disiorb/User/listAllUsers:1.0
     //
     /***/
