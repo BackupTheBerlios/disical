@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.10 2002/01/10 21:11:12 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.11 2002/01/12 01:52:15 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -59,6 +59,8 @@
   <!-- ones.  Non-ant-users: This is your #ifdef.                 -->
   <touch file="${dir.etc}/local-build.properties" />
   <property file="${dir.etc}/local-build.properties" />
+  <property file="${disical.cfg}/server.properties" />
+  <property file="${disical.cfg}/local/server.properties" />
 
 
   <!-- Initial build activities: Tstamp + Create pk output dirs -->
@@ -94,7 +96,7 @@
          debug="${build.debug}" optimize="${build.optimize}">
 	<classpath>
 	  <pathelement path="${java.class.path}" />
-	  <path id="db.classpath"> <!-- name classpath for later reference -->
+	  <path> <!-- name classpath for later reference -->
 	    <pathelement location="${dir.lib}/${mod.transaction}" />
 	    <pathelement location="${dir.lib}/${mod.jdbc}" />
 	    <pathelement location="${dir.lib}/${mod.pgsql}" />
@@ -110,8 +112,75 @@
   <delete dir="${dir.out}/${dir.ns}/db" />
 </target>
 
+<target name="pg_init" depends="init">
+  <exec executable="${shell.file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell.exec}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.initdb} ${pg.root}${shell.quote}" />
+  </exec>
+</target>
 
+<target name="pg_run" depends="init">
+  <exec executable="${shell.file}" 
+        os="${os.name}" dir="${user.dir}" vmlauncher="false">
+    <arg line="${shell.exec}" />
+    <arg line="${shell.quote}${pg.bindir}${pg.postmaster} -i -D ${pg.root}${shell.quote}" />
+  </exec>
+</target>
 
+<target name="pg_destroy" depends="init">
+  <delete dir="${pg.root}" includeEmptyDirs="true" />
+</target>
+
+<target name="db_create" depends="init">
+  <sql
+    driver="${db.driver.class}"
+    url="${db.url.boot}" 
+    userid="${db.username}" password="${db.password}">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> <!-- name classpath for later reference -->
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+    commit;
+    create database disical
+  </sql>
+  <sql
+    driver="${db.driver.class}"
+    url="${db.url.boot}" 
+    userid="${db.username}" password="${db.password}"
+    src="${dir.etc}/db_create.sql">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> <!-- name classpath for later reference -->
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+  </sql>
+</target>
+
+<target name="db_drop" depends="init">
+  <sql
+    driver="${db.driver.class}"
+    url="${db.url.boot}"
+    userid="${db.username}" password="${db.password}">
+    <classpath>
+	  <pathelement path="${java.class.path}" />
+	  <path> <!-- name classpath for later reference -->
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	  </path>    
+    </classpath>
+    commit;
+    drop database disical
+  </sql>
+</target>
 
 <!-- *** 'CORBA' ********************************************************** -->
 
@@ -156,7 +225,7 @@
 <!-- binary distribution (currently unfinished ant-task 'dist').      -->
 
 <!-- Make jar containing all necessary class files -->
-<target name="jar" depends="init,corba,db">
+<target name="jar" depends="init,db">
   <jar 
     jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
@@ -204,8 +273,6 @@
   <classpath>
     <pathelement path="${java.class.path}" />
     <pathelement location="${dir.lib}/${mod.bsh}" />
-    <path refid="db.classpath" />
-    <path refid="corba.classpath" />
     <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
   </classpath>
   </java>

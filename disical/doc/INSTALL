@@ -5,11 +5,25 @@ DiSiCal development is done using the following fine OSS:
 
 	postgresql 7.1.3 (jdbc drivers included in disical src)
 	castor 0.9.3 (jars included in disical src)
-		- requires JDK API: jta 1.0.1 (included in disical src)
-		- requires JDK API: jdbc-se 2.0 (included in disical src)
+		- requires JDK API: jta 1.0.1 
+		  (included in disical src)
+		- requires JDK API: jdbc-se 2.0 
+		  (included in disical src)
 	ORBacus ?.?
 	Apache jakarta ant 1.4.1
 
 
 Jakarta, ORBacus and postgresql versions used by the disical developers can be
 found at ftp://ftp.berlios.de/pub/disical/tools.
+
+Notes on Cygwin
+---------------
+
+To use postgresl under Cygwin, IPC for cygwin is required.  It is
+not contained in the standard cygwin distribution, but can be
+found at:
+
+http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/ 
+
+
+or at the disical ftp site ftp://ftp.berlios.de/pub/disical.
