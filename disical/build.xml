@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by -->
-<!-- $Id: build.xml,v 1.6 2002/01/04 17:58:12 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.7 2002/01/04 22:26:57 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -110,7 +110,7 @@
 <target name="corba" depends="init,clean_jar,idl">
   <javac srcdir="${dir.src}" destdir="${dir.out}/${dir.ns}/corba"
          debug="${build.debug}" optimize="${build.optimize}">
-        <classpath id="classpath.corba">
+        <classpath id="corba.classpath">
           <pathelement path="${java.class.path}" />
           <pathelement location="${dir.lib}/${mod.OB}" />
         </classpath>
@@ -128,13 +128,13 @@
 <!-- Make jar containing all necessary class files -->
 <target name="jar" depends="init,corba,db">
   <jar 
-    jarfile="${dir.dist}/disical-${disical.version}.jar"
+    jarfile="${dir.lib}/disical-${disical.version}.jar"
     basedir="${dir.out}" 
   />
 </target>
 
 <target name="clean_jar" depends="init">
-  <delete file="${dir.dist}/disical-${disical.version}.jar" />
+  <delete file="${dir.lib}/disical-${disical.version}.jar" />
 </target>
 
 
@@ -168,6 +168,7 @@
     <pathelement path="${java.class.path}" />
     <pathelement location="${dir.lib}/${mod.bsh}" />
     <path refid="db.classpath" />
+    <path refid="corba.classpath" />
     <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
   </classpath>
   </java>
