@@ -17,4 +17,9 @@ public final class HackHelper
 		out.println(e.getMessage());
 		e.printStackTrace (out);
 	}
+
+	public final static void printObj (PrintStream out, String s, Object o)
+	{
+		out.println (s + "Class: "+o.getClass().toString() + " Ref:" + o);
+	}
 }
