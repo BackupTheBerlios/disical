@@ -18,8 +18,12 @@ import javax.swing.*;
 public class SessionFrame extends javax.swing.JInternalFrame {
 
     /** Creates new form SessionFrame */
-    public SessionFrame() {
+    public SessionFrame(Date[] dates) {
         initComponents();
+        jList3.setCellRenderer(new MyCellRenderer());
+        jList3.setListData(dates);
+        
+        
     }
 
     /** This method is called from within the constructor to

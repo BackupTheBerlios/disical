@@ -140,7 +140,12 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                         server = client.getServer();
                          user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
                          System.out.println(cancel);
-                         
+                         online = true;
+                         try {
+                             new SessionFrame(user.listAllDatesByTime()).show();
+                         } catch ( Exception e)  {
+                             new SessionFrame(new Date[0]).show();
+                         }
                     }
                     catch (jdoPersistenceEx e) {
                         System.out.println(e.toString());
@@ -159,6 +164,11 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
     
     private void logoutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuActionPerformed
         // Add your handling code here:
+        if (online && user != null) {
+            user.destroy();
+            online = false;
+            user = null;
+        }
     }//GEN-LAST:event_logoutMenuActionPerformed
     
     private void loginMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginMenuActionPerformed
