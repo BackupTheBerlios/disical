@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.18 2002/01/16 19:27:13 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.19 2002/01/17 15:31:37 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -61,10 +61,10 @@
   <!-- ones.  Non-ant-users: This is your #ifdef.                 -->
   <touch file="${dir.etc}/local-build.properties" />
   <property file="${dir.etc}/local-build.properties" />
-  <property file="${disical.cfg}/server.properties" />
-  <property file="${disical.cfg}/velocity.properties" />
   <property file="${disical.cfg}/local/server.properties" />
+  <property file="${disical.cfg}/server.properties" />
   <property file="${disical.cfg}/local/velocity.properties" />
+  <property file="${disical.cfg}/velocity.properties" />
 
   <!-- Initial build activities: Tstamp + Create pk output dirs -->
   <tstamp />
