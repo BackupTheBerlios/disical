@@ -9,11 +9,11 @@ class DisicalDate extends DatePOA {
 	public final static String Id = "Date";
 	public final static String Kind = "";
 
-	private static String startTime;
-	private static String endTime;
-	private static String location;
-	private static String subject;
-	private static short _index;
+	private String startTime = null;
+	private String endTime = null;
+	private String location = null;
+	private String subject = null;
+	private short _index;
 
 	public void deleteDate(){
 
@@ -70,6 +70,11 @@ class DisicalDate extends DatePOA {
 
 	public short getIndex() {
 		return	_index;
+	}
+
+	public boolean persist() {
+		//return dbPersist(this);
+		return true;
 	}
 
 	public void changeDate(String start, String end, String location, String subject) {
