@@ -26,4 +26,12 @@ public class DisicalCli {
 
 		disicalServer = ServerHelper.narrow(disicalServerImpl);
 	}
+
+	public Server getServer() {
+		return disicalServer;
+	}
+
+	public ORB getORB() {
+		return orb;
+	}
 }
