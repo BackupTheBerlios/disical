@@ -15,7 +15,7 @@ import java.util.Vector;
 public final class DbInvited extends DbPersistable
 {
 	private int index = 0;
-	private boolean notify = false;
+	private int notify = 0;
 
 	public DbInvited ()
 	throws PersistenceException
@@ -86,29 +86,29 @@ public final class DbInvited extends DbPersistable
 
 	/* Property: State */
 
-	public short getState ()
+	public int getState ()
 	{
 		return getInvitedServant().status ();
 	}
 
-	public void setState (short s)
+	public void setState (int s)
 						 
 	{
-		getInvitedServant ().setStatus (s);
+		getInvitedServant ().setStatus ((short)s);
 	}
 
 
 
 	/* Property: Notify */
 
-	public boolean getNotify ()
+	public int getNotify ()
 	{
-		return getInvitedServant().getNotify ();
+		return notify;
 	}
 
-	public void setNotify (boolean b)
+	public void setNotify (int b)
 	{
-		getInvitedServant().setNotify (b);
+		this.notify = b;
 	}
 
 

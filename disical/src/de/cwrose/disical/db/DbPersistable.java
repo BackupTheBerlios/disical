@@ -8,7 +8,7 @@ import de.cwrose.disical.util.HackHelper;
 import java.lang.reflect.InvocationTargetException;
 import org.exolab.castor.jdo.DataObjectAccessException;
 
-public class DbPersistable {
+public class DbPersistable implements org.exolab.castor.jdo.TimeStampable{
 	/* Flag that stores whether a DbPersistable must be created 
 	   or updated when persisted to the db */
 	private boolean create_persistable = true;
@@ -21,6 +21,7 @@ public class DbPersistable {
 	private org.omg.PortableServer.Servant servant = null;
 
 	public DbPersistable () {
+		jdoSetTimeStamp (System.currentTimeMillis());
 	}
 
 	protected final void setServant (org.omg.PortableServer.Servant servant) {
