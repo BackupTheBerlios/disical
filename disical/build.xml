@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by -->
-<!-- $Id: build.xml,v 1.4 2002/01/02 11:49:05 deafman Exp $ -->
+<!-- $Id: build.xml,v 1.5 2002/01/02 15:50:45 stepn Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -34,6 +34,7 @@
   <property name="mod.jdbc" value="jdbc-se2.0.jar" />
   <property name="mod.pgsql" value="postgresql.jar" />
   <property name="mod.transaction" value="jta1.0.1.jar" />
+  <property name="mod.bsh" value="bsh-1.2b3.jar" />
   <property name="mod.OB" value="OB.jar" />
 
 
@@ -70,13 +71,15 @@
 <target name="db" depends="init,util,clean_jar">
   <javac srcdir="${dir.src}" destdir="${dir.out}" 
          debug="${build.debug}" optimize="${build.optimize}">
-	<classpath id="classpath.db">
+	<classpath>
 	  <pathelement path="${java.class.path}" />
-	  <pathelement location="${dir.lib}/${mod.transaction}" />
-	  <pathelement location="${dir.lib}/${mod.jdbc}" />
-	  <pathelement location="${dir.lib}/${mod.pgsql}" />
-	  <pathelement location="${dir.lib}/${mod.castor}" />
-	  <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	  <path id="db.classpath">
+	    <pathelement location="${dir.lib}/${mod.transaction}" />
+	    <pathelement location="${dir.lib}/${mod.jdbc}" />
+	    <pathelement location="${dir.lib}/${mod.pgsql}" />
+	    <pathelement location="${dir.lib}/${mod.castor}" />
+	    <pathelement location="${dir.lib}/${mod.castor.xml}" />
+	  </path>
 	</classpath>
     <include name="${dir.ns}/db/**/*.java" />
   </javac>
@@ -147,7 +150,7 @@
 
 <!-- Example run target -->
 <target name="listprops" depends="init,jar">
-  <java classname = "de.cwrose.disical.util.CfgTester" fork="yes">
+  <java classname="de.cwrose.disical.util.CfgTester" fork="yes">
   <classpath>
     <pathelement path="${java.class.path}" />
 	 <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
@@ -158,7 +161,17 @@
   </java>
 </target>
 
-
+<!-- Run bsh class browser -->
+<target name="bsh" depends="init,jar">
+  <java classname="bsh.Console" fork="yes">
+  <classpath>
+    <pathelement path="${java.class.path}" />
+    <pathelement location="${dir.lib}/${mod.bsh}" />
+    <path refid="db.classpath" />
+    <pathelement location="${dir.lib}/disical-${disical.version}.jar" />
+  </classpath>
+  </java>
+</target>
 
 
 <!-- Make zip containing bindist of all necessary files -->
