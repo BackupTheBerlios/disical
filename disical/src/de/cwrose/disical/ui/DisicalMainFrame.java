@@ -139,13 +139,15 @@ public class DisicalMainFrame extends javax.swing.JFrame implements ActionListen
                     client = new DisicalCli(new String[0]);                    
                     try {
                         server = client.getServer();
+                         online = true;
                          user =     server.createUser(dlg.login, dlg.name, dlg.password,  dlg.email);
                          System.out.println(cancel);
-                         online = true;
+                         
                          try {
                              new SessionFrame(user.listAllDatesByTime()).show();
                          } catch ( Exception e)  {
                              new SessionFrame(new Date[0]).show();
+                             e.printStackTrace(System.out);
                          }
                     }
                     catch (jdoPersistenceEx e) {
