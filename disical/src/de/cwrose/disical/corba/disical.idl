@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.16 2002/01/30 21:18:10 deafman Exp $
+// $Id: disical.idl,v 1.17 2002/01/30 21:20:31 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 module de {
   module cwrose {
@@ -17,6 +17,7 @@ module de {
 		  interface User;
 		  interface Date;
 		  interface Invitation;
+		  interface Invited;
 		  
 		  typedef sequence <Date> seqDate;
 		  typedef sequence <Invitation> seqInvitation;

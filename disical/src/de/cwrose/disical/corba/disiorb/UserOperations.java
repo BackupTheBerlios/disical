@@ -109,15 +109,6 @@ public interface UserOperations
         throws jdoPersistenceEx;
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/User/selectDate:1.0
-    //
-    /***/
-
-    Date
-    selectDate(int index)
-        throws jdoPersistenceEx;
-
-    //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByTime:1.0
     //
     /***/

@@ -63,7 +63,6 @@ public abstract class UserPOA
             "listDatesBySubject",
             "listDatesByTime",
             "persist",
-            "selectDate",
             "setEmail",
             "setLogin",
             "setName",
@@ -124,19 +123,16 @@ public abstract class UserPOA
         case 10: // persist
             return _OB_op_persist(in, handler);
 
-        case 11: // selectDate
-            return _OB_op_selectDate(in, handler);
-
-        case 12: // setEmail
+        case 11: // setEmail
             return _OB_op_setEmail(in, handler);
 
-        case 13: // setLogin
+        case 12: // setLogin
             return _OB_op_setLogin(in, handler);
 
-        case 14: // setName
+        case 13: // setName
             return _OB_op_setName(in, handler);
 
-        case 15: // setPasswd
+        case 14: // setPasswd
             return _OB_op_setPasswd(in, handler);
         }
 
@@ -315,26 +311,6 @@ public abstract class UserPOA
         boolean _ob_r = persist();
         out = handler.createReply();
         out.write_boolean(_ob_r);
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_selectDate(org.omg.CORBA.portable.InputStream in,
-                      org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        try
-        {
-            int _ob_a0 = in.read_long();
-            Date _ob_r = selectDate(_ob_a0);
-            out = handler.createReply();
-            DateHelper.write(out, _ob_r);
-        }
-        catch(jdoPersistenceEx _ob_ex)
-        {
-            out = handler.createExceptionReply();
-            jdoPersistenceExHelper.write(out, _ob_ex);
-        }
         return out;
     }
 

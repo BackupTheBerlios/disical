@@ -22,44 +22,44 @@ package de.cwrose.disical.corba.disiorb;
 public interface InvitationOperations
 {
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getIndex:1.0
-    //
-    /***/
-
-    int
-    getIndex();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
-    //
-    /***/
-
-    User
-    getFromUser();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getToUser:1.0
-    //
-    /***/
-
-    User[]
-    getToUser();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getInvitationDate:1.0
-    //
-    /***/
-
-    Date
-    getInvitationDate();
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setIndex:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStartTime:1.0
     //
     /***/
 
     void
-    setIndex(int index);
+    setStartTime(long Time);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setEndTime:1.0
+    //
+    /***/
+
+    void
+    setEndTime(long Time);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setLocation:1.0
+    //
+    /***/
+
+    void
+    setLocation(String location);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setSubject:1.0
+    //
+    /***/
+
+    void
+    setSubject(String subject);
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setDescription:1.0
+    //
+    /***/
+
+    void
+    setDescription(String description);
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setFromUser:1.0
@@ -70,30 +70,68 @@ public interface InvitationOperations
     setFromUser(User fromUser);
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setToUser:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getStartTime:1.0
     //
     /***/
 
-    void
-    setToUser(User[] toUser);
+    long
+    getStartTime();
 
     //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitationDate:1.0
-    //
-    /***/
-
-    void
-    setInvitationDate(Date newdate);
-
-    //
-    // IDL:de/cwrose/disical/corba/disiorb/Invitation/setInvitation:1.0
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getEndTime:1.0
     //
     /***/
 
-    void
-    setInvitation(User[] toUser,
-                  Date invitationDate)
-        throws jdoPersistenceEx;
+    long
+    getEndTime();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getLocation:1.0
+    //
+    /***/
+
+    String
+    getLocation();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getSubject:1.0
+    //
+    /***/
+
+    String
+    getSubject();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getDescription:1.0
+    //
+    /***/
+
+    String
+    getDescription();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getFromUser:1.0
+    //
+    /***/
+
+    User
+    getFromUser();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getAllInvited:1.0
+    //
+    /***/
+
+    Invited[]
+    getAllInvited();
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invitation/getAllNotifiedInv:1.0
+    //
+    /***/
+
+    Invited[]
+    getAllNotifiedInv();
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0

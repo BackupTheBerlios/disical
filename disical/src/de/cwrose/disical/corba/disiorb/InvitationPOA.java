@@ -54,16 +54,21 @@ public abstract class InvitationPOA
         {
             "delete",
             "destroy",
+            "getAllInvited",
+            "getAllNotifiedInv",
+            "getDescription",
+            "getEndTime",
             "getFromUser",
-            "getIndex",
-            "getInvitationDate",
-            "getToUser",
+            "getLocation",
+            "getStartTime",
+            "getSubject",
             "persist",
+            "setDescription",
+            "setEndTime",
             "setFromUser",
-            "setIndex",
-            "setInvitation",
-            "setInvitationDate",
-            "setToUser"
+            "setLocation",
+            "setStartTime",
+            "setSubject"
         };
 
         int _ob_left = 0;
@@ -93,35 +98,50 @@ public abstract class InvitationPOA
         case 1: // destroy
             return _OB_op_destroy(in, handler);
 
-        case 2: // getFromUser
+        case 2: // getAllInvited
+            return _OB_op_getAllInvited(in, handler);
+
+        case 3: // getAllNotifiedInv
+            return _OB_op_getAllNotifiedInv(in, handler);
+
+        case 4: // getDescription
+            return _OB_op_getDescription(in, handler);
+
+        case 5: // getEndTime
+            return _OB_op_getEndTime(in, handler);
+
+        case 6: // getFromUser
             return _OB_op_getFromUser(in, handler);
 
-        case 3: // getIndex
-            return _OB_op_getIndex(in, handler);
+        case 7: // getLocation
+            return _OB_op_getLocation(in, handler);
 
-        case 4: // getInvitationDate
-            return _OB_op_getInvitationDate(in, handler);
+        case 8: // getStartTime
+            return _OB_op_getStartTime(in, handler);
 
-        case 5: // getToUser
-            return _OB_op_getToUser(in, handler);
+        case 9: // getSubject
+            return _OB_op_getSubject(in, handler);
 
-        case 6: // persist
+        case 10: // persist
             return _OB_op_persist(in, handler);
 
-        case 7: // setFromUser
+        case 11: // setDescription
+            return _OB_op_setDescription(in, handler);
+
+        case 12: // setEndTime
+            return _OB_op_setEndTime(in, handler);
+
+        case 13: // setFromUser
             return _OB_op_setFromUser(in, handler);
 
-        case 8: // setIndex
-            return _OB_op_setIndex(in, handler);
+        case 14: // setLocation
+            return _OB_op_setLocation(in, handler);
 
-        case 9: // setInvitation
-            return _OB_op_setInvitation(in, handler);
+        case 15: // setStartTime
+            return _OB_op_setStartTime(in, handler);
 
-        case 10: // setInvitationDate
-            return _OB_op_setInvitationDate(in, handler);
-
-        case 11: // setToUser
-            return _OB_op_setToUser(in, handler);
+        case 16: // setSubject
+            return _OB_op_setSubject(in, handler);
         }
 
         throw new org.omg.CORBA.BAD_OPERATION();
@@ -156,6 +176,50 @@ public abstract class InvitationPOA
     }
 
     private org.omg.CORBA.portable.OutputStream
+    _OB_op_getAllInvited(org.omg.CORBA.portable.InputStream in,
+                         org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        Invited[] _ob_r = getAllInvited();
+        out = handler.createReply();
+        seqInvitedHelper.write(out, _ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getAllNotifiedInv(org.omg.CORBA.portable.InputStream in,
+                             org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        Invited[] _ob_r = getAllNotifiedInv();
+        out = handler.createReply();
+        seqInvitedHelper.write(out, _ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getDescription(org.omg.CORBA.portable.InputStream in,
+                          org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_r = getDescription();
+        out = handler.createReply();
+        out.write_string(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_getEndTime(org.omg.CORBA.portable.InputStream in,
+                      org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        long _ob_r = getEndTime();
+        out = handler.createReply();
+        out.write_longlong(_ob_r);
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
     _OB_op_getFromUser(org.omg.CORBA.portable.InputStream in,
                        org.omg.CORBA.portable.ResponseHandler handler)
     {
@@ -167,35 +231,35 @@ public abstract class InvitationPOA
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_getIndex(org.omg.CORBA.portable.InputStream in,
-                    org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_getLocation(org.omg.CORBA.portable.InputStream in,
+                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        int _ob_r = getIndex();
+        String _ob_r = getLocation();
         out = handler.createReply();
-        out.write_long(_ob_r);
+        out.write_string(_ob_r);
         return out;
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_getInvitationDate(org.omg.CORBA.portable.InputStream in,
-                             org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_getStartTime(org.omg.CORBA.portable.InputStream in,
+                        org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        Date _ob_r = getInvitationDate();
+        long _ob_r = getStartTime();
         out = handler.createReply();
-        DateHelper.write(out, _ob_r);
+        out.write_longlong(_ob_r);
         return out;
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_getToUser(org.omg.CORBA.portable.InputStream in,
-                     org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_getSubject(org.omg.CORBA.portable.InputStream in,
+                      org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        User[] _ob_r = getToUser();
+        String _ob_r = getSubject();
         out = handler.createReply();
-        seqUserHelper.write(out, _ob_r);
+        out.write_string(_ob_r);
         return out;
     }
 
@@ -211,6 +275,28 @@ public abstract class InvitationPOA
     }
 
     private org.omg.CORBA.portable.OutputStream
+    _OB_op_setDescription(org.omg.CORBA.portable.InputStream in,
+                          org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        String _ob_a0 = in.read_string();
+        setDescription(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
+    _OB_op_setEndTime(org.omg.CORBA.portable.InputStream in,
+                      org.omg.CORBA.portable.ResponseHandler handler)
+    {
+        org.omg.CORBA.portable.OutputStream out = null;
+        long _ob_a0 = in.read_longlong();
+        setEndTime(_ob_a0);
+        out = handler.createReply();
+        return out;
+    }
+
+    private org.omg.CORBA.portable.OutputStream
     _OB_op_setFromUser(org.omg.CORBA.portable.InputStream in,
                        org.omg.CORBA.portable.ResponseHandler handler)
     {
@@ -222,54 +308,34 @@ public abstract class InvitationPOA
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_setIndex(org.omg.CORBA.portable.InputStream in,
-                    org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_setLocation(org.omg.CORBA.portable.InputStream in,
+                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        int _ob_a0 = in.read_long();
-        setIndex(_ob_a0);
+        String _ob_a0 = in.read_string();
+        setLocation(_ob_a0);
         out = handler.createReply();
         return out;
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_setInvitation(org.omg.CORBA.portable.InputStream in,
-                         org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_setStartTime(org.omg.CORBA.portable.InputStream in,
+                        org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        try
-        {
-            User[] _ob_a0 = seqUserHelper.read(in);
-            Date _ob_a1 = DateHelper.read(in);
-            setInvitation(_ob_a0, _ob_a1);
-            out = handler.createReply();
-        }
-        catch(jdoPersistenceEx _ob_ex)
-        {
-            out = handler.createExceptionReply();
-            jdoPersistenceExHelper.write(out, _ob_ex);
-        }
-        return out;
-    }
-
-    private org.omg.CORBA.portable.OutputStream
-    _OB_op_setInvitationDate(org.omg.CORBA.portable.InputStream in,
-                             org.omg.CORBA.portable.ResponseHandler handler)
-    {
-        org.omg.CORBA.portable.OutputStream out = null;
-        Date _ob_a0 = DateHelper.read(in);
-        setInvitationDate(_ob_a0);
+        long _ob_a0 = in.read_longlong();
+        setStartTime(_ob_a0);
         out = handler.createReply();
         return out;
     }
 
     private org.omg.CORBA.portable.OutputStream
-    _OB_op_setToUser(org.omg.CORBA.portable.InputStream in,
-                     org.omg.CORBA.portable.ResponseHandler handler)
+    _OB_op_setSubject(org.omg.CORBA.portable.InputStream in,
+                      org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        User[] _ob_a0 = seqUserHelper.read(in);
-        setToUser(_ob_a0);
+        String _ob_a0 = in.read_string();
+        setSubject(_ob_a0);
         out = handler.createReply();
         return out;
     }
