@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.6 2002/01/31 03:08:04 deafman Exp $
+// $Id: DisicalInvited.java,v 1.7 2002/01/31 04:46:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,7 +7,7 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
@@ -91,17 +91,40 @@ public class DisicalInvited extends InvitedPOA {
 	}
 
 	public void accept()
-		throws jdoPersistenceEx {
-
-		this.status = 2;
-		this.persist();
+		throws jdoPersistenceEx 
+	{
+		try	{
+		    DbInvitedbubble = getBubble();				
+			if (bubble.getState () != 2) {
+				bubble.setState (2);
+				Invitation i = bubble.getInvitation().getInvitation();
+				bubble.setDate 
+					(DbDate.createDate 
+					 (this.getUser(), 
+					  i.getStartTime (), i.geEndTime (), 
+					  i.getSubject (), i.getLocation (), i.getDescription ()));
+				this.persist ();
+			}
+		}
+		catch (PersistenceException e) {
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 	}
 
 	public void reject()
 		throws jdoPersistenceEx {
-
-		this.status = 3;
-		this.persist();
+		try	{
+			DbInvited bubble = getBubble().setDate();
+			if (bubble.getState () != 2) {
+				bubble.setState (2);
+				bubble.getDate ().delete ();
+				bubble.setDate (null);
+				this.persist ();
+			}
+		}
+		catch (PersistenceException e) {
+			throw new jdoPersistenceEx(e.getMessage());
+		}
 	}
 
 	public short status() {

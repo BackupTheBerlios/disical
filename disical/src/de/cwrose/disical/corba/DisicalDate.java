@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.16 2002/01/30 21:18:10 deafman Exp $
+// $Id: DisicalDate.java,v 1.17 2002/01/31 04:46:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -17,7 +17,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
@@ -90,7 +90,7 @@ public class DisicalDate extends DatePOA {
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();
-			//getBubble().delete();
+			getBubble().delete (db);
 			db.commit();
 		}
 		catch (PersistenceException e) {

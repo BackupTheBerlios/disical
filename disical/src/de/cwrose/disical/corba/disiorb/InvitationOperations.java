@@ -27,7 +27,8 @@ public interface InvitationOperations
     /***/
 
     void
-    invite(User usr);
+    invite(User usr)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/setStartTime:1.0

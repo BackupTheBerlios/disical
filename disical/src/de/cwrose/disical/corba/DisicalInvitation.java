@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.12 2002/01/31 00:27:58 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.13 2002/01/31 04:46:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -77,6 +77,22 @@ public class DisicalInvitation extends InvitationPOA {
 		return true;
 	}
 
+	public void invite (User u)
+		throws jdoPersistenceEx
+	{
+		try	{
+			DbInvitation inv = getBubble();
+			DbInvited di = inv.createToUser ();
+			Invited i = di.getInvited ();
+			di.setInvitation (bubble);
+			inv.addToUser (di);
+			i.persist ();
+		}
+		catch (PersistenceException e) {
+			throw new jdoPersistenceEx(e.getMessage());
+		}
+	}
+
 	public Invited[] getAllInvited()
 		throws jdoPersistenceEx {
 
@@ -101,10 +117,7 @@ public class DisicalInvitation extends InvitationPOA {
 		Invited[] invitedList = null;
 		
 		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//
-			db.commit();
+			return getBubble().getAllNotifiedInv ();
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());

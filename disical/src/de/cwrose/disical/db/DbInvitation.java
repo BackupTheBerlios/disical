@@ -180,7 +180,7 @@ public final class DbInvitation extends DbPersistable
 		return (Invited [])getToUsers().toArray();
 	}
 
-	public  Date[] getAllNotifiedInv ()
+	public  Invited[] getAllNotifiedInv ()
 		throws org.exolab.castor.jdo.PersistenceException
 	{
 		Database  db = DbManager.getConnection ();
@@ -198,7 +198,7 @@ public final class DbInvitation extends DbPersistable
 		db.begin();
 		QueryResults res = oql.execute();
 		db.commit();
-		return (Date [])DbDate.enum2array(res);
+		return (Invited [])DbInvited.enum2array(res);
 	}
 
 	protected final static Invitation [] enum2array (Enumeration enum)

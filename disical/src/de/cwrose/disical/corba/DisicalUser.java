@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.20 2002/01/31 03:49:26 deafman Exp $
+// $Id: DisicalUser.java,v 1.21 2002/01/31 04:46:23 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -22,7 +22,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -205,7 +205,7 @@ public class DisicalUser extends UserPOA {
 		throws jdoPersistenceEx
 	{
 		try {
-			return DbUser.listAllUsers ();
+			return getBubble().listAllUsers ();
 		}
 		catch (PersistenceException e) {
 			throw new jdoPersistenceEx(e.getMessage());
