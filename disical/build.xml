@@ -1,8 +1,7 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.26 2002/01/27 18:08:19 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.27 2002/01/27 21:22:30 LuckyStarr Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
-
 
 
 
@@ -100,15 +99,22 @@
 
 
 <!-- *** 'ui' ************************************************************* -->
-<target name="ui" depends="init,clean_jar">
+<target name="ui" depends="init,clean_jar,ui_dependency">
   <javac srcdir="${dir.src}" destdir="${dir.out}" 
          debug="${build.debug}" optimize="${build.optimize}">
 	 <classpath>
 	   <pathelement path="${java.class.path}" />
+           <pathelement path="lib/CalendarBean.jar"/>
     </classpath>
     <include name="${dir.ns}/ui/**/*.java" />
   </javac>
 </target>
+
+<target name="ui_dependency" >
+    <javac srcdir="src/org" destdir="${dir.out}">
+    </javac>
+</target>
+
 
 <target name="clean_ui" depends="init">
   <delete dir="${dir.out}/${dir.ns}/ui" />
