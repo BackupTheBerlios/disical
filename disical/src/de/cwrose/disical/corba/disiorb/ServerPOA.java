@@ -96,13 +96,21 @@ public abstract class ServerPOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        String _ob_a1 = in.read_string();
-        String _ob_a2 = in.read_string();
-        String _ob_a3 = in.read_string();
-        User _ob_r = createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
-        out = handler.createReply();
-        UserHelper.write(out, _ob_r);
+        try
+        {
+            String _ob_a0 = in.read_string();
+            String _ob_a1 = in.read_string();
+            String _ob_a2 = in.read_string();
+            String _ob_a3 = in.read_string();
+            User _ob_r = createUser(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+            out = handler.createReply();
+            UserHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

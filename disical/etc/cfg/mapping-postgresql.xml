@@ -43,11 +43,11 @@
   	</field>
 
 	<field name="startTime" type="java.sql.Timestamp" >
-	    <sql name="startTime" type="timestamp" />
+	    <sql name="starttime" type="timestamp" />
     </field>
 
 	<field name="endTime" type="java.sql.Timestamp" >
-	    <sql name="stopTime" type="timestamp" />
+	    <sql name="stoptime" type="timestamp" />
     </field>
 
   	<field name="location" type="string">

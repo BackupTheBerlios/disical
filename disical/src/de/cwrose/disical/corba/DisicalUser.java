@@ -19,8 +19,12 @@ import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import de.cwrose.disical.db.DbUser;
+import de.cwrose.disical.db.DbDate;
 import de.cwrose.disical.db.DbManager;
 import org.exolab.castor.jdo.Database;
+import org.exolab.castor.jdo.PersistenceException;
+import java.sql.Timestamp;
+
 
 public class DisicalUser extends UserPOA {
 
@@ -39,6 +43,8 @@ public class DisicalUser extends UserPOA {
 	private DbUser bubble = null;
 
 	public void setBubble (DbUser bubble) {
+		if (this.bubble != null)
+			throw new IllegalStateException ("Don't burst my bubble, fool!");
 		this.bubble = bubble;
 	}
 
@@ -119,20 +125,17 @@ public class DisicalUser extends UserPOA {
 		// dbDeleteUser(newUserImpl);
 	}
 
-	public Date createDate(long start, long end, String location, String subject) {
+	public Date createDate
+		(long start, long end, String location, String subject) 
+		throws jdoPersistenceEx {
 
-		DisicalDate newDateImpl = new DisicalDate();
-		
-		newDateImpl.setStartTime(start);
-		newDateImpl.setEndTime(end);
-		newDateImpl.setLocation(location);
-		newDateImpl.setSubject(subject);
-
-		//dbCreateDate(newDateImpl);
-		Date newDate = newDateImpl._this(DisicalSrv.orb);
-
-		return newDate;
-
+		try {
+			return DbDate.createDate(getBubble().getUser(), new Timestamp(start), new Timestamp (end), subject, location);
+		}
+		catch (PersistenceException e) {
+			System.err.println(e.getMessage());
+			throw new jdoPersistenceEx("jdo-PersistenceEx: "+e.getMessage());
+		}
 	}
 
 	public Date selectDate(int index) {

@@ -1,4 +1,4 @@
-// $Id: DisicalDate.java,v 1.11 2002/01/28 11:53:55 deafman Exp $
+// $Id: DisicalDate.java,v 1.12 2002/01/28 16:56:37 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -15,13 +15,15 @@ package de.cwrose.disical.corba;
  * destroy (void)
  *
  * @author deafman
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import de.cwrose.disical.db.DbDate;
+import org.exolab.castor.jdo.Database;
+import de.cwrose.disical.db.DbManager;
 
 public class DisicalDate extends DatePOA {
 
@@ -40,11 +42,37 @@ public class DisicalDate extends DatePOA {
 	private DbDate bubble = null;
 
 	public void setBubble (DbDate bubble) {
+		if (this.bubble != null)
+			throw new IllegalStateException ("Don't burst my bubble, fool!");
 		this.bubble = bubble;
 	}
 
 	public DbDate getBubble () {
 		return this.bubble;
+	}
+
+	public void do_persist(Database db) 
+		throws org.exolab.castor.jdo.PersistenceException
+	{
+		bubble.persist (db);
+	}
+
+	public boolean persist ()
+	{
+		try 
+		{ 
+			Database db = DbManager.getConnection ();
+			db.begin ();
+			this.do_persist (db);
+			db.commit ();
+		}
+		catch (org.exolab.castor.jdo.PersistenceException e)
+		{
+			System.err.println (e.getMessage ());
+			e.printStackTrace (System.err);
+			return false;
+		}
+		return true;
 	}
 
 	public void setStartTime(long Time) {
@@ -95,20 +123,6 @@ public class DisicalDate extends DatePOA {
 		return	_index;
 	}
 
-	public boolean persist() {
-		DisicalDate dateImpl = new DisicalDate();
-
-		dateImpl.setStartTime(startTime);
-		dateImpl.setEndTime(endTime);
-		dateImpl.setLocation(location);
-		dateImpl.setSubject(subject);
-
-		Date date = dateImpl._this(DisicalSrv.orb);
-		boolean success = true; //dbPersistDate(date);
-
-		return success;
-	}
-	
 	public void deleteDate() {
 		DisicalDate dateImpl = new DisicalDate();
 

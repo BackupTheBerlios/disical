@@ -6,20 +6,20 @@ import de.cwrose.disical.corba.DisicalDate;
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
-
+import java.sql.Timestamp;
 
 public final class DbDate extends DbPersistable
 {
 	private Date skel;
-	private DbUser dbLogin;
 
 	public DbDate ()
+	throws PersistenceException
 	{
 		super ();
 		DisicalDate stub = new DisicalDate ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
-		dbLogin = null;
+		putBubble (skel, this);
 	}
 
 	public Date getDate ()
@@ -29,18 +29,35 @@ public final class DbDate extends DbPersistable
 
 
 
+	public static Date createDate(User u,  Timestamp start, Timestamp stop, 
+			String subject, String location)
+		throws PersistenceException
+	{
+		DbDate dd = new DbDate ();
+		dd.setSubject (subject);
+		dd.setLocation (location);
+		dd.setStartTime (start);
+		dd.setEndTime (stop);
+		dd.setLogin ((DbUser)lookupBubble(u));
+
+		Date d = dd.getDate ();
+		d.persist ();
+		return d;
+	}
+
+
+
 
 	/* Property: Login */
 
-	public DbUser getLogin () {
-		return dbLogin;
+	public DbUser getLogin () 
+	throws PersistenceException
+    {
+		return (DbUser)lookupBubble(skel.getLogin ());
 	}
 
 	public void setLogin (DbUser login) {
-		/* Wir haben ein Problem... */
-
-		dbLogin = login;
-		skel.setLogin (dbLogin.getUser ());
+		skel.setLogin (login.getUser ());
 	}
 
 

@@ -148,13 +148,21 @@ public abstract class UserPOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        long _ob_a0 = in.read_longlong();
-        long _ob_a1 = in.read_longlong();
-        String _ob_a2 = in.read_string();
-        String _ob_a3 = in.read_string();
-        Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
-        out = handler.createReply();
-        DateHelper.write(out, _ob_r);
+        try
+        {
+            long _ob_a0 = in.read_longlong();
+            long _ob_a1 = in.read_longlong();
+            String _ob_a2 = in.read_string();
+            String _ob_a3 = in.read_string();
+            Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+            out = handler.createReply();
+            DateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -194,9 +202,17 @@ public abstract class UserPOA
                           org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        Invitation[] _ob_r = getInvitations();
-        out = handler.createReply();
-        seqInvitationHelper.write(out, _ob_r);
+        try
+        {
+            Invitation[] _ob_r = getInvitations();
+            out = handler.createReply();
+            seqInvitationHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -227,10 +243,18 @@ public abstract class UserPOA
                                org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        Date[] _ob_r = listDatesByLocation(_ob_a0);
-        out = handler.createReply();
-        seqDateHelper.write(out, _ob_r);
+        try
+        {
+            String _ob_a0 = in.read_string();
+            Date[] _ob_r = listDatesByLocation(_ob_a0);
+            out = handler.createReply();
+            seqDateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -239,10 +263,18 @@ public abstract class UserPOA
                               org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        String _ob_a0 = in.read_string();
-        Date[] _ob_r = listDatesBySubject(_ob_a0);
-        out = handler.createReply();
-        seqDateHelper.write(out, _ob_r);
+        try
+        {
+            String _ob_a0 = in.read_string();
+            Date[] _ob_r = listDatesBySubject(_ob_a0);
+            out = handler.createReply();
+            seqDateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -251,11 +283,19 @@ public abstract class UserPOA
                            org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        long _ob_a0 = in.read_longlong();
-        long _ob_a1 = in.read_longlong();
-        Date[] _ob_r = listDatesByTime(_ob_a0, _ob_a1);
-        out = handler.createReply();
-        seqDateHelper.write(out, _ob_r);
+        try
+        {
+            long _ob_a0 = in.read_longlong();
+            long _ob_a1 = in.read_longlong();
+            Date[] _ob_r = listDatesByTime(_ob_a0, _ob_a1);
+            out = handler.createReply();
+            seqDateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -275,10 +315,18 @@ public abstract class UserPOA
                       org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        int _ob_a0 = in.read_long();
-        Date _ob_r = selectDate(_ob_a0);
-        out = handler.createReply();
-        DateHelper.write(out, _ob_r);
+        try
+        {
+            int _ob_a0 = in.read_long();
+            Date _ob_r = selectDate(_ob_a0);
+            out = handler.createReply();
+            DateHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

@@ -30,7 +30,8 @@ public interface ServerOperations
     createUser(String login,
                String name,
                String pwd,
-               String email);
+               String email)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Server/login:1.0

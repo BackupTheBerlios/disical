@@ -14,12 +14,14 @@ public final class DbUser extends DbPersistable
 	private boolean isLoginUser;
 
 	public DbUser ()
+	throws PersistenceException
 	{
 		super ();
 		DisicalUser stub = new DisicalUser ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
 		this.isLoginUser = false;
+		putBubble (skel, this);
 	}
 
 	public User getUser ()
@@ -63,11 +65,13 @@ public final class DbUser extends DbPersistable
 				("You are already logged in. Don't do that!");
 		bubble.beLoginUser ();
 		db.commit();
+		putBubble (bubble.getUser (), bubble);
 		return bubble.getUser ();
 	}
 
 	public static User createUser (String login, String pwd, 
 								   String name, String email)
+		throws PersistenceException
 	{
 		DbUser bubble = new DbUser ();
 		User usr = bubble.getUser ();

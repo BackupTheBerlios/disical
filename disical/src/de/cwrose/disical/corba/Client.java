@@ -10,6 +10,7 @@ public class Client {
 
 		DisicalCli client = new DisicalCli(args);
 
+		try {
 		Server server = client.getServer();
 		User myuser = server.createUser("carsten", "Carsten Rose", "hello", "carsten@cwrose.de");
 
@@ -19,8 +20,13 @@ public class Client {
 
 		DisicalCli newClient = new DisicalCli(args);	
 		Server newServer = newClient.getServer();
-		try {
-			newUser = server.login("carsten", "hello");
+		newUser = server.login("carsten", "hello");
+		System.out.println(newUser.getLogin() + " " + newUser.getName() + " " + newUser.getEmail());
+
+		long fstTime = System.currentTimeMillis();
+
+		Date myDate = newUser.createDate(fstTime, fstTime*10, "Mensa", "ESSEN!!!");
+		//newDate = myDate.getDate
 		}
 		catch (wrongPwEx e) {
 			System.out.println(e.toString());
@@ -29,6 +35,7 @@ public class Client {
 			System.out.println(e.toString());
 			e.printStackTrace(System.out);
 		}
-		System.out.println(newUser.getLogin() + " " + newUser.getName() + " " + newUser.getEmail());
+
+
 	}
 }	

@@ -1,6 +1,6 @@
 <!-- DiSiCal Main Build Script -->
 <!-- Currently maintained by stepn -->
-<!-- $Id: build.xml,v 1.28 2002/01/28 01:33:07 stepn Exp $ -->
+<!-- $Id: build.xml,v 1.29 2002/01/28 16:56:37 deafman Exp $ -->
 <project name="DiSiCal" default="all" basedir="./">
 
 
@@ -265,13 +265,14 @@
 	      <pathelement location="${dir.lib}/${mod.velocity}" />
 	      <pathelement location="${dir.lib}/${mod.castor.xml}" />
         </classpath>
-     <include name="${dir.ns}/db/**/*.java" />
+     <include name="${dir.ns}/db/*.java" />
      <include name="${dir.ns}/corba/**/*.java" />
   </javac>
 </target>
 
 <target name="clean_corba" depends="init">
   <delete dir="${dir.out}/${dir.ns}/corba" />
+  <delete dir="${dir.out}/${dir.ns}/db" />
 </target>
 
 

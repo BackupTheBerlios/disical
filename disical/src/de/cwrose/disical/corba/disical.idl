@@ -29,7 +29,8 @@ module de {
 		User createUser(in string login, 
 				in string name, 
 				in string pwd,
-				in string email);
+				in string email)
+			raises (jdoPersistenceEx);
 		
 		User login(in string login, 
 			in string pwd)
@@ -62,19 +63,25 @@ module de {
 		Date createDate(in long long start, 
 				in long long end, 
 				in string location, 
-				in string subject);
+				in string subject)
+				raises (jdoPersistenceEx);
 
 		/* ok, the index might be of different type (typedef dbkey..) :-) */
-		Date selectDate(in long index);
+		Date selectDate(in long index)
+				raises (jdoPersistenceEx);
 
 		seqDate listDatesByTime(in long long start,
-									in long long end);
+									in long long end)
+				raises (jdoPersistenceEx);
 
-		seqDate listDatesByLocation(in string location);
+		seqDate listDatesByLocation(in string location)
+				raises (jdoPersistenceEx);
 
-		seqDate listDatesBySubject(in string subject);
+		seqDate listDatesBySubject(in string subject)
+				raises (jdoPersistenceEx);
 
-		seqInvitation getInvitations();
+		seqInvitation getInvitations()
+				raises (jdoPersistenceEx);
 
 		/* destroy the corba-object in the poa */
 		void destroy();

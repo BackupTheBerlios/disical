@@ -104,7 +104,8 @@ public interface UserOperations
     createDate(long start,
                long end,
                String location,
-               String subject);
+               String subject)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/selectDate:1.0
@@ -112,7 +113,8 @@ public interface UserOperations
     /***/
 
     Date
-    selectDate(int index);
+    selectDate(int index)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByTime:1.0
@@ -121,7 +123,8 @@ public interface UserOperations
 
     Date[]
     listDatesByTime(long start,
-                    long end);
+                    long end)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesByLocation:1.0
@@ -129,7 +132,8 @@ public interface UserOperations
     /***/
 
     Date[]
-    listDatesByLocation(String location);
+    listDatesByLocation(String location)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/listDatesBySubject:1.0
@@ -137,7 +141,8 @@ public interface UserOperations
     /***/
 
     Date[]
-    listDatesBySubject(String subject);
+    listDatesBySubject(String subject)
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/getInvitations:1.0
@@ -145,7 +150,8 @@ public interface UserOperations
     /***/
 
     Invitation[]
-    getInvitations();
+    getInvitations()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/User/destroy:1.0
