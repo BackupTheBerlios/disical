@@ -38,7 +38,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public Invitation
     getInvitation()
-        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -62,8 +61,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
-                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
-                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -94,7 +91,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public User
     getUser()
-        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -118,8 +114,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
-                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
-                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -150,7 +144,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public Date
     getDate()
-        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -174,8 +167,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
-                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
-                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -318,7 +309,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
     //
     public short
     status()
-        throws jdoPersistenceEx
     {
         while(true)
         {
@@ -342,8 +332,6 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
                     final String _ob_id = _ob_aex.getId();
                     in = _ob_aex.getInputStream();
 
-                    if(_ob_id.equals(jdoPersistenceExHelper.id()))
-                        throw jdoPersistenceExHelper.read(in);
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
                 }
                 finally
@@ -360,6 +348,59 @@ public class _InvitedStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     return _ob_self.status();
+                }
+                finally
+                {
+                    _servant_postinvoke(_ob_so);
+                }
+            }
+        }
+    }
+
+    //
+    // IDL:de/cwrose/disical/corba/disiorb/Invited/persist:1.0
+    //
+    public boolean
+    persist()
+    {
+        while(true)
+        {
+            if(!this._is_local())
+            {
+                org.omg.CORBA.portable.OutputStream out = null;
+                org.omg.CORBA.portable.InputStream in = null;
+                try
+                {
+                    out = _request("persist", true);
+                    in = _invoke(out);
+                    boolean _ob_r = in.read_boolean();
+                    return _ob_r;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _ob_ex)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _ob_aex)
+                {
+                    final String _ob_id = _ob_aex.getId();
+                    in = _ob_aex.getInputStream();
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: " + _ob_id);
+                }
+                finally
+                {
+                    _releaseReply(in);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _ob_so = _servant_preinvoke("persist", _ob_opsClass);
+                if(_ob_so == null)
+                    continue;
+                InvitedOperations _ob_self = (InvitedOperations)_ob_so.servant;
+                try
+                {
+                    return _ob_self.persist();
                 }
                 finally
                 {

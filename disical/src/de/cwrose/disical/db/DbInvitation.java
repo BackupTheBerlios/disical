@@ -2,6 +2,8 @@ package de.cwrose.disical.db;
 
 import de.cwrose.disical.corba.disiorb.Date;
 import de.cwrose.disical.corba.disiorb.User;
+import de.cwrose.disical.corba.disiorb.Invitation;
+import de.cwrose.disical.corba.disiorb.Invited;
 import de.cwrose.disical.corba.DisicalDate;
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.DisicalInvitation;
@@ -9,11 +11,14 @@ import de.cwrose.disical.corba.DisicalInvited;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
 import java.sql.Timestamp;
+import java.util.Vector;
 
 public final class DbInvitation extends DbPersistable
 {
 	private Invitation skel;
 	private DisicalInvitation stub;
+	private Vector toUsers = new Vector ();
+	private int index = 0;
 
 	public DbInvitation ()
 	throws PersistenceException
@@ -25,14 +30,14 @@ public final class DbInvitation extends DbPersistable
 		putBubble (skel, this);
 	}
 
-	public DbInvitation getInvitation ()
+	public Invitation getInvitation ()
 	{
 		return this.skel;
 	}
 
 
 
-	public static Date createInvitation(User u,  Timestamp start, 
+	public static Invitation createInvitation(User u,  Timestamp start, 
 	Timestamp stop, String subject, String location, String descr)
 		throws PersistenceException
 	{
@@ -43,11 +48,7 @@ public final class DbInvitation extends DbPersistable
 		di.setEndTime (stop);
 		di.setDescription (descr);
 
-		// Fill up external references
-		System.out.println (u.getLogin ());
-		di.setLogin ((DbUser)lookupBubble(u));
-
-		Invitation i = di.getDate ();
+		Invitation i = di.getInvitation ();
 		i.persist ();
 		di.growOld();
 		return i;
@@ -113,11 +114,11 @@ public final class DbInvitation extends DbPersistable
 	/* Property: Index */
 
 	public int getIndex () {
-		return skel.getIndex ();
+		return index;
 	}
 
 	public void setIndex (int index) {
-		skel.setIndex (index);
+		this.index = index;
 	}
 
 
@@ -145,5 +146,24 @@ public final class DbInvitation extends DbPersistable
 	public java.sql.Timestamp getEndTime ()
 	{
 		return new java.sql.Timestamp (skel.getEndTime ());
+	}
+
+
+	/* Property: toUsers */
+
+	public DbInvited createToUser ()
+		throws PersistenceException
+	{
+		return new DbInvited ();
+	}
+
+	public Vector getToUsers ()
+	{
+		return this.toUsers;
+	}
+	
+	public void addToUser (DbInvited inv)
+	{
+		toUsers.addElement (inv);
 	}
 }

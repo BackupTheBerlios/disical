@@ -1,4 +1,4 @@
-// $Id: DisicalInvited.java,v 1.4 2002/01/30 22:06:31 deafman Exp $
+// $Id: DisicalInvited.java,v 1.5 2002/01/30 22:39:50 stepn Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -7,12 +7,13 @@ package de.cwrose.disical.corba;
  * 
  *
  * @author deafman
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbDate;
 import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbInvited;
+import de.cwrose.disical.db.DbUser;
 import de.cwrose.disical.db.DbInvitation;
 
 import org.omg.CORBA.ORB;
@@ -106,6 +107,12 @@ public class DisicalInvited extends InvitedPOA {
 
 	public short status() {
 		return this.status;
+	}
+
+
+	public void setStatus(short s)
+	{
+		this.status = s;
 	}
 
 	public void setNotify(boolean notify) {

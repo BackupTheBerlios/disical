@@ -1,7 +1,11 @@
 package de.cwrose.disical.db;
 
 import de.cwrose.disical.corba.disiorb.User;
+import de.cwrose.disical.corba.disiorb.Date;
+import de.cwrose.disical.corba.disiorb.Invited;
+import de.cwrose.disical.corba.disiorb.Invitation;
 import de.cwrose.disical.corba.DisicalUser;
+import de.cwrose.disical.corba.DisicalInvited;
 import de.cwrose.disical.corba.DisicalSrv;
 import org.exolab.castor.jdo.*;
 
@@ -31,17 +35,20 @@ public final class DbInvited extends DbPersistable
 		return this.stub;
 	}
 
-	public static User createInvited (Invitation i, User u)
+	public static Invited createInvited (Invitation i, User u)
 
 		throws PersistenceException
 	{
 		DbInvited bubble = new DbInvited ();
 		DisicalInvited inv = bubble.getDisicalInvited ();
 		inv.setInvitation (i);
-		inv.setFromUser (u);
+		inv.setUser (u);
+		
+		Invited ret = bubble.getInvited ();
+		ret.persist ();
+
+		return ret;
     }
-
-
 
 	/* Property: User */
 
@@ -66,7 +73,7 @@ public final class DbInvited extends DbPersistable
 	}
 
 	public void setInvitation (DbInvitation inv) {
-		stub.setInvitation (login.getUser ());
+		stub.setInvitation (inv.getInvitation ());
 	}
 
 
@@ -80,7 +87,7 @@ public final class DbInvited extends DbPersistable
 	}
 
 	public void setDate (DbDate date) {
-		stub.setDate (login.getDate ());
+		stub.setDate (date.getDate ());
 	}
 
 
@@ -92,10 +99,10 @@ public final class DbInvited extends DbPersistable
 		return skel.status ();
 	}
 
-	public void setState (short i)
+	public void setState (short s)
 						 
 	{
-		stub.setState (s);
+		stub.setStatus (s);
 	}
 
 
