@@ -124,25 +124,26 @@ public final class DbInvited extends DbPersistable
 		this.index = index;
 	}
 
-
-
-
-	protected final static Invited [] enum2array (Enumeration enum)
-		throws EmptySeqException
+	protected final static Invited [] qres2array (QueryResults res)
+		throws EmptySeqException, PersistenceException
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
+		if (!res.hasMore ())
 			throw new EmptySeqException ("Invited");
+		else
+			do
+				v.addElement (res.next ());
+			while (res.hasMore ());
 
-		while (enum.hasMoreElements ())
+		Invited [] ret = new Invited [v.size()];
+		Enumeration enum = v.elements ();
+		for (int i=0;  i<ret.length; i++)
 			{
-				DbInvited o = (DbInvited)enum.nextElement ();
-				o.growOld ();
-				v.addElement (o.getInvitedSkel ());
+				DbInvited elem = (DbInvited) enum.nextElement ();
+				elem.growOld ();
+				ret [i] = elem.getInvitedSkel ();
 			}
-
-		return (Invited [])v.toArray ();
+		return ret;
 	}
 }
-

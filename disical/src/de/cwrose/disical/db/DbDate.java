@@ -151,22 +151,26 @@ public final class DbDate extends DbPersistable
 	}
 
 
-	protected final static Date [] enum2array (Enumeration enum)
-		throws EmptySeqException 
+	protected final static Date [] qres2array (QueryResults res)
+		throws EmptySeqException, PersistenceException 
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
+		if (!res.hasMore ())
 			throw new EmptySeqException ("Date");
+		else
+			do
+				v.addElement (res.next ());
+			while (res.hasMore ());
 
-		for (;enum.hasMoreElements ();)
+		Date [] ret = new Date [v.size()];
+		Enumeration enum = v.elements ();
+		for (int i=0;  i<ret.length; i++)
 			{
-				DbDate o = (DbDate)enum.nextElement ();
-				o.growOld ();
-				v.addElement (o.getDateSkel());
+				DbDate elem = (DbDate) enum.nextElement ();
+				elem.growOld ();
+				ret [i] = elem.getDateSkel ();
 			}
-
-	   Object [] ret = v.toArray ();
-	   return (Date [])ret;
+		return ret;
 	}
 }

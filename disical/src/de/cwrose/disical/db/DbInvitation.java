@@ -176,8 +176,9 @@ public final class DbInvitation extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		Invited [] ret = (Invited []) DbInvited.qres2array(res);
 		db.commit();
-		return (Invited [])DbInvited.enum2array(res);
+		return ret;
 	}
 
 	public  Invited[] getAllNotifiedInv ()
@@ -197,8 +198,9 @@ public final class DbInvitation extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		Invited [] ret = (Invited []) DbInvited.qres2array(res);
 		db.commit();
-		return (Invited [])DbInvited.enum2array(res);
+		return ret;
 	}
 
 	public static Invitation lookupInvitation (int invId)
@@ -225,21 +227,26 @@ public final class DbInvitation extends DbPersistable
 		return bubble.getInvitationSkel ();
 	}
 
-	protected final static Invitation [] enum2array (Enumeration enum)
-		throws EmptySeqException
+	protected final static Invitation [] qres2array (QueryResults res)
+		throws EmptySeqException, PersistenceException
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
+		if (!res.hasMore ())
 			throw new EmptySeqException ("Invitation");
+		else
+			do
+				v.addElement (res.next ());
+			while (res.hasMore ());
 
-		while (enum.hasMoreElements ())
+		Invitation [] ret = new Invitation [v.size()];
+		Enumeration enum = v.elements ();
+		for (int i=0;  i<ret.length; i++)
 			{
-				DbInvitation o = (DbInvitation)enum.nextElement ();
-				o.growOld ();
-				v.addElement (o.getInvitationSkel ());
+				DbInvitation elem = (DbInvitation) enum.nextElement ();
+				elem.growOld ();
+				ret [i] = elem.getInvitationSkel ();
 			}
-
-		return (Invitation [])v.toArray ();
+		return ret;
 	}
 }

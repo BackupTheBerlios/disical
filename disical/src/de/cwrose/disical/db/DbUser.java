@@ -116,9 +116,10 @@ public final class DbUser extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
-		db.commit();
 
-		return (Date [])DbDate.enum2array(res);
+		Date [] ret = (Date [])DbDate.qres2array(res);
+		db.commit();
+		return ret;
 	}
 	
 	public  User[] listAllUsers ()
@@ -133,8 +134,9 @@ public final class DbUser extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		User [] ret = (User [])DbUser.qres2array(res);
 		db.commit();
-		return (User [])DbUser.enum2array(res);
+		return ret;
 	}
 
 	public  Date[] listDatesBySubject (String subject)
@@ -152,8 +154,9 @@ public final class DbUser extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		Date [] ret = (Date []) DbDate.qres2array(res);
 		db.commit();
-		return (Date [])DbDate.enum2array(res);
+		return ret;
 	}
 
 	public  Date[] listDatesByTime (Timestamp startTime, Timestamp stopTime)
@@ -163,9 +166,9 @@ public final class DbUser extends DbPersistable
 
 		// OQL 
 		OQLQuery oql = db.getOQLQuery 
-			("SELECT d FROM de.cwrose.disical.db.DbDate d WHERE d.login=$1"+
-			 "d.login=$1 and $2<=d.startTime  and d.stopTime<=$3"+
-			 "ORDER BY startTime ASC");
+			("SELECT d FROM de.cwrose.disical.db.DbDate d WHERE d.login=$1 "+
+			 "and $2<=d.startTime  and d.endTime<=$3 "+
+			 "ORDER BY d.startTime ASC");
 		oql.bind (getLogin());
 		oql.bind (startTime);
 		oql.bind (stopTime);
@@ -173,8 +176,9 @@ public final class DbUser extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		Date [] ret = (Date []) DbDate.qres2array(res);
 		db.commit();
-		return (Date [])DbDate.enum2array(res);
+		return ret;
 	}
 
 	public  Invitation[] listAllInvitations ()
@@ -189,8 +193,9 @@ public final class DbUser extends DbPersistable
 		// Get Results
 		db.begin();
 		QueryResults res = oql.execute();
+		Invitation [] ret = (Invitation [])DbInvitation.qres2array(res);
 		db.commit();
-		return (Invitation [])DbInvitation.enum2array(res);
+		return ret;
 	}
 
 	public static User createUser (String login, String pwd, 
@@ -257,20 +262,26 @@ public final class DbUser extends DbPersistable
 		getUserServant().setEmail (email);
 	}
 
-	protected final static User [] enum2array (Enumeration enum)
-		throws EmptySeqException
+	protected final static User [] qres2array (QueryResults res)
+		throws EmptySeqException, PersistenceException
 	{
 		Vector v = new Vector ();
 
-		if (!enum.hasMoreElements ())
+		if (!res.hasMore ())
 			throw new EmptySeqException ("User");
+		else
+			do
+				v.addElement (res.next ());
+			while (res.hasMore ());
 
-		for (; enum.hasMoreElements (); )
+		User [] ret = new User [v.size()];
+		Enumeration enum = v.elements ();
+		for (int i=0;  i<ret.length; i++)
 			{
-				DbUser o = (DbUser)enum.nextElement ();
-				o.growOld ();
-				v.addElement (o.getUserSkel ());
+				DbUser elem = (DbUser) enum.nextElement ();
+				elem.growOld ();
+				ret [i] = elem.getUserSkel ();
 			}
-		return (User [])v.toArray ();
+		return ret;
 	}
 }
