@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.9 2002/01/30 21:26:55 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.10 2002/01/30 22:06:31 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,12 +11,13 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
 import de.cwrose.disical.db.DbDate;
-//import de.cwrose.disical.db.DbInvitation;
+import de.cwrose.disical.db.DbInvitation;
+import de.cwrose.disical.db.DbInvited;
 
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
@@ -44,7 +45,7 @@ public class DisicalInvitation extends InvitationPOA {
 		this.bubble = bubble;
 	}
 
-	public DbDate getBubble () {
+	public DbInvitation getBubble () {
 		return this.bubble;
 	}
 

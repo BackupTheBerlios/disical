@@ -1,4 +1,4 @@
-// $Id: DisicalUser.java,v 1.17 2002/01/30 17:11:44 deafman Exp $
+// $Id: DisicalUser.java,v 1.18 2002/01/30 22:06:31 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -20,7 +20,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
@@ -142,12 +142,12 @@ public class DisicalUser extends UserPOA {
 		}
 	}
 
-	public Date createDate
-		(long start, long end, String location, String subject) 
+	public Date createDate (long start, long end, String location, 
+							String subject, String description)
 		throws jdoPersistenceEx {
 
 		try {
-			return DbDate.createDate(getBubble().getUser(), new Timestamp(start), new Timestamp (end), subject, location);
+			return DbDate.createDate(getBubble().getUser(), new Timestamp(start), new Timestamp (end), subject, location, description);
 		}
 		catch (PersistenceException e) {
 			System.err.println(e.getMessage());

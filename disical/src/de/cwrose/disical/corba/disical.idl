@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.18 2002/01/30 21:26:55 deafman Exp $
+// $Id: disical.idl,v 1.19 2002/01/30 22:06:31 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 module de {
   module cwrose {
@@ -65,7 +65,8 @@ module de {
 			Date createDate(in long long start, 
 							in long long end, 
 							in string location, 
-							in string subject)
+							in string subject,
+							in string description)
 			  raises (jdoPersistenceEx);
 			
 			seqDate listDatesByTime(in long long start,

@@ -150,7 +150,8 @@ public abstract class UserPOA
             long _ob_a1 = in.read_longlong();
             String _ob_a2 = in.read_string();
             String _ob_a3 = in.read_string();
-            Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+            String _ob_a4 = in.read_string();
+            Date _ob_r = createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3, _ob_a4);
             out = handler.createReply();
             DateHelper.write(out, _ob_r);
         }

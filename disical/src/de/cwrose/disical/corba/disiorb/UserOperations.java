@@ -105,7 +105,8 @@ public interface UserOperations
     createDate(long start,
                long end,
                String location,
-               String subject)
+               String subject,
+               String description)
         throws jdoPersistenceEx;
 
     //

@@ -529,7 +529,8 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
     createDate(long _ob_a0,
                long _ob_a1,
                String _ob_a2,
-               String _ob_a3)
+               String _ob_a3,
+               String _ob_a4)
         throws jdoPersistenceEx
     {
         while(true)
@@ -545,6 +546,7 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                     out.write_longlong(_ob_a1);
                     out.write_string(_ob_a2);
                     out.write_string(_ob_a3);
+                    out.write_string(_ob_a4);
                     in = _invoke(out);
                     Date _ob_r = DateHelper.read(in);
                     return _ob_r;
@@ -575,7 +577,7 @@ public class _UserStub extends org.omg.CORBA.portable.ObjectImpl
                 UserOperations _ob_self = (UserOperations)_ob_so.servant;
                 try
                 {
-                    return _ob_self.createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+                    return _ob_self.createDate(_ob_a0, _ob_a1, _ob_a2, _ob_a3, _ob_a4);
                 }
                 finally
                 {
