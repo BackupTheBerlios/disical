@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.8 2002/01/30 21:18:10 deafman Exp $
+// $Id: DisicalInvitation.java,v 1.9 2002/01/30 21:26:55 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -31,7 +31,7 @@ public class DisicalInvitation extends InvitationPOA {
 
 	private User fromuser;
 	private long startTime;
-	private long endUser;
+	private long endTime;
 	private String location;
 	private String subject;
 	private String description;
@@ -73,7 +73,7 @@ public class DisicalInvitation extends InvitationPOA {
 		return true;
 	}
 
-	public static Invited[] getAllInvited()
+	public Invited[] getAllInvited()
 		throws jdoPersistenceEx {
 
 		Invited[] invitedList = null;
@@ -93,7 +93,7 @@ public class DisicalInvitation extends InvitationPOA {
 		return invitedList;
 	}
 
-	public static Invited[] getAllNotifiedInv()
+	public Invited[] getAllNotifiedInv()
 		throws jdoPersistenceEx {
 
 		Invited[] invitedList = null;

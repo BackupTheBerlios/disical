@@ -1,9 +1,9 @@
-// $Id: disical.idl,v 1.17 2002/01/30 21:20:31 deafman Exp $
+// $Id: disical.idl,v 1.18 2002/01/30 21:26:55 deafman Exp $
 /*
  * Titel: disical.idl
  * Central Definitions for the CORBA-Objects (our CORBA-Interface...)
  * @author deafman
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 module de {
   module cwrose {
@@ -140,8 +140,10 @@ module de {
 			string getDescription();
 			User getFromUser();
 			
-			seqInvited getAllInvited();
-			seqInvited getAllNotifiedInv();
+			seqInvited getAllInvited()
+			  raises (jdoPersistenceEx);
+			seqInvited getAllNotifiedInv()
+			  raises (jdoPersistenceEx);
 
 			void delete()
 			  raises (jdoPersistenceEx);

@@ -180,9 +180,17 @@ public abstract class InvitationPOA
                          org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        Invited[] _ob_r = getAllInvited();
-        out = handler.createReply();
-        seqInvitedHelper.write(out, _ob_r);
+        try
+        {
+            Invited[] _ob_r = getAllInvited();
+            out = handler.createReply();
+            seqInvitedHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 
@@ -191,9 +199,17 @@ public abstract class InvitationPOA
                              org.omg.CORBA.portable.ResponseHandler handler)
     {
         org.omg.CORBA.portable.OutputStream out = null;
-        Invited[] _ob_r = getAllNotifiedInv();
-        out = handler.createReply();
-        seqInvitedHelper.write(out, _ob_r);
+        try
+        {
+            Invited[] _ob_r = getAllNotifiedInv();
+            out = handler.createReply();
+            seqInvitedHelper.write(out, _ob_r);
+        }
+        catch(jdoPersistenceEx _ob_ex)
+        {
+            out = handler.createExceptionReply();
+            jdoPersistenceExHelper.write(out, _ob_ex);
+        }
         return out;
     }
 

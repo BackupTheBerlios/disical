@@ -123,7 +123,8 @@ public interface InvitationOperations
     /***/
 
     Invited[]
-    getAllInvited();
+    getAllInvited()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/getAllNotifiedInv:1.0
@@ -131,7 +132,8 @@ public interface InvitationOperations
     /***/
 
     Invited[]
-    getAllNotifiedInv();
+    getAllNotifiedInv()
+        throws jdoPersistenceEx;
 
     //
     // IDL:de/cwrose/disical/corba/disiorb/Invitation/delete:1.0
