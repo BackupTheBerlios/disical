@@ -1,5 +1,19 @@
 package de.cwrose.disical.corba;
 
+/**
+ * DisicalUser ist the Implementation of the Object the User 
+ * has after logging in into the Server
+ * (set|get)Login (String)
+ * (set|get)Name (String);
+ * (set|get)Email (String);
+ * setPasswd (String oldPW, String newPW);
+ * persist();
+ * DeleteUser();
+ * disiorb.Date createDate 
+ * 		(long start, long end, String location, String subject);
+ * disiorb.Date selectDate(int index) ???
+ * disiorb.Date selectDateByTime
+ */
 import de.cwrose.disical.corba.*;
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;

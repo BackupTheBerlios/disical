@@ -1,5 +1,18 @@
+// $Id: DisicalServer.java,v 1.9 2002/01/28 11:53:55 deafman Exp $
 package de.cwrose.disical.corba;
 
+/**
+ * The DisicalServer is the Implementation of the first Object
+ * the ORB gives to the User - It is known by the CORBA NameServer
+ * as the disiorb.Server-Object
+ *
+ * User createUser(String login, String name, String pwd, String email);
+ * User login(String login, String pwd);
+ * void destroy();
+ *
+ * @author deafman
+ * @version $Revision: 1.9 $
+ */
 import de.cwrose.disical.corba.DisicalUser;
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.*;

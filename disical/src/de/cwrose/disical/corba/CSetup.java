@@ -1,5 +1,15 @@
+// $Id: CSetup.java,v 1.11 2002/01/28 11:53:55 deafman Exp $
 package de.cwrose.disical.corba;
 
+/**
+ * CORBA setup-class
+ * * initializes properties
+ * * starts ORB and POA
+ * * handles NameService
+ * 
+ * @author deafman
+ * @version $Revision: 1.11 $
+ */
 import de.cwrose.disical.corba.Exceptions.*;
 import de.cwrose.disical.util.*;
 

@@ -1,4 +1,22 @@
+// $Id: DisicalDate.java,v 1.11 2002/01/28 11:53:55 deafman Exp $
 package de.cwrose.disical.corba;
+
+/**
+ * CORBA Implementation for the Date-Object of the Calendar
+ * (set|get)StartTime (long)
+ * (set|get)EndTime (long)
+ * (set|get)Location (String)
+ * (set|get)Subject (String)
+ * (set|get)Login (String)
+ * (set|get)Index (int)
+ * persist (boolean)
+ * DeleteDate (this)
+ * changeDate (long, long, String, String)
+ * destroy (void)
+ *
+ * @author deafman
+ * @version $Revision: 1.11 $
+ */
 
 import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;

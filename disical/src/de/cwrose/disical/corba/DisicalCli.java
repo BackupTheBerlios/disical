@@ -1,3 +1,4 @@
+// $Id: DisicalCli.java,v 1.5 2002/01/28 11:53:55 deafman Exp $
 package de.cwrose.disical.corba;
 
 import de.cwrose.disical.corba.*;
