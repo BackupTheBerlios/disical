@@ -5,6 +5,8 @@ import de.cwrose.disical.corba.disiorb.*;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import de.cwrose.disical.db.DbUser;
+import de.cwrose.disical.db.DbManager;
+import org.exolab.castor.jdo.Database;
 
 public class DisicalUser extends UserPOA {
 
@@ -15,8 +17,8 @@ public class DisicalUser extends UserPOA {
 	private String name = null;
 	private String email = null;
 
-	private static  int dateLimit = 1000;
-	private static int inviteLimit = 100;
+	private static int dateLimit   = 1000;
+	private static int inviteLimit =  100;
 
 	/* Client doesnt see the bubble.. ooh */
 
@@ -30,9 +32,12 @@ public class DisicalUser extends UserPOA {
 		return this.bubble;
 	}
 
+	private boolean isLoginUser ()
+	{
+		return bubble.isLoginUser ();
+	}
 
-
-
+	
 	public void setLogin(String login) {
 		this.login = login;
 	}
@@ -65,8 +70,28 @@ public class DisicalUser extends UserPOA {
 		return bubble.getPassword ();
 	}
 
-	public boolean persist() {
-		return bubble.persist ();
+	public void do_persist(Database db) 
+		throws org.exolab.castor.jdo.PersistenceException
+	{
+		bubble.persist (db);
+	}
+
+	public boolean persist ()
+	{
+		try 
+		{ 
+			Database db = DbManager.getConnection ();
+			db.begin ();
+			this.do_persist (db);
+			db.commit ();
+		}
+		catch (org.exolab.castor.jdo.PersistenceException e)
+		{
+			System.err.println (e.getMessage ());
+			e.printStackTrace (System.err);
+			return false;
+		}
+		return true;
 	}
 
 	public void deleteUser() {

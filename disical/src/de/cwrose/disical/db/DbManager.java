@@ -12,7 +12,7 @@ import de.cwrose.disical.corba.disiorb.*;
 /**
  * Static class for Castor JDO -> DB Initialization and Connection management
  * @author stepn
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DbManager {
 	private static JDO jdo;
@@ -63,7 +63,7 @@ public class DbManager {
 		}			
 	}
 	
-	static Database getConnection() 
+	public static Database getConnection() 
 		throws DatabaseNotFoundException, PersistenceException
 	{
 		return jdo.getDatabase ();

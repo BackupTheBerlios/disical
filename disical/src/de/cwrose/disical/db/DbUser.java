@@ -11,11 +11,14 @@ public final class DbUser extends DbPersistable
 	private User skel;
 	private String pwd;
 
+	private boolean isLoginUser;
+
 	public DbUser ()
 	{
 		DisicalUser stub = new DisicalUser ();
 		stub.setBubble (this);
 		skel = stub._this (DisicalSrv.orb);
+		this.isLoginUser = false;
 	}
 
 	public User getUser ()
@@ -23,18 +26,46 @@ public final class DbUser extends DbPersistable
 		return this.skel;
 	}
 
-	public static User queryUserByLogin (String login)
+	public boolean isLoginUser ()
 	{
-		DbUser bubble = null;
-		
-		/* OQL */
+		return this.isLoginUser;
+	}
 
-		User skel = bubble.getUser ();
-		return skel;
+	public void beLoginUser ()
+	{
+		this.isLoginUser = true;
 	}
 
 
-	public static User createUser (String login, String pwd, String name, String email)
+
+	public static User login (String login, String passwd)
+		throws org.exolab.castor.jdo.PersistenceException,
+			   IllegalArgumentException, IllegalStateException
+	{
+		DbUser bubble;
+
+		/* OQL */
+		Database     db  = DbManager.getConnection ();
+		OQLQuery     oql = db.getOQLQuery 
+			("SELECT u FROM auth WHERE login=$");
+		oql.bind (login);
+		
+		QueryResults res = oql.execute();
+		if (!res.hasMore ())
+			throw new IllegalArgumentException 
+				("You don't have the right password!  Go away!");
+		
+		bubble = ((DbUser) res.next ());
+		bubble.growOld ();
+		if (bubble.isLoginUser ())
+			throw new IllegalStateException 
+				("You are already logged in. Don't do that!");
+		bubble.beLoginUser ();
+		return bubble.getUser ();
+	}
+
+	public static User createUser (String login, String pwd, 
+								   String name, String email)
 	{
 		DbUser bubble = new DbUser ();
 		User usr = bubble.getUser ();
