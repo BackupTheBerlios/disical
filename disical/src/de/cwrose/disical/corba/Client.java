@@ -25,7 +25,7 @@ public class Client {
 
 		long fstTime = System.currentTimeMillis();
 
-		Date myDate = newUser.createDate(fstTime, fstTime*10, "Mensa", "ESSEN!!!", "Tralala");
+		Date myDate = newUser.createDate(fstTime, fstTime*10, "Mensa", "ESSEN!!!", "Isch haaaabe Hungor");
 		System.out.println (myDate.getLogin () == newUser);
 		//newDate = myDate.getDate
 		}

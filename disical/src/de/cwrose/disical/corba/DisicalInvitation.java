@@ -1,4 +1,4 @@
-// $Id: DisicalInvitation.java,v 1.11 2002/01/30 22:39:50 stepn Exp $
+// $Id: DisicalInvitation.java,v 1.12 2002/01/31 00:27:58 deafman Exp $
 package de.cwrose.disical.corba;
 
 /**
@@ -11,7 +11,7 @@ package de.cwrose.disical.corba;
  * void destroy();
  *
  * @author deafman
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 import de.cwrose.disical.corba.disiorb.*;
 import de.cwrose.disical.db.DbManager;
@@ -19,13 +19,14 @@ import de.cwrose.disical.db.DbDate;
 
 import de.cwrose.disical.db.DbInvitation;
 import de.cwrose.disical.db.DbInvited;
-import de.cwrose.disical.db.DbInvitation;
 
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 
 import org.exolab.castor.jdo.Database;
 import org.exolab.castor.jdo.PersistenceException;
+
+import java.sql.Timestamp;
 
 public class DisicalInvitation extends InvitationPOA {
 
@@ -82,25 +83,23 @@ public class DisicalInvitation extends InvitationPOA {
 		Invited[] invitedList = null;
 
 		try {
-			Database db = DbManager.getConnection();
-			db.begin();
-			//
-			db.commit();
+			invitedList = getBubble().getAllInvited();
+			
 		}
-		catch (PersistenceException e) {
+		catch (IllegalStateException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace(System.err);
 			throw new jdoPersistenceEx(e.getMessage());
 		}
 			
-		return invitedList;
+			return invitedList;
 	}
-
+	
 	public Invited[] getAllNotifiedInv()
 		throws jdoPersistenceEx {
-
+		
 		Invited[] invitedList = null;
-
+		
 		try {
 			Database db = DbManager.getConnection();
 			db.begin();

@@ -83,7 +83,7 @@
 	   <sql name="id" type="integer" />
     </field>
 
-  	<field name="login" type="de.cwrose.disical.db.DbUser" >
+  	<field name="user" type="de.cwrose.disical.db.DbUser" >
   		<sql name="login" />
   	</field>
 
@@ -134,10 +134,10 @@
   	</field>
 
 	<field name="user" type="de.cwrose.disical.db.DbUser" >
-	    <sql name="login" type="timestamp" />
+	    <sql name="login" />
     </field>
 
-	<field name="date" type="de.cwrose.disical.DbDate" >
+	<field name="date" type="de.cwrose.disical.db.DbDate" >
 	    <sql name="date" />
     </field>
 
